@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.enjoytrip.trip.dao.TripDao">
+
+	<select id="sidoList" resultType="sidoDto">
+		SELECT sido_code, sido_name
+		FROM sido
+	</select>
+	
+	<select id="tripSearchList" parameterType="tripSearchDto" resultType="tripDto">
+		SELECT content_id, content_type_id, title, addr1, addr2, zipcode, tel, first_image, first_image2, readcount, sido_code, gugun_code, latitude, longitude, mlevel
+		FROM attraction_info
+		<if test="contentTypeId == 0">
+			<if test="keyword == null">
+				WHERE sido_code = #{sidoCode}
+			</if>
+			<if test="keyword != null">
+				WHERE sido_code = #{sidoCode} AND title LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+		</if>
+		<if test="contentTypeId != 0">
+			<if test="keyword == null">
+				WHERE sido_code = #{sidoCode} AND content_type_id = #{contentTypeId}
+			</if>
+			<if test="keyword != null">
+				WHERE sido_code = #{sidoCode} AND content_type_id = #{contentTypeId} AND title LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+		</if>
+	</select>
+	
+	 <update id="updateReadCount" parameterType="string">
+			UPDATE attraction_info 
+			SET readcount = readcount + 1 
+			WHERE title = #{title}
+		
+	</update> 
+	
+	 <insert id="tripPlanSave" parameterType="tripPlanDto">
+		INSERT INTO tripplan(user_id, plan_list)
+		VALUES (#{userId}, #{planList2})
+	</insert>  
+	
+	
+	<select id="userTripPlan" parameterType="userDto" resultType="tripPlanDto">
+		SELECT num, user_id, plan_list planList2
+		FROM tripplan
+		WHERE user_id = #{userId}
+	</select>
+	
+	<select id="tripPlanDtoToTripDtoList" parameterType="string" resultType="tripDto">
+		SELECT content_id, content_type_id, title, addr1, addr2, zipcode, tel, first_image, first_image2, readcount, sido_code, gugun_code, latitude, longitude, mlevel
+		FROM attraction_info
+		WHERE title= #{title}
+	</select>
+	
+	
+	<select id="rankList" resultType="tripDto">
+		SELECT content_id, content_type_id, title, addr1, addr2, zipcode, tel, first_image, first_image2, readcount, sido_code, gugun_code, latitude, longitude, mlevel
+		FROM attraction_info
+		WHERE readcount >= 1
+	</select>
+	
+	<delete id="tripPlanDelete" parameterType="userDto">
+		DELETE
+		FROM tripplan 
+		WHERE user_id = #{userId}
+	</delete>
+	
+</mapper>
