@@ -46,6 +46,7 @@ export const useMemberStore = defineStore("memberStore", () => {
         isLogin.value = false;
         isLoginError.value = true;
         console.error(error);
+        alert("아이디 및 비밀번호를 확인해주세요.");
       }
     );
   };
@@ -67,6 +68,7 @@ export const useMemberStore = defineStore("memberStore", () => {
       (error) => {
         console.log("회원가입 실패!!!!");
         console.error(error);
+        alert("회원가입 실패");
       }
     );
   };
@@ -94,6 +96,7 @@ export const useMemberStore = defineStore("memberStore", () => {
       (error) => {
         console.log("회원 정보 수정 실패!!!!");
         console.error(error);
+        alert("회원 정보 수정 실패");
       }
     );
   };
@@ -111,6 +114,7 @@ export const useMemberStore = defineStore("memberStore", () => {
       (error) => {
         console.log("회원 탈퇴 실패!!!!");
         console.error(error);
+        alert("회원 탈퇴 실패");
       }
     );
   };
@@ -121,12 +125,14 @@ export const useMemberStore = defineStore("memberStore", () => {
         if (response.status === httpStatusCode.OK) {
           userInfo.value = user;
           console.log("비밀번호 찾기 성공!!!!");
+          console.log(response.status);
           gochangePwd();
         }
       },
       (error) => {
         console.log("비밀번호 찾기 실패!!!!");
         console.error(error);
+        alert("아이디 및 이름을 확인해주세요.");
       }
     );
   };
@@ -142,6 +148,7 @@ export const useMemberStore = defineStore("memberStore", () => {
       (error) => {
         console.log("비밀번호 변경 실패!!!!");
         console.error(error);
+        alert("비밀번호 변경 실패");
       }
     );
   };

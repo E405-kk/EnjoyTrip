@@ -90,13 +90,18 @@ public class UserController{
 
 	@PutMapping("/modify")
 	public ResponseEntity<?> modify(@RequestBody UserDto userDto) {
-		System.out.println("postmodify");
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
 		try {
 			int result = userService.modify(userDto);
-			resultMap.put("message", "회원 정보 수정 성공");
-			status = HttpStatus.CREATED;
+			if(result > 0) {
+				resultMap.put("message", "회원 정보 수정 성공");
+				status = HttpStatus.CREATED;
+			}
+			else {
+				resultMap.put("message", "회원 정보 수정 실패");
+				status = HttpStatus.UNAUTHORIZED;
+			}
 		} catch (Exception e) {
 			resultMap.put("message", e.getMessage());
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -106,8 +111,23 @@ public class UserController{
 
 	@DeleteMapping("/remove/{userId}")
 	public ResponseEntity<?> remove(@PathVariable String userId) {
-		int result = userService.remove(userId);
-		return ResponseEntity.ok(result);
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = HttpStatus.ACCEPTED;
+		try {
+			int result = userService.remove(userId);
+			if(result > 0) {
+				resultMap.put("message", "회원 삭제 성공");
+				status = HttpStatus.OK;
+			}
+			else {
+				resultMap.put("message", "회원 삭제 실패");
+				status = HttpStatus.UNAUTHORIZED;
+			}
+		} catch (Exception e) {
+			resultMap.put("message", e.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 
 	@GetMapping("/findpwd")
@@ -115,14 +135,16 @@ public class UserController{
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
 		try {
+			System.out.println(userDto);
 			int result = userService.findpwd(userDto);
+			System.out.println(result);
 			if(result > 0) {
 				resultMap.put("message", "비밀번호 찾기 성공");
 				status = HttpStatus.OK;
 			}
 			else {
 				resultMap.put("message", "비밀번호 찾기 실패");
-				status = HttpStatus.OK;
+				status = HttpStatus.UNAUTHORIZED;
 			}
 		} catch (Exception e) {
 			resultMap.put("message", e.getMessage());
@@ -133,8 +155,22 @@ public class UserController{
 
 	@PutMapping("/changepwd")
 	public ResponseEntity<?> changepwd(@RequestBody UserDto userDto) {
-		System.out.println(userDto);
-		int result = userService.changepwd(userDto);
-		return ResponseEntity.ok(result);
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = HttpStatus.ACCEPTED;
+		try {
+			int result = userService.changepwd(userDto);
+			if(result > 0) {
+				resultMap.put("message", "비밀번호 변경 성공");
+				status = HttpStatus.OK;
+			}
+			else {
+				resultMap.put("message", "비밀번호 변경 실패");
+				status = HttpStatus.UNAUTHORIZED;
+			}
+		} catch (Exception e) {
+			resultMap.put("message", e.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 }

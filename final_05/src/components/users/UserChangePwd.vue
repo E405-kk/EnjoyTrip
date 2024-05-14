@@ -12,9 +12,11 @@ const user = ref({
   userName: "",
   userEmail: "",
 });
+
 onMounted(() => {
   user.value = userInfo.value;
 });
+
 const changePwd = async () => {
   await userChangePwd(user.value);
 };
