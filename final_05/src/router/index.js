@@ -34,6 +34,16 @@ const router = createRouter({
           name: "user-modify",
           component: () => import("@/components/users/UserModify.vue"),
         },
+        {
+          path: "findPwd",
+          name: "user-findPwd",
+          component: () => import("@/components/users/UserFindPwd.vue"),
+        },
+        {
+          path: "changePwd",
+          name: "user-changePwd",
+          component: () => import("@/components/users/UserChangePwd.vue"),
+        },
       ],
     },
     {

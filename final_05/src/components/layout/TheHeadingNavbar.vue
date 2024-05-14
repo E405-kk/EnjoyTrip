@@ -1,4 +1,19 @@
-<script setup></script>
+<script setup>
+import { useMenuStore } from "@/stores/menu";
+import { useMemberStore } from "@/stores/member";
+import { storeToRefs } from "pinia";
+
+const menuStore = useMenuStore();
+const memberStore = useMemberStore();
+
+const { menuList } = storeToRefs(menuStore);
+
+const { userLogout } = memberStore;
+
+const logout = () => {
+  userLogout();
+};
+</script>
 
 <template>
   <!-- component -->
@@ -44,6 +59,33 @@
           <li>
             <router-link :to="{ name: 'board' }">Q&A</router-link>
           </li>
+        </ul>
+        <ul
+          class="navbar-nav ms-auto my-2 my-lg-0 navbar-nav-scroll"
+          style="--bs-scroll-height: 100px">
+          <template v-for="menu in menuList" :key="menu.routeName">
+            <template v-if="menu.show">
+              <template v-if="menu.routeName === 'user-logout'">
+                <li class="nav-item">
+                  <router-link
+                    to="/"
+                    @click.prevent="logout"
+                    class="nav-link"
+                    >{{ menu.name }}</router-link
+                  >
+                </li>
+              </template>
+              <template v-else>
+                <li class="nav-item">
+                  <router-link
+                    :to="{ name: menu.routeName }"
+                    class="nav-link"
+                    >{{ menu.name }}</router-link
+                  >
+                </li>
+              </template>
+            </template>
+          </template>
         </ul>
       </div>
     </div>

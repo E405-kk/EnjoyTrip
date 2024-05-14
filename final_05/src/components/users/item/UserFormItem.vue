@@ -1,8 +1,10 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import { storeToRefs } from "pinia";
 import { useMemberStore } from "@/stores/member";
 const memberStore = useMemberStore();
-const { userJoin, userModify, userInfo } = memberStore;
+const { userInfo } = storeToRefs(memberStore);
+const { userJoin, userModify, userGetInfo, userId } = memberStore;
 
 const props = defineProps({ type: String });
 
@@ -11,6 +13,10 @@ const user = ref({
   userPwd: "",
   userName: "",
   userEmail: "",
+});
+
+onMounted(() => {
+  userGetInfo(userId);
 });
 
 if (props.type === "modify") {

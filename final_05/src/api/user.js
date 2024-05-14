@@ -19,15 +19,21 @@ async function userUpdate(param, success, fail) {
 }
 
 async function userRemove(userId, success, fail) {
-  await local.post(`/user/remove/${userId}`).then(success).catch(fail);
+  await local.delete(`/user/remove/${userId}`).then(success).catch(fail);
 }
 
 async function findPwd(param, success, fail) {
-  await local.post(`/user/findpwd`, param).then(success).catch(fail);
+  await local
+    .get(`/user/findpwd`, {
+      params: { userId: param.userId, userName: param.userName },
+    })
+    .then(success)
+    .catch(fail);
 }
 
 async function changePwd(param, success, fail) {
-  await local.post(`/user/changepwd`, param).then(success).catch(fail);
+  console.log(param);
+  await local.put(`/user/changepwd`, param).then(success).catch(fail);
 }
 export {
   userConfirm,

@@ -6,12 +6,18 @@ import { useMemberStore } from "@/stores/member";
 const memberStore = useMemberStore();
 
 const { userInfo } = storeToRefs(memberStore);
-const { userGetInfo } = memberStore;
-const userId = sessionStorage.getItem("userId");
+const { userGetInfo, goModify, userId, userDelete } = memberStore;
+
 onMounted(() => {
   userGetInfo(userId);
-  console.log(userInfo.value);
 });
+
+const go = () => {
+  goModify();
+};
+const remove = () => {
+  userDelete(userId);
+};
 </script>
 
 <template>
@@ -43,8 +49,17 @@ onMounted(() => {
           </div>
         </div>
         <div>
-          <button type="button" class="btn btn-outline-secondary mt-2">
+          <button
+            type="button"
+            class="btn btn-outline-secondary mt-2"
+            @click="go">
             수정
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-secondary mt-2"
+            @click="remove">
+            삭제
           </button>
         </div>
       </div>

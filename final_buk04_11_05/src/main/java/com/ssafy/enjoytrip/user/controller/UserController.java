@@ -91,9 +91,17 @@ public class UserController{
 	@PutMapping("/modify")
 	public ResponseEntity<?> modify(@RequestBody UserDto userDto) {
 		System.out.println("postmodify");
-		int result = userService.modify(userDto);
-		//		session.setAttribute("userinfo", userDto);
-		return ResponseEntity.ok(result);
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = HttpStatus.ACCEPTED;
+		try {
+			int result = userService.modify(userDto);
+			resultMap.put("message", "회원 정보 수정 성공");
+			status = HttpStatus.CREATED;
+		} catch (Exception e) {
+			resultMap.put("message", e.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 
 	@DeleteMapping("/remove/{userId}")
@@ -103,18 +111,29 @@ public class UserController{
 	}
 
 	@GetMapping("/findpwd")
-	public ResponseEntity<?> findpwd(@RequestBody UserDto userDto) {
-		if (userService.findpwd(userDto) > 0) {	// 비밀번호 찾기 성공 
-			return ResponseEntity.ok(userDto);
-		} else {
-			//			model.addAttribute("msg", "일치하는 회원정보가 없습니다. 이름 혹은 아이디를 다시 입력하세요.");
-			//			return "user/findpwd";
-			return ResponseEntity.noContent().build();
+	public ResponseEntity<?> findpwd(@ModelAttribute UserDto userDto) {
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = HttpStatus.ACCEPTED;
+		try {
+			int result = userService.findpwd(userDto);
+			if(result > 0) {
+				resultMap.put("message", "비밀번호 찾기 성공");
+				status = HttpStatus.OK;
+			}
+			else {
+				resultMap.put("message", "비밀번호 찾기 실패");
+				status = HttpStatus.OK;
+			}
+		} catch (Exception e) {
+			resultMap.put("message", e.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 
 	@PutMapping("/changepwd")
 	public ResponseEntity<?> changepwd(@RequestBody UserDto userDto) {
+		System.out.println(userDto);
 		int result = userService.changepwd(userDto);
 		return ResponseEntity.ok(result);
 	}

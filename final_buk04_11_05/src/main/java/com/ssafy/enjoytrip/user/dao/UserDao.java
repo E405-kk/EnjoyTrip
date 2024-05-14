@@ -11,6 +11,7 @@ public interface UserDao {
 	UserDto login(UserDto userDto);
 	int modify(UserDto userDto);
 	int remove(String userId);
+	int userBoardRemove(String userId);
 	int findpwd(UserDto userDto);
 	int changepwd(UserDto userDto);
 	UserDto userInfo(String userId);

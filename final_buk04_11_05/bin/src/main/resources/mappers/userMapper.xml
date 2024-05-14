@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.enjoytrip.user.dao.UserDao">
+	<insert id="register" parameterType="userDto">
+		INSERT INTO user (user_id, user_name, user_password, user_email)
+		VALUES (#{userId}, #{userName}, #{userPwd}, #{userEmail})
+	</insert>
+	
+	<select id="login" parameterType="userDto" resultType="userDto">
+		SELECT user_id, user_name, user_email, join_date
+		FROM user
+		WHERE user_id = #{userId} AND user_password = #{userPwd}
+	</select>	
+	
+	<select id="userInfo" parameterType="String" resultType="userDto">
+		SELECT user_id, user_name, user_password userPwd, user_email, join_date
+		FROM user 
+		WHERE user_id = #{userId}
+	</select>
+	
+	<update id="modify" parameterType="userDto">
+		UPDATE user SET user_name = #{userName}, user_email = #{userEmail}, user_password = #{userPwd}
+		WHERE user_id = #{userId}
+	</update>
+	
+	<delete id="remove" parameterType="string">
+		DELETE FROM user 
+		WHERE user_id = #{userId}
+	</delete>
+	
+	<select id="findpwd" parameterType="userDto" resultType="int">
+		SELECT count(user_id)
+		FROM user 
+		WHERE user_id = #{userId} AND user_name = #{userName}
+	</select>
+	
+	<update id="changepwd" parameterType="userDto">
+		UPDATE user 
+		SET user_password = #{userPwd} 
+		WHERE user_id = #{userId}
+	</update>
+</mapper>
