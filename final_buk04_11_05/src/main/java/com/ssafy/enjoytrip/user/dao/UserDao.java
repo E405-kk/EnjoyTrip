@@ -13,5 +13,6 @@ public interface UserDao {
 	int remove(String userId);
 	int findpwd(UserDto userDto);
 	int changepwd(UserDto userDto);
+	UserDto userInfo(String userId);
 
 }

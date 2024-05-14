@@ -49,5 +49,10 @@ public class UserServiceImpl implements UserService{
 		return userDao.changepwd(userDto);
 	}
 
+	@Override
+	public UserDto userInfo(String userId) {
+		return userDao.userInfo(userId);
+	}
+
 
 }

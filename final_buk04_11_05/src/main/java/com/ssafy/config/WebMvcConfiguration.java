@@ -18,15 +18,15 @@ import com.ssafy.enjoytrip.interceptor.SessionInterceptor;
 @MapperScan(basePackages = { "com.ssafy.enjoytrip.*.dao" })
 public class WebMvcConfiguration implements WebMvcConfigurer {
 	
-	private final List<String> patterns = Arrays.asList("/board/*","/trip/*");
-	
-	@Autowired
-	private SessionInterceptor sessionInterceptor;
-	
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(sessionInterceptor).addPathPatterns(patterns);
-	}
+//	private final List<String> patterns = Arrays.asList("/board/*","/trip/*");
+//	
+//	@Autowired
+//	private SessionInterceptor sessionInterceptor;
+//	
+//	@Override
+//	public void addInterceptors(InterceptorRegistry registry) {
+//		registry.addInterceptor(sessionInterceptor).addPathPatterns(patterns);
+//	}
 	
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
