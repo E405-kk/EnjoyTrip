@@ -4,7 +4,7 @@ import { storeToRefs } from "pinia";
 import { useMemberStore } from "@/stores/member";
 const memberStore = useMemberStore();
 const { userInfo } = storeToRefs(memberStore);
-const { userJoin, userModify, userGetInfo, userId } = memberStore;
+const { userJoin, userModify } = memberStore;
 
 const props = defineProps({ type: String });
 const userPwdCheck = ref("");
@@ -19,7 +19,6 @@ onMounted(() => {
   if (props.type === "modify") {
     user.value = userInfo.value;
   }
-  userGetInfo(userId);
 });
 
 const register = async () => {

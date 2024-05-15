@@ -90,6 +90,7 @@ export const useMemberStore = defineStore("memberStore", () => {
       (response) => {
         if (response.status === httpStatusCode.CREATE) {
           console.log("회원 정보 수정 성공!!!!");
+          console.log(userInfo.value);
           goMyPage();
         }
       },
