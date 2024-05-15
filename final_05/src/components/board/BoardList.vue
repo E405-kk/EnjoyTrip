@@ -67,7 +67,7 @@ const moveWrite = () => {
 <template>
   <div class="fluid-container mb-20">
     <div class="row justify-content-center">
-      <h2 class="my-3 py-3 shadow-sm text-2xl text-center">글목록</h2>
+      <h2 class="my-3 py-3 shadow-sm text-2xl text-center">Q&A</h2>
       <div class="flex items-center justify-center">
         <div class="ml-40 mr-auto">
           <button

@@ -9,7 +9,7 @@ const router = useRouter();
 
 const memberStore = useMemberStore();
 
-const { isLogin, isLoginError } = storeToRefs(memberStore);
+const { isLogin } = storeToRefs(memberStore);
 const { userLogin } = memberStore;
 const { changeMenuState } = useMenuStore();
 
@@ -97,11 +97,6 @@ const findPwd = () => {
               v-model="loginUser.userPwd"
               @keyup.enter="login"
               class="pl-3 lock w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-          </div>
-          <div class="mb-3 text-start" v-if="isLoginError === true">
-            <div class="alert alert-danger" role="alert">
-              아이디 또는 비밀번호 확인해 주세요
-            </div>
           </div>
         </div>
 

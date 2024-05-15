@@ -12,54 +12,83 @@ const user = ref({
   userName: "",
   userEmail: "",
 });
+const userPwdCheck = ref("");
 
 onMounted(() => {
   user.value = userInfo.value;
 });
 
 const changePwd = async () => {
-  await userChangePwd(user.value);
+  if (userPwdCheck.value === user.value.userPwd) {
+    await userChangePwd(user.value);
+  } else {
+    alert("비밀번호를 다시 확인해주세요.");
+    return;
+  }
 };
 </script>
 
 <template>
-  <main class="row">
-    <div class="col-lg-2 col-md-1"></div>
-    <div class="login col-lg-8 col-md-10">
-      <div class="login-title fw-bold fs-3 border-bottom pb-2 mt-2">
+  <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+    <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+      <img
+        class="mx-auto h-10 w-auto"
+        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+        alt="Your Company" />
+      <h2
+        class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
         비밀번호 변경
-      </div>
-      <div class="input-pwd mt-3 ms-3 me-3">
-        <label for="userpwd" class="d-block">비밀번호: </label>
-        <input
-          type="password"
-          class="form-control"
-          id="userpwd"
-          name="userpwd"
-          placeholder="비밀번호..."
-          v-model="user.userPwd" />
-      </div>
-      <div class="input-pwd-check mt-3 ms-3 me-3">
-        <label for="userpwdcheck" class="d-block">비밀번호확인: </label>
-        <input
-          type="password"
-          class="form-control"
-          id="userpwdcheck"
-          name="userpwdcheck"
-          placeholder="비밀번호확인..." />
-      </div>
-      <div class="input-bottom mt-3 text-end border-top pt-3 me-3">
-        <button
-          type="button"
-          class="btn btn-outline-success fs-6 p-2"
-          id="btn-findpwd"
-          @click="changePwd">
-          비밀번호 변경
-        </button>
+      </h2>
+    </div>
+
+    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+      <div class="space-y-6">
+        <div>
+          <label
+            for="userpwd"
+            class="block text-sm font-medium leading-6 text-gray-900"
+            >비밀번호</label
+          >
+          <div class="mt-2">
+            <input
+              id="userpwd"
+              name="userpwd"
+              type="password"
+              required
+              v-model="user.userPwd"
+              class="pl-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+          </div>
+        </div>
+
+        <div>
+          <label
+            for="userpwdcheck"
+            class="block text-sm font-medium leading-6 text-gray-900"
+            >비밀번호 확인</label
+          >
+          <div class="mt-2">
+            <input
+              id="userpwdcheck"
+              name="userpwdcheck"
+              type="password"
+              required
+              @keyup.enter="changePwd"
+              v-model="userPwdCheck"
+              class="pl-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+          </div>
+        </div>
+
+        <div>
+          <button
+            type="button"
+            class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            @click="changePwd">
+            비밀번호 변경
+          </button>
+        </div>
       </div>
     </div>
-    <div class="col-lg-2 col-md-1"></div>
-  </main>
+  </div>
 </template>
 
 <style scoped></style>

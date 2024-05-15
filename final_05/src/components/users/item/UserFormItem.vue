@@ -7,7 +7,7 @@ const { userInfo } = storeToRefs(memberStore);
 const { userJoin, userModify, userGetInfo, userId } = memberStore;
 
 const props = defineProps({ type: String });
-
+const userPwdCheck = ref("");
 const user = ref({
   userId: "",
   userPwd: "",
@@ -16,10 +16,10 @@ const user = ref({
 });
 
 onMounted(() => {
-  userGetInfo(userId);
   if (props.type === "modify") {
     user.value = userInfo.value;
   }
+  userGetInfo(userId);
 });
 
 const register = async () => {
@@ -27,7 +27,12 @@ const register = async () => {
 };
 
 const modify = async () => {
-  await userModify(user.value);
+  if (userPwdCheck.value === user.value.userPwd) {
+    await userModify(user.value);
+  } else {
+    alert("비밀번호를 다시 확인해주세요.");
+    return;
+  }
 };
 </script>
 
@@ -90,7 +95,8 @@ const modify = async () => {
           <input
             type="password"
             class="pl-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-            placeholder="비밀번호 확인..." />
+            placeholder="비밀번호 확인..."
+            v-model="userPwdCheck" />
         </div>
       </div>
 

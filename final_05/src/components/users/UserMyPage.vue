@@ -1,22 +1,20 @@
 <script setup>
-import { onMounted } from "vue";
+import { onBeforeMount, onMounted } from "vue";
 import { storeToRefs } from "pinia";
 import { useMemberStore } from "@/stores/member";
 
 const memberStore = useMemberStore();
 
 const { userInfo } = storeToRefs(memberStore);
-const { userGetInfo, goModify, userId, userDelete } = memberStore;
-
-onMounted(() => {
-  userGetInfo(userId);
-});
+const { userId, goModify, userDelete } = memberStore;
 
 const go = () => {
   goModify();
 };
 const remove = () => {
-  userDelete(userId);
+  if (confirm("정말로 회원 탈퇴하시겠습니까? ㅠㅠ")) {
+    userDelete(userId);
+  }
 };
 </script>
 
@@ -36,7 +34,7 @@ const remove = () => {
             <dt class="text-m font-medium leading-6 text-gray-900">ID</dt>
             <dd
               class="mt-1 text-m leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-              {{ userInfo.userId }}
+              {{ userId }}
             </dd>
           </div>
           <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">

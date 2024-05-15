@@ -25,7 +25,7 @@ const logout = () => {
         <router-link :to="{ name: 'main' }"> EnjoyTrip </router-link>
       </span>
 
-      <div class="w-full md:block md:w-auto" id="mobile-menu">
+      <div class="w-full md:block md:w-auto">
         <ul
           class="flex mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
           <li>
@@ -57,31 +57,30 @@ const logout = () => {
             </a>
           </li>
           <li>
-            <router-link :to="{ name: 'board' }">Q&A</router-link>
+            <router-link
+              class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+              :to="{ name: 'board' }"
+              >Q&A</router-link
+            >
           </li>
 
           <template v-for="menu in menuList" :key="menu.routeName">
             <template v-if="menu.show">
-              <template
-                v-if="
-                  menu.routeName === 'user-logout' ||
-                  menu.routeName === 'user-join'
-                ">
+              <template v-if="menu.routeName === 'user-logout'">
                 <li class="nav-item">
                   <router-link
                     to="/"
                     @click.prevent="logout"
-                    class="nav-link"
+                    class="nav-link block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                     >{{ menu.name }}</router-link
                   >
                 </li>
               </template>
-
               <template v-else>
                 <li class="nav-item">
                   <router-link
+                    class="nav-link block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                     :to="{ name: menu.routeName }"
-                    class="nav-link"
                     >{{ menu.name }}</router-link
                   >
                 </li>

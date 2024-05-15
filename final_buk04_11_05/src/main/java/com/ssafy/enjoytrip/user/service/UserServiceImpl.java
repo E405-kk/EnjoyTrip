@@ -37,7 +37,8 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public int remove(String userId) {
 		userDao.userBoardRemove(userId);
-		return userDao.remove(userId);
+		int res = userDao.remove(userId);
+		return res;
 	}
 
 	@Override

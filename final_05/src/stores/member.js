@@ -27,7 +27,6 @@ export const useMemberStore = defineStore("memberStore", () => {
   });
 
   const isLogin = ref(false);
-  const isLoginError = ref(false);
 
   const userLogin = async (loginUser) => {
     await userConfirm(
@@ -38,14 +37,13 @@ export const useMemberStore = defineStore("memberStore", () => {
           let { data } = response;
           let userId = data["userId"];
           isLogin.value = true;
-          isLoginError.value = false;
           sessionStorage.setItem("userId", userId);
+          userGetInfo(userId);
         }
       },
       (error) => {
         console.log("로그인 실패!!!!");
         isLogin.value = false;
-        isLoginError.value = true;
         console.error(error);
         alert("아이디 및 비밀번호를 확인해주세요.");
       }
@@ -79,6 +77,7 @@ export const useMemberStore = defineStore("memberStore", () => {
       userId,
       ({ data }) => {
         userInfo.value = data.user;
+        console.log(userInfo.value);
       },
       (error) => {
         console.error(error);
@@ -167,7 +166,6 @@ export const useMemberStore = defineStore("memberStore", () => {
   };
   return {
     isLogin,
-    isLoginError,
     userInfo,
     userLogin,
     userLogout,

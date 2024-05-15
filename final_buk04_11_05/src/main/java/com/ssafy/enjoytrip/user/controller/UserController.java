@@ -113,8 +113,10 @@ public class UserController{
 	public ResponseEntity<?> remove(@PathVariable String userId) {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
+		System.out.println("usercontroller - remove() : " + userId);
 		try {
 			int result = userService.remove(userId);
+			System.out.println("usercontroller - remove : "+ result);
 			if(result > 0) {
 				resultMap.put("message", "회원 삭제 성공");
 				status = HttpStatus.OK;

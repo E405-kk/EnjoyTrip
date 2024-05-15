@@ -27,7 +27,14 @@
 	
 	<delete id="userBoardRemove" parameterType="string">
 		DELETE FROM board 
-		WHERE user_id = #{userId}
+		WHERE user_id = #{userId};
+		
+		DELETE FROM tripplan
+		WHERE user_id = #{userId};
+		
+		DELETE FROM notice
+		WHERE user_id = #{userId};
+		 
 	</delete>
 	
 	<delete id="remove" parameterType="string">
