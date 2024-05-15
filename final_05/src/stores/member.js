@@ -23,6 +23,7 @@ export const useMemberStore = defineStore("memberStore", () => {
     userPwd: "",
     userName: "",
     userEmail: "",
+    joinDate: "",
   });
 
   const isLogin = ref(false);

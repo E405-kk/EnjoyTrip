@@ -59,9 +59,14 @@ const logout = () => {
           <li>
             <router-link :to="{ name: 'board' }">Q&A</router-link>
           </li>
+
           <template v-for="menu in menuList" :key="menu.routeName">
             <template v-if="menu.show">
-              <template v-if="menu.routeName === 'user-logout'">
+              <template
+                v-if="
+                  menu.routeName === 'user-logout' ||
+                  menu.routeName === 'user-join'
+                ">
                 <li class="nav-item">
                   <router-link
                     to="/"
@@ -71,6 +76,7 @@ const logout = () => {
                   >
                 </li>
               </template>
+
               <template v-else>
                 <li class="nav-item">
                   <router-link

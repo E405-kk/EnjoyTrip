@@ -5,7 +5,7 @@ export const useMenuStore = defineStore("menuStore", () => {
   const menuList = ref([
     { name: "회원가입", show: true, routeName: "user-join" },
     { name: "로그인", show: true, routeName: "user-login" },
-    { name: "내정보", show: false, routeName: "user-mypage" },
+    { name: "마이 페이지", show: false, routeName: "user-mypage" },
     { name: "로그아웃", show: false, routeName: "user-logout" },
   ]);
 

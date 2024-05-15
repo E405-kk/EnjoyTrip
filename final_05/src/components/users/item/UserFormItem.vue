@@ -17,11 +17,10 @@ const user = ref({
 
 onMounted(() => {
   userGetInfo(userId);
+  if (props.type === "modify") {
+    user.value = userInfo.value;
+  }
 });
-
-if (props.type === "modify") {
-  user.value = userInfo.value;
-}
 
 const register = async () => {
   await userJoin(user.value);
@@ -33,68 +32,100 @@ const modify = async () => {
 </script>
 
 <template>
-  <div class="mb-3">
-    <label for="username" class="form-label">이름 : </label>
-    <input
-      type="text"
-      class="form-control"
-      placeholder="이름..."
-      v-model="user.userName" />
-  </div>
-  <div class="mb-3">
-    <label for="userid" class="form-label">아이디 : </label>
-    <input
-      type="text"
-      class="form-control"
-      placeholder="아이디..."
-      v-model="user.userId"
-      v-if="type === 'regist'" />
-    <div v-if="type === 'modify'">{{ user.userId }}</div>
-  </div>
-  <div class="mb-3">
-    <label for="userpwd" class="form-label">비밀번호 : </label>
-    <input
-      type="text"
-      class="form-control"
-      placeholder="비밀번호..."
-      v-model="user.userPwd" />
-  </div>
-  <div class="mb-3">
-    <label for="pwdcheck" class="form-label">비밀번호확인 : </label>
-    <input
-      type="text"
-      class="form-control"
-      id="pwdcheck"
-      placeholder="비밀번호확인..." />
-  </div>
-  <div class="mb-3">
-    <label for="emailid" class="form-label">이메일 : </label>
-    <div class="input-group">
-      <input
-        type="text"
-        class="form-control"
-        placeholder="이메일아이디"
-        v-model="user.userEmail" />
+  <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+    <div class="space-y-6">
+      <div>
+        <label
+          for="username"
+          class="block text-sm font-medium leading-6 text-gray-900"
+          >이름 :
+        </label>
+        <div class="mt-2">
+          <input
+            type="text"
+            class="pl-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            placeholder="이름..."
+            v-model="user.userName" />
+        </div>
+      </div>
+
+      <div>
+        <label
+          for="userid"
+          class="inline text-sm font-medium leading-6 text-gray-900"
+          >아이디 :
+        </label>
+
+        <input
+          type="text"
+          class="mt-2 pl-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          placeholder="아이디..."
+          v-model="user.userId"
+          v-if="type === 'regist'" />
+        <span v-if="type === 'modify'">{{ user.userId }}</span>
+      </div>
+
+      <div>
+        <label
+          for="userpwd"
+          class="block text-sm font-medium leading-6 text-gray-900"
+          >비밀번호 :
+        </label>
+        <div class="mt-2">
+          <input
+            type="password"
+            class="pl-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            placeholder="비밀번호..."
+            v-model="user.userPwd" />
+        </div>
+      </div>
+
+      <div>
+        <label
+          for="pwdcheck"
+          class="block text-sm font-medium leading-6 text-gray-900"
+          >비밀번호 확인:
+        </label>
+        <div class="mt-2">
+          <input
+            type="password"
+            class="pl-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            placeholder="비밀번호 확인..." />
+        </div>
+      </div>
+
+      <div>
+        <label
+          for="useremail"
+          class="block text-sm font-medium leading-6 text-gray-900"
+          >이메일:
+        </label>
+        <div class="mt-2">
+          <input
+            type="text"
+            class="pl-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            placeholder="이메일..."
+            v-model="user.userEmail" />
+        </div>
+      </div>
+
+      <div class="col-auto text-center">
+        <button
+          type="button"
+          class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          @click="register"
+          v-if="type === 'regist'">
+          회원가입
+        </button>
+        <button
+          type="button"
+          class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          @click="modify"
+          v-else>
+          수정
+        </button>
+      </div>
     </div>
-  </div>
-  <div class="col-auto text-center">
-    <button
-      type="button"
-      class="btn btn-outline-primary mb-3"
-      @click="register"
-      v-if="type === 'regist'">
-      회원가입
-    </button>
-    <button
-      type="button"
-      class="btn btn-outline-primary mb-3"
-      @click="modify"
-      v-else>
-      수정
-    </button>
-    <button type="button" class="btn btn-outline-success ms-1 mb-3">
-      초기화
-    </button>
   </div>
 </template>
 

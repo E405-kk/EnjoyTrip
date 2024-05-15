@@ -21,47 +21,60 @@ const remove = () => {
 </script>
 
 <template>
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-10">
-        <h2 class="my-3 py-3 shadow-sm bg-light text-center">
-          <mark class="orange">내정보</mark>
-        </h2>
+  <div class="flex flex-col justify-center items-center h-[80vh]">
+    <div
+      class="relative flex flex-col items-center rounded-[20px] w-[700px] max-w-[95%] mx-auto bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:!shadow-none p-3">
+      <div class="mt-2 mb-8 w-full">
+        <h4 class="px-2 text-2xl font-bold text-navy-700 dark:text-white">
+          마이 페이지
+        </h4>
       </div>
-      <div class="col-lg-10">
-        <div class="card mt-3 m-auto" style="max-width: 700px">
-          <div class="row g-0">
-            <div class="col-md-4">
-              <img
-                src="https://source.unsplash.com/random/250x250/?food"
-                class="img-fluid rounded-start"
-                alt="..." />
-            </div>
-            <div class="col-md-8">
-              <div class="card-body text-start">
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item">{{ userInfo.userId }}</li>
-                  <li class="list-group-item">{{ userInfo.userName }}</li>
-                  <li class="list-group-item">{{ userInfo.userEmail }}</li>
-                </ul>
-              </div>
-            </div>
+
+      <div class="mt-4 border-t border-gray-100 w-full">
+        <dl class="divide-y divide-gray-100">
+          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt class="text-m font-medium leading-6 text-gray-900">ID</dt>
+            <dd
+              class="mt-1 text-m leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+              {{ userInfo.userId }}
+            </dd>
           </div>
-        </div>
-        <div>
-          <button
-            type="button"
-            class="btn btn-outline-secondary mt-2"
-            @click="go">
-            수정
-          </button>
-          <button
-            type="button"
-            class="btn btn-outline-secondary mt-2"
-            @click="remove">
-            삭제
-          </button>
-        </div>
+          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt class="text-m font-medium leading-6 text-gray-900">이름</dt>
+            <dd
+              class="mt-1 text-m leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+              {{ userInfo.userName }}
+            </dd>
+          </div>
+          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt class="text-m font-medium leading-6 text-gray-900">이메일</dt>
+            <dd
+              class="mt-1 text-m leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+              {{ userInfo.userEmail }}
+            </dd>
+          </div>
+          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt class="text-m font-medium leading-6 text-gray-900">
+              가입 날짜
+            </dt>
+            <dd
+              class="mt-1 text-m leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+              {{ userInfo.joinDate }}
+            </dd>
+          </div>
+        </dl>
+      </div>
+      <div class="flex mt-6">
+        <button
+          @click="go"
+          class="rounded-xl bg-indigo-600 px-4 py-2 text-base mb-3 font-medium text-white transition duration-200 hover:bg-indigo-500 active:bg-indigo-600">
+          정보 수정
+        </button>
+        <button
+          @click="remove"
+          class="ml-4 rounded-xl bg-red-500 px-4 py-2 text-base mb-3 font-medium text-white transition duration-200 hover:bg-red-400 active:bg-red-600">
+          회원 탈퇴
+        </button>
       </div>
     </div>
   </div>
