@@ -1,25 +1,21 @@
 package com.ssafy.enjoytrip.trip.controller;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.enjoytrip.trip.model.SidoDto;
 import com.ssafy.enjoytrip.trip.model.TripDto;
@@ -28,12 +24,7 @@ import com.ssafy.enjoytrip.trip.model.TripSearchDto;
 import com.ssafy.enjoytrip.trip.service.TripService;
 import com.ssafy.enjoytrip.user.model.UserDto;
 
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-
+@CrossOrigin(origins = { "*" }, methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE} , maxAge = 6000)
 @RestController
 @RequestMapping("/trip")
 public class TripController {
@@ -50,7 +41,8 @@ public class TripController {
 	}
 	
 	@GetMapping("/tripSearch")
-	public ResponseEntity<?> tripSearch(@RequestBody TripSearchDto tripSearchDto){
+	public ResponseEntity<?> tripSearch(@ModelAttribute TripSearchDto tripSearchDto){
+		
 		List<TripDto> tripSearchList = tripService.tripSearchList(tripSearchDto);
 		ObjectMapper mapper = new ObjectMapper();
 		String result;
