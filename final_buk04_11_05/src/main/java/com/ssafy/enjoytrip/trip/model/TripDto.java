@@ -16,6 +16,8 @@ public class TripDto implements Comparable<TripDto>{
 	double latitude;
 	double longitude;
 	String mLevel;
+	String overview;
+	
 	public int getContentId() {
 		return contentId;
 	}
@@ -106,13 +108,22 @@ public class TripDto implements Comparable<TripDto>{
 	public void setmLevel(String mLevel) {
 		this.mLevel = mLevel;
 	}
+	public String getOverview() {
+		return overview;
+	}
+	public void setOverview(String overview) {
+		this.overview = overview;
+	}
 	public TripDto() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+	
 	public TripDto(int contentId, int contentTypeId, String title, String addr1, String addr2, String zipcode,
 			String tel, String firstImage, String firstImage2, int readCount, int sidoCode, int gugunCode,
-			double latitude, double longitude, String mLevel) {
+			double latitude, double longitude, String mLevel, String overview) {
 		super();
 		this.contentId = contentId;
 		this.contentTypeId = contentTypeId;
@@ -129,14 +140,17 @@ public class TripDto implements Comparable<TripDto>{
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.mLevel = mLevel;
+		this.overview = overview;
 	}
+	
+	
 	@Override
 	public String toString() {
 		return "TripDto [contentId=" + contentId + ", contentTypeId=" + contentTypeId + ", title=" + title + ", addr1="
 				+ addr1 + ", addr2=" + addr2 + ", zipcode=" + zipcode + ", tel=" + tel + ", firstImage=" + firstImage
 				+ ", firstImage2=" + firstImage2 + ", readCount=" + readCount + ", sidoCode=" + sidoCode
 				+ ", gugunCode=" + gugunCode + ", latitude=" + latitude + ", longitude=" + longitude + ", mLevel="
-				+ mLevel + "]";
+				+ mLevel + ", overview=" + overview + "]";
 	}
 	@Override
 	public int compareTo(TripDto o) {

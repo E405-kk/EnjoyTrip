@@ -29,6 +29,11 @@
 			</if>
 		</if>
 	</select>
+	<select id = "tripDetailSearch" parameterType="int" resultType="string">
+		SELECT overview
+		FROM attraction_description
+		WHERE content_id = #{contentId}
+	</select>
 	
 	 <update id="updateReadCount" parameterType="string">
 			UPDATE attraction_info 

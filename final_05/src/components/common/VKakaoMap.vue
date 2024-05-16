@@ -47,8 +47,10 @@ watch(
       obj.contentTypeId = station.contentTypeId;
       obj.firstImage = station.firstImage;
       obj.addr1 = station.addr1;
+      obj.addr2 = station.addr2;
       obj.zipcode = station.zipcode;
       obj.tel = station.tel;
+      obj.overview = station.overview;
       positions.value.push(obj);
     });
     loadMarkers();
@@ -106,14 +108,10 @@ const loadMarkers = () => {
       img = "/src/assets/about-bg.jpg";
     }
     var contentVal =
-      '        <div class="title" >' +
-      `            ${position.title}` +
-      "        </div>" +
-      '        <div class="">' +
-      `                <img src="${img}"  class = "" width = "50px" height ="50px"/>` +
-      `                <div class = "">${position.addr1}</div>
-            ` +
-      "        </div>";
+      '        <div class="container border-1" style="padding: 5px; width: 250px; height: 200px;">' +
+      `           <div> ${position.title} </div>` +
+      `           <img src="${img}" class="m-auto" width="150px" height="100px"/>` +
+      `        <span>${position.addr1}</span> </div>`;
     var infowindow = new kakao.maps.InfoWindow({
       content: contentVal,
     });
@@ -140,11 +138,12 @@ const loadMarkers = () => {
 
       var content2 =
         '            <div class="img">' +
-        `                <img src="${positions.value[i].firstImage}" width="73" height="70">` +
+        `                <img src="${positions.value[i].firstImage}" width="100" height="80">` +
         "           </div>" +
         '            <div class="desc">' +
         `                <div class="ellipsis">${positions.value[i].addr1}</div>` +
         `                <div class="jibun ellipsis">(우)${positions.value[i].zipcode}</div>` +
+        `               <div> ${positions.value[i].overview}</div>` +
         '                <div><a href="https://www.kakaocorp.com/main" target="_blank" class="link">홈페이지</a></div>' +
         "            </div>";
 
@@ -209,17 +208,18 @@ function hiderMarksersInCluster(clusterer) {
 <style>
 #map {
   width: 100%;
-  height: 700px;
+  height: 400px;
+  border-radius: 20px;
 }
 .wrap {
   position: absolute;
   left: 0;
   bottom: 40px;
-  width: 288px;
-  height: 132px;
+  width: 286px;
+  height: 120px;
   margin-left: -144px;
   text-align: left;
-  overflow: hidden;
+  overflow: auto;
   font-size: 12px;
   font-family: "Malgun Gothic", dotum, "돋움", sans-serif;
   line-height: 1.5;
@@ -234,7 +234,7 @@ function hiderMarksersInCluster(clusterer) {
   border-radius: 5px;
   border-bottom: 2px solid #ccc;
   border-right: 1px solid #ccc;
-  overflow: hidden;
+  overflow: auto;
   background: #fff;
 }
 .wrap .info:nth-child(1) {
@@ -263,7 +263,7 @@ function hiderMarksersInCluster(clusterer) {
 }
 .info .body {
   position: relative;
-  overflow: hidden;
+  overflow: auto;
 }
 .info .desc {
   position: relative;
@@ -271,8 +271,8 @@ function hiderMarksersInCluster(clusterer) {
   height: 75px;
 }
 .desc .ellipsis {
-  overflow: hidden;
-  text-overflow: ellipsis;
+  overflow: auto;
+  /* text-overflow: ellipsis; */
   white-space: nowrap;
 }
 .desc .jibun {
@@ -288,7 +288,7 @@ function hiderMarksersInCluster(clusterer) {
   height: 71px;
   border: 1px solid #ddd;
   color: #888;
-  overflow: hidden;
+  overflow: auto;
 }
 .info:after {
   content: "";

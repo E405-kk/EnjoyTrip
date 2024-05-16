@@ -29,7 +29,11 @@ public class TripServiceImpl implements TripService {
 
 	@Override
 	public List<TripDto> tripSearchList(TripSearchDto tripSearchDto) {
-		return tripDao.tripSearchList(tripSearchDto);
+		List<TripDto> list = tripDao.tripSearchList(tripSearchDto);
+		for (TripDto trip: list) {
+			trip.setOverview(tripDao.tripDetailSearch(trip.getContentId()));
+		}
+		return list;
 	}
 	
 	@Override

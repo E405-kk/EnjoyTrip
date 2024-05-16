@@ -74,43 +74,60 @@ const viewStation = (trip) => {
 </script>
 
 <template>
-  <div class="container text-center mt-3">
-    <div class="row mb-2">
-      <div class="col d-flex flex-row-reverse">
-        <VSelect :selectOption="sidoList" @onKeySelect="onChangeSido" />
+  <div class="fluid-container text-center mt-3 mx-20">
+    <div class="flex items-center justify-center mb-10">
+      <div class="mx-auto">
+        <form class="flex">
+          <VSelect :selectOption="sidoList" @onKeySelect="onChangeSido" />
+          <VSelect :selectOption="typeList" @onKeySelect="onChangeType" />
+          <div class="ml-5">
+            <input
+              type="text"
+              class="h-9 min-w-[10rem] rounded-lg border-emerald-500 indent-4 text-emerald-900 shadow-lg focus:outline-none focus:ring focus:ring-emerald-500"
+              v-model="param.keyword"
+              placeholder="검색어..." />
+            <button
+              class="ml-2 h-9 min-w-[5rem] rounded-lg border text-emerald-50 shadow-lg bg-emerald-500 hover:bg-emerald-600 hover:text-white focus:outline-none focus:ring focus:ring-emerald-500"
+              type="button"
+              @click="getTripList">
+              검색
+            </button>
+          </div>
+        </form>
       </div>
-      <div class="col d-flex flex-row-reverse">
-        <VSelect :selectOption="typeList" @onKeySelect="onChangeType" />
-      </div>
-      <div class="col d-flex flex-row-reverse">
-        <input type="text" v-model="param.keyword" />
-      </div>
-      <button @click="getTripList">검색</button>
     </div>
     <VKakaoMap :stations="tripList" :selectStation="selectStation" />
-    <div class="row" style="width: 100%; height: 400px; overflow: auto">
-      <table class="table table-hover" style="width: 100%">
-        <thead>
-          <tr class="text-center">
-            <th scope="col">대표이미지</th>
-            <th scope="col">관광지명</th>
-            <th scope="col">주소</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            class="text-center"
-            v-for="trip in tripList"
-            :key="trip.contentId"
-            @click="viewStation(trip)">
-            <td style="width: 100px">
-              <img :src="trip.firstImage" />
-            </td>
-            <td style="width: 200px">{{ trip.title }}</td>
-            <td style="width: 300px">{{ trip.addr1 }} {{ trip.addr2 }}</td>
-          </tr>
-        </tbody>
-      </table>
+
+    <!-- component -->
+    <div class="bg-white my-5">
+      <div
+        class="overflow-x-auto border-x border-t"
+        style="width: 100%; height: 500px; overflow: auto">
+        <table class="table-auto w-full">
+          <thead class="border-b">
+            <tr class="bg-emerald-500 text-white">
+              <th class="text-center p-4 font-medium">관광지명</th>
+              <th class="text-center p-4 font-medium">대표이미지</th>
+              <th class="text-center p-4 font-medium">주소</th>
+            </tr>
+          </thead>
+          <tbody class="overflow-y-scroll w-full">
+            <tr
+              class="text-center border-b hover:bg-gray-50"
+              v-for="trip in tripList"
+              :key="trip.contentId"
+              @click="viewStation(trip)">
+              <td class="p-2" style="width: 100px">
+                <img :src="trip.firstImage" />
+              </td>
+              <td class="p-3" style="width: 200px">{{ trip.title }}</td>
+              <td class="p-3" style="width: 300px">
+                {{ trip.addr1 }} {{ trip.addr2 }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </template>

@@ -20,4 +20,5 @@ public interface TripDao {
 	TripDto tripPlanDtoToTripDtoList(String title);
 	List<TripDto> rankList();
 	int tripPlanDelete(UserDto userDto);
+	String tripDetailSearch(int contentId);
 }
