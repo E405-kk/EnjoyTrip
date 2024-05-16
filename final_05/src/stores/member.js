@@ -84,6 +84,9 @@ export const useMemberStore = defineStore("memberStore", () => {
       }
     );
   };
+  if (sessionStorage.getItem("userId")) {
+    userGetInfo(userId);
+  }
   const userModify = async (user) => {
     await userUpdate(
       user,

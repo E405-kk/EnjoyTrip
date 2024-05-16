@@ -89,12 +89,12 @@ const viewStation = (trip) => {
     </div>
     <VKakaoMap :stations="tripList" :selectStation="selectStation" />
     <div class="row" style="width: 100%; height: 400px; overflow: auto">
-      <table class="table table-hover">
+      <table class="table table-hover" style="width: 100%">
         <thead>
           <tr class="text-center">
-            <th scope="col" style="width: 30%">대표이미지</th>
-            <th scope="col" style="width: 20%">관광지명</th>
-            <th scope="col" style="width: 50%">주소</th>
+            <th scope="col">대표이미지</th>
+            <th scope="col">관광지명</th>
+            <th scope="col">주소</th>
           </tr>
         </thead>
         <tbody>
