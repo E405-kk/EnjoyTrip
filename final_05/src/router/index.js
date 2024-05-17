@@ -20,6 +20,11 @@ const router = createRouter({
           name: "trip-search",
           component: () => import("@/components/trip/TripSearch.vue"),
         },
+        {
+          path: "plan",
+          name: "trip-plan",
+          component: () => import("@/components/trip/TripPlan.vue"),
+        },
       ],
     },
     {

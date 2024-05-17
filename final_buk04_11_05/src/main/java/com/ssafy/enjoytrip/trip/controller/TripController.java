@@ -44,6 +44,7 @@ public class TripController {
 	public ResponseEntity<?> tripSearch(@ModelAttribute TripSearchDto tripSearchDto){
 		
 		List<TripDto> tripSearchList = tripService.tripSearchList(tripSearchDto);
+		System.out.println(tripSearchList);
 		ObjectMapper mapper = new ObjectMapper();
 		String result;
 		try {

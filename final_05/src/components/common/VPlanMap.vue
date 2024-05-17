@@ -5,6 +5,8 @@ var clusterer;
 const positions = ref([]);
 const markers = ref([]);
 const infowindows = ref([]);
+const tripPlanList = ref([]);
+const tripPlanPosList = ref([]);
 const props = defineProps({ stations: Array, selectStation: Object });
 watch(
   () => props.selectStation.value,
@@ -132,50 +134,22 @@ const loadMarkers = () => {
     });
 
     kakao.maps.event.addListener(markers.value[i], "click", function () {
+      console.log("마커 클릭!");
       infowindows.value[i].close();
+      let pos = markers.value[i].getPosition();
+      console.log(pos);
+      // 여행 계획 마커를 생성합니다
 
-      var content2 =
-        '            <div class="img">' +
-        `                <img src="${positions.value[i].firstImage}" width="100" height="80">` +
-        "           </div>" +
-        '            <div class="desc">' +
-        `                <div class="ellipsis">${positions.value[i].addr1}</div>` +
-        `                <div class="jibun ellipsis">(우)${positions.value[i].zipcode}</div>` +
-        `               <div class="overview"> ${positions.value[i].overview}</div>` +
-        '                <div><a href="https://www.kakaocorp.com/main" target="_blank" class="link">홈페이지</a></div>' +
-        "            </div>";
+      let markerImageTmp = new kakao.maps.MarkerImage(
+        "/src/assets/plane.png",
+        imageSize
+      );
+      markers.value[i].setImage(markerImageTmp);
+      tripPlanList.value.push(markers.value[i]);
+      tripPlanPosList.value.push(pos);
 
-      var customOverlay = new kakao.maps.CustomOverlay({
-        position: markers.value[i].n,
-        map: map,
-      });
-
-      var div1 = document.createElement("div");
-      div1.setAttribute("class", "wrap");
-      var div2 = document.createElement("div");
-      div2.setAttribute("class", "info");
-      var div3 = document.createElement("div");
-      div3.innerHTML = positions.value[i].title;
-      div3.setAttribute("class", "title");
-
-      var div4 = document.createElement("div");
-      div4.innerHTML = content2;
-      div4.setAttribute("class", "body");
-
-      var closeBtn = document.createElement("div");
-      closeBtn.setAttribute("class", "close");
-
-      closeBtn.onclick = function () {
-        customOverlay.setMap(null);
-      };
-
-      div1.appendChild(div2);
-      div2.appendChild(div3);
-      div2.appendChild(closeBtn);
-      div2.appendChild(div4);
-
-      customOverlay.setContent(div1);
-      customOverlay.setMap(map);
+      addAnswer(positions.value[i].title, markers.value[i]);
+      reloadPlanLine();
     });
   }
   clusterer.addMarkers(markers.value);
