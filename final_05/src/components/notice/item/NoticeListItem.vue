@@ -7,7 +7,7 @@ defineProps({ article: Object });
     <td class="py-3 px-4">{{ article.articleNo }}</td>
     <td class="py-3 px-4">
       <router-link
-        :to="{ name: 'article-view', params: { articleno: article.articleNo } }"
+        :to="{ name: 'notice-view', params: { articleno: article.articleNo } }"
         class="article-title link-dark">
         {{ article.subject }}
       </router-link>

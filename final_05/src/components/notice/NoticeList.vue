@@ -63,7 +63,7 @@ const onPageChange = (val) => {
 
 const moveWrite = () => {
   if (sessionStorage.getItem("userId")) {
-    router.push({ name: "article-write" });
+    router.push({ name: "notice-write" });
   } else {
     alert("로그인이 필요한 페이지입니다");
     router.push({ name: "user-login" });

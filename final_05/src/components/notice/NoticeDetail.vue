@@ -7,6 +7,9 @@ import { useMemberStore } from "@/stores/member";
 const memberStore = useMemberStore();
 const { userId } = memberStore;
 
+import { storeToRefs } from "pinia";
+const { userInfo } = storeToRefs(memberStore);
+
 const route = useRoute();
 const router = useRouter();
 
@@ -32,11 +35,11 @@ const getArticle = () => {
 };
 
 function moveList() {
-  router.push({ name: "article-list" });
+  router.push({ name: "notice-list" });
 }
 
 function moveModify() {
-  router.push({ name: "article-modify", params: { articleno } });
+  router.push({ name: "notice-modify", params: { articleno } });
 }
 
 function onDeleteArticle() {
@@ -96,14 +99,14 @@ function onDeleteArticle() {
           </div>
           <div class="justify-end mr-5 ml-auto">
             <button
-              v-if="userId === article.userId"
+              v-if="userInfo.isAdmin === 1"
               type="button"
               class="mr-3 bg-white text-emerald-600 font-semibold py-2 px-4 border border-emerald-600 rounded-md shadow-md hover:bg-emerald-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:ring-opacity-50"
               @click="moveModify">
               글수정
             </button>
             <button
-              v-if="userId === article.userId"
+              v-if="userInfo.isAdmin === 1"
               type="button"
               class="bg-white text-red-600 font-semibold py-2 px-4 border border-red-600 rounded-md shadow-md hover:bg-red-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50"
               @click="onDeleteArticle">

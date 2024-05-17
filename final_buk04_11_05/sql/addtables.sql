@@ -10,12 +10,13 @@ CREATE TABLE IF NOT EXISTS `ssafytrip`.`user` (
   `user_password` VARCHAR(16) NOT NULL,
   `user_email` VARCHAR(50) NULL DEFAULT NULL,
   `join_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+   `is_admin` int DEFAULT '0',
   PRIMARY KEY (`user_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
-INSERT INTO user VALUES ("ssafy", "김싸피", "1234", "ssafy@ssafy.com", now());
+INSERT INTO user VALUES ("ssafy", "김싸피", "1234", "ssafy@ssafy.com", now(), 1);
 
 CREATE TABLE IF NOT EXISTS `ssafytrip`.`board` (
   `article_no` int NOT NULL AUTO_INCREMENT,

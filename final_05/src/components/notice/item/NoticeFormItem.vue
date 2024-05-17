@@ -102,7 +102,7 @@ function updateArticle() {
 }
 
 function moveList() {
-  router.replace({ name: "article-list" });
+  router.replace({ name: "notice-list" });
 }
 </script>
 
