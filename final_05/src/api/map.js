@@ -11,4 +11,8 @@ function listTrip(param, success, fail) {
   local.get("/trip/tripSearch", { params: param }).then(success).catch(fail);
 }
 
-export { listSido, listTrip };
+function addPlanList(param, success, fail) {
+  console.log(param);
+  local.post("/trip/tripPlanSave", param).then(success).catch(fail);
+}
+export { listSido, listTrip, addPlanList };

@@ -1,5 +1,6 @@
 <script setup>
 import { ref, watch, onMounted } from "vue";
+
 var map;
 var clusterer;
 const positions = ref([]);
@@ -72,18 +73,12 @@ const initMap = () => {
     averageCenter: false, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
     minLevel: 7, // 클러스터 할 최소 지도 레벨
   });
-  // loadMarkers();
 };
 
 const loadMarkers = () => {
   // 현재 표시되어있는 marker들이 있다면 map에 등록된 marker를 제거한다.
   deleteMarkers();
   hiderMarksersInCluster(clusterer);
-  // 마커 이미지를 생성합니다
-  //   const imgSrc = require("@/assets/map/markerStar.png");
-  // 마커 이미지의 이미지 크기 입니다
-  //   const imgSize = new kakao.maps.Size(24, 35);
-  //   const markerImage = new kakao.maps.MarkerImage(imgSrc, imgSize);
 
   const imageSize = new kakao.maps.Size(25, 25);
   // 마커를 생성합니다
@@ -96,7 +91,7 @@ const loadMarkers = () => {
     var imgsrc = "/src/assets/img_marker";
     imgsrc += position.contentTypeId;
     imgsrc += ".png";
-    // const imgsrcfull = new URL(imgsrc, import.meta.url).href;
+
     const markerImageTmp = new kakao.maps.MarkerImage(imgsrc, imageSize);
     const marker = new kakao.maps.Marker({
       map: map, // 마커를 표시할 지도
@@ -170,6 +165,173 @@ const deleteMarkers = () => {
 };
 function hiderMarksersInCluster(clusterer) {
   clusterer.clear();
+}
+
+let addAnswer = function (title, marker) {
+  // 리스트
+  let listDiv = document.getElementById("plan-list");
+
+  //추가할 노드
+  let divEl = document.createElement("div");
+  divEl.setAttribute("class", "row mb-1 plan-list-item");
+  let divEl2 = document.createElement("div");
+  divEl2.setAttribute("class", "col-md-10 d-flex");
+
+  //인풋 추가
+  let inputEl = document.createElement("input");
+  inputEl.setAttribute("name", "plan-list-item");
+  inputEl.setAttribute("type", "text");
+  inputEl.setAttribute("class", "form-control");
+  inputEl.setAttribute("value", title);
+  inputEl.setAttribute("readonly", "readonly");
+
+  //삭제 버튼 추가
+  let btnEl = document.createElement("button");
+  btnEl.setAttribute("type", "button");
+  btnEl.setAttribute("class", "btn btn-outline-danger btn-sm");
+  btnEl.appendChild(document.createTextNode("삭제"));
+
+  btnEl.addEventListener("click", function () {
+    console.log(this);
+    let parent = this.parentNode;
+    listDiv.removeChild(parent.parentNode);
+
+    // 리스트 에서 마커 삭제
+    for (var i = 0; i < tripPlanList.value.length; i++) {
+      if (tripPlanList.value[i] === marker) {
+        tripPlanList.value[i].setMap(null);
+        tripPlanList.value.splice(i, 1);
+        tripPlanPosList.value.splice(i, 1);
+        i--;
+      }
+    }
+
+    reloadPlanLine();
+  });
+
+  //위 버튼 추가
+  let btnEl2 = document.createElement("button");
+  btnEl2.setAttribute("type", "button");
+  btnEl2.setAttribute("class", "btn btn-outline-danger btn-sm");
+  btnEl2.appendChild(document.createTextNode("위"));
+
+  btnEl2.addEventListener("click", function () {
+    console.log("위로 클릭!");
+
+    // 리스트 에서 마커 이동
+    for (var i = 0; i < tripPlanList.value.length; i++) {
+      if (tripPlanList.value[i] === marker) {
+        if (i == 0) {
+          return;
+        }
+
+        //DOM 변경
+        let target = this.parentNode.parentNode;
+        console.log(target);
+
+        let listDiv = document.getElementById("plan-list");
+        console.log(listDiv);
+
+        listDiv.insertBefore(target, target.previousSibling);
+        console.log(listDiv);
+
+        // 마커 변경
+        let tmp = tripPlanList.value[i - 1];
+        tripPlanList.value[i - 1] = tripPlanList.value[i];
+        tripPlanList.value[i] = tmp;
+
+        let tmp2 = tripPlanPosList.value[i - 1];
+        tripPlanPosList.value[i - 1] = tripPlanPosList.value[i];
+        tripPlanPosList.value[i] = tmp2;
+
+        break;
+      }
+    }
+
+    reloadPlanLine();
+  });
+
+  //아래 버튼 추가
+  let btnEl3 = document.createElement("button");
+  btnEl3.setAttribute("type", "button");
+  btnEl3.setAttribute("class", "btn btn-outline-danger btn-sm");
+  btnEl3.appendChild(document.createTextNode("아래"));
+  btnEl3.addEventListener("click", function () {
+    console.log("아래 클릭!");
+
+    console.log(tripPlanList.value);
+    console.log(tripPlanPosList.value);
+
+    // 리스트 에서 마커 이동
+    for (var i = 0; i < tripPlanList.value.length; i++) {
+      if (tripPlanList.value[i] === marker) {
+        if (i == tripPlanList.value.length - 1) {
+          return;
+        }
+
+        //DOM 변경
+        let target = this.parentNode.parentNode.nextSibling;
+        console.log(target);
+
+        let listDiv = document.getElementById("plan-list");
+
+        // let prevSibling = target.previousSibling;
+        // console.log(prevSibling);
+        listDiv.insertBefore(target, target.previousSibling);
+
+        //마커 변경
+        let tmp = tripPlanList.value[i + 1];
+        tripPlanList.value[i + 1] = tripPlanList.value[i];
+        tripPlanList.value[i] = tmp;
+
+        let tmp2 = tripPlanPosList.value[i + 1];
+        tripPlanPosList.value[i + 1] = tripPlanPosList.value[i];
+        tripPlanPosList.value[i] = tmp2;
+
+        break;
+      }
+    }
+
+    console.log(tripPlanList.value);
+    console.log(tripPlanPosList.value);
+
+    reloadPlanLine();
+  });
+
+  divEl2.appendChild(inputEl);
+  divEl2.appendChild(btnEl);
+  divEl2.appendChild(btnEl2);
+  divEl2.appendChild(btnEl3);
+
+  divEl.appendChild(divEl2);
+  listDiv.appendChild(divEl);
+};
+
+var polyline = null;
+
+function reloadPlanLine() {
+  if (polyline != null) {
+    polyline.setMap(null);
+  }
+
+  console.log(tripPlanPosList.value);
+  // 선을 구성하는 좌표 배열입니다. 이 좌표들을 이어서 선을 표시합니다
+  const linePath = ref([]);
+  for (let i = 0; i < tripPlanPosList.value.length; i++) {
+    //좌표 찍기
+    linePath.value.push(tripPlanPosList.value[i]);
+  }
+
+  // 지도에 표시할 선을 생성합니다
+  polyline = new kakao.maps.Polyline({
+    path: linePath.value, // 선을 구성하는 좌표배열 입니다
+    strokeWeight: 5, // 선의 두께 입니다
+    strokeColor: "#2D64F5", // 선의 색깔입니다
+    strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+    strokeStyle: "solid", // 선의 스타일입니다
+  });
+  // 지도에 선을 표시합니다
+  polyline.setMap(map);
 }
 </script>
 

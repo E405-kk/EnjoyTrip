@@ -44,7 +44,6 @@ public class TripController {
 	public ResponseEntity<?> tripSearch(@ModelAttribute TripSearchDto tripSearchDto){
 		
 		List<TripDto> tripSearchList = tripService.tripSearchList(tripSearchDto);
-		System.out.println(tripSearchList);
 		ObjectMapper mapper = new ObjectMapper();
 		String result;
 		try {
@@ -79,6 +78,7 @@ public class TripController {
 				tripService.updateReadCount(tripPlanDto.getPlanList().get(i));
 			}
 			int result = tripService.tripPlanSave(tripPlanDto);
+			
 			return ResponseEntity.ok(result);
 		}
 	}

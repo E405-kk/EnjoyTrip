@@ -1,7 +1,11 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { listSido, listTrip } from "@/api/map";
-
+import { addPlanList } from "@/api/map";
+import { httpStatusCode } from "@/util/http-status";
+import { useMemberStore } from "@/stores/member";
+const memberStore = useMemberStore();
+const { userId } = memberStore;
 import VPlanMap from "@/components/common/VPlanMap.vue";
 import VSelect from "@/components/common/VSelect.vue";
 
@@ -28,6 +32,25 @@ const param = ref({
 
 onMounted(() => {
   getSidoList();
+  let tripPlanButton = document.getElementById("tripPlanSaveBtn");
+  tripPlanButton.addEventListener("click", function () {
+    let list = document.getElementsByName("plan-list-item");
+
+    // 순서, 이름, 좌표를 준다.
+
+    const names = ref([]);
+
+    for (let i = 0; i < list.length; i++) {
+      let name = list[i].getAttribute("value");
+      names.value.push(name);
+    }
+
+    const plan = ref({
+      userId: userId,
+      planList: names.value,
+    });
+    addPlan(plan.value);
+  });
 });
 
 const getSidoList = () => {
@@ -58,8 +81,6 @@ const getTripList = () => {
   listTrip(
     param.value,
     ({ data }) => {
-      console.log(data);
-
       tripList.value = data;
     },
     (err) => {
@@ -70,6 +91,20 @@ const getTripList = () => {
 
 const viewStation = (trip) => {
   selectStation.value = trip;
+};
+
+const addPlan = (plan) => {
+  addPlanList(
+    plan,
+    (response) => {
+      if (response.status === httpStatusCode.CREATE) {
+        console.log("저장 성공!!!!");
+      }
+    },
+    (error) => {
+      console.error(error);
+    }
+  );
 };
 </script>
 
@@ -136,7 +171,8 @@ const viewStation = (trip) => {
     </div>
 
     <div class="col-span-1">
-      <button>저장하기</button>
+      <button id="tripPlanSaveBtn">저장하기</button>
+      <div id="plan-list"></div>
     </div>
   </div>
 </template>
