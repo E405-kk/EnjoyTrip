@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch, onMounted } from "vue";
+import { ref, watch, onMounted, toRaw } from "vue";
 
 var map;
 var clusterer;
@@ -139,11 +139,18 @@ const loadMarkers = () => {
         "/src/assets/plane.png",
         imageSize
       );
-      markers.value[i].setImage(markerImageTmp);
-      tripPlanList.value.push(markers.value[i]);
+      let marker = new kakao.maps.Marker({
+        map: map, // 마커를 표시할 지도  클러스터링위한  주석
+        position: pos, // 마커를 표시할 위치
+        title: pos.title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+        image: markerImageTmp, // 마커 이미지
+      });
+      tripPlanList.value.push(marker);
       tripPlanPosList.value.push(pos);
-
-      addAnswer(positions.value[i].title, markers.value[i]);
+      marker.setMap(map);
+      console.log(tripPlanList.value);
+      console.log(marker);
+      addAnswer(positions.value[i].title, marker);
       reloadPlanLine();
     });
   }
@@ -163,6 +170,7 @@ const deleteMarkers = () => {
     markers.value.forEach((marker) => marker.setMap(null));
   }
 };
+
 function hiderMarksersInCluster(clusterer) {
   clusterer.clear();
 }
@@ -192,13 +200,11 @@ let addAnswer = function (title, marker) {
   btnEl.appendChild(document.createTextNode("삭제"));
 
   btnEl.addEventListener("click", function () {
-    console.log(this);
     let parent = this.parentNode;
     listDiv.removeChild(parent.parentNode);
-
     // 리스트 에서 마커 삭제
     for (var i = 0; i < tripPlanList.value.length; i++) {
-      if (tripPlanList.value[i] === marker) {
+      if (toRaw(tripPlanList.value[i]) === marker) {
         tripPlanList.value[i].setMap(null);
         tripPlanList.value.splice(i, 1);
         tripPlanPosList.value.splice(i, 1);
@@ -314,7 +320,6 @@ function reloadPlanLine() {
     polyline.setMap(null);
   }
 
-  console.log(tripPlanPosList.value);
   // 선을 구성하는 좌표 배열입니다. 이 좌표들을 이어서 선을 표시합니다
   const linePath = ref([]);
   for (let i = 0; i < tripPlanPosList.value.length; i++) {
