@@ -110,46 +110,47 @@ function moveList() {
   <form @submit.prevent="onSubmit">
     <div class="min-h-screen md:px-20 pt-6">
       <div class="border bg-white rounded-md px-6 py-10 max-w-2xl mx-auto">
-        <div class="space-y-4">
-          <div>
-            <label for="subject" class="text-lx">제목:</label>
-            <input
-              type="text"
-              placeholder="제목..."
-              id="subject"
-              v-model="article.subject"
-              class="ml-2 outline-none py-1 px-2 text-md border-2 rounded-md" />
+        <div class="flex">
+          <div class="flex-1 space-y-4">
+            <div>
+              <label for="subject" class="text-lx">제목:</label>
+              <input
+                type="text"
+                placeholder="제목..."
+                id="subject"
+                v-model="article.subject"
+                class="ml-2 outline-none py-1 px-2 text-md border-2 rounded-md w-full" />
+            </div>
+            <div>
+              <label for="content" class="block mb-2 text-lg">내용:</label>
+              <textarea
+                id="content"
+                cols="30"
+                rows="10"
+                v-model="article.content"
+                class="w-full p-4 text-gray-600 bg-emerald-50 outline-none rounded-md"></textarea>
+            </div>
           </div>
-          <div>
-            <label for="content" class="block mb-2 text-lg"></label>
-            <textarea
-              id="content"
-              cols="30"
-              rows="10"
-              v-model="article.content"
-              class="w-full p-4 text-gray-600 bg-emerald-50 outline-none rounded-md"></textarea>
-          </div>
-
-          <div class="col-auto text-center">
-            <button
-              type="submit"
-              class="px-6 py-2 mx-auto rounded-md text-lg font-semibold text-emerald-50 bg-emerald-600"
-              v-if="type === 'regist'">
-              글작성
-            </button>
-            <button
-              type="submit"
-              class="px-6 py-2 mx-auto rounded-md text-lg font-semibold text-emerald-50 bg-emerald-600"
-              v-else>
-              글수정
-            </button>
-            <button
-              type="button"
-              class="inline-flex px-6 py-2 ml-3 block border rounded-md text-lg font-semibold text-emerald-600 bg-white-100"
-              @click="moveList">
-              목록으로이동...
-            </button>
-          </div>
+        </div>
+        <div class="mt-6 text-center">
+          <button
+            type="submit"
+            class="px-6 py-2 mx-auto rounded-md text-lg font-semibold text-emerald-50 bg-emerald-600"
+            v-if="type === 'regist'">
+            글작성
+          </button>
+          <button
+            type="submit"
+            class="px-6 py-2 mx-auto rounded-md text-lg font-semibold text-emerald-50 bg-emerald-600"
+            v-else>
+            글수정
+          </button>
+          <button
+            type="button"
+            class="inline-flex px-6 py-2 ml-3 block border rounded-md text-lg font-semibold text-emerald-600 bg-white-100"
+            @click="moveList">
+            목록으로이동...
+          </button>
         </div>
       </div>
     </div>
