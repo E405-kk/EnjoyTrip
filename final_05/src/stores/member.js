@@ -24,6 +24,7 @@ export const useMemberStore = defineStore("memberStore", () => {
     userName: "",
     userEmail: "",
     joinDate: "",
+    isAdmin: 0,
   });
 
   const isLogin = ref(false);

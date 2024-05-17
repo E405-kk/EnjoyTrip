@@ -3,12 +3,14 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { listArticle } from "@/api/notice.js";
 
-import { useMemberStore } from "@/stores/member";
-const memberStore = useMemberStore();
-
 import VSelect from "@/components/common/VSelect.vue";
 import NoticeListItem from "@/components/notice/item/NoticeListItem.vue";
 import PageNavigation from "@/components/common/PageNavigation.vue";
+
+import { storeToRefs } from "pinia";
+import { useMemberStore } from "@/stores/member";
+const memberStore = useMemberStore();
+const { userInfo } = storeToRefs(memberStore);
 
 const router = useRouter();
 
@@ -72,10 +74,11 @@ const moveWrite = () => {
 <template>
   <div class="fluid-container mb-20">
     <div class="row justify-content-center">
-      <h2 class="my-3 py-3 shadow-sm text-2xl text-center">Q&A</h2>
+      <h2 class="my-3 py-3 shadow-sm text-2xl text-center">공지사항</h2>
       <div class="flex items-center justify-center">
         <div class="ml-40 mr-auto">
           <button
+            v-if="userInfo.isAdmin == 1"
             type="button"
             @click="moveWrite"
             class="bg-white text-emerald-600 font-semibold py-2 px-4 border border-emerald-600 rounded-md shadow-md hover:bg-emerald-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:ring-opacity-50">

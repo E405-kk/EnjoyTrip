@@ -21,7 +21,7 @@
 	</select>	
 	
 	<select id="userInfo" parameterType="String" resultType="userDto">
-		SELECT user_id, user_name, user_password userPwd, user_email, join_date
+		SELECT user_id, user_name, user_password userPwd, user_email, join_date, is_admin
 		FROM user 
 		WHERE user_id = #{userId}
 	</select>

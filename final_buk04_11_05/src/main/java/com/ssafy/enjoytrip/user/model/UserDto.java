@@ -6,15 +6,30 @@ public class UserDto {
 	private String userPwd;
 	private String userEmail;
 	private String joinDate;
+	private int isAdmin;
 	public UserDto() {}
-	public UserDto(String userName, String userId, String userPwd, String userEmail, String joinDate) {
+	
+	
+	public UserDto(String userName, String userId, String userPwd, String userEmail, String joinDate, int isAdmin) {
 		super();
 		this.userName = userName;
 		this.userId = userId;
 		this.userPwd = userPwd;
 		this.userEmail = userEmail;
 		this.joinDate = joinDate;
+		this.isAdmin = isAdmin;
 	}
+
+	public int getIsAdmin() {
+		return isAdmin;
+	}
+
+
+	public void setIsAdmin(int isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+
+
 	public String getUserName() {
 		return userName;
 	}
@@ -45,10 +60,12 @@ public class UserDto {
 	public void setJoinDate(String joinDate) {
 		this.joinDate = joinDate;
 	}
+
+
 	@Override
 	public String toString() {
-		return "User [userName=" + userName + ", userId=" + userId + ", userPwd=" + userPwd + ", userEmail=" + userEmail
-				+ ", joinDate=" + joinDate + "]";
+		return "UserDto [userName=" + userName + ", userId=" + userId + ", userPwd=" + userPwd + ", userEmail="
+				+ userEmail + ", joinDate=" + joinDate + ", isAdmin=" + isAdmin + "]";
 	}
 	
 }
