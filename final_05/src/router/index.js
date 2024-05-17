@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
 import TheMainView from "@/views/TheMainView.vue";
-import TheTripView from "@/views/TheTripView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -122,6 +121,34 @@ const router = createRouter({
           path: "modify/:articleno",
           name: "notice-modify",
           component: () => import("@/components/notice/NoticeModify.vue"),
+        },
+      ],
+    },
+    {
+      path: "/hotplace",
+      name: "hotplace",
+      component: () => import("@/views/TheHotplaceView.vue"),
+      redirect: { name: "hotplace-list" },
+      children: [
+        {
+          path: "list",
+          name: "hotplace-list",
+          component: () => import("@/components/hotplace/HotplaceList.vue"),
+        },
+        {
+          path: "view/:articleno",
+          name: "hotplace-view",
+          component: () => import("@/components/hotplace/HotplaceDetail.vue"),
+        },
+        {
+          path: "write",
+          name: "hotplace-write",
+          component: () => import("@/components/hotplace/HotplaceWrite.vue"),
+        },
+        {
+          path: "modify/:articleno",
+          name: "hotplace-modify",
+          component: () => import("@/components/hotplace/HotplaceModify.vue"),
         },
       ],
     },

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onUpdated } from "vue";
 import { getPlanList, deletePlanList } from "@/api/map";
 import { storeToRefs } from "pinia";
 import { httpStatusCode } from "@/util/http-status";
@@ -13,7 +13,7 @@ const { userInfo } = storeToRefs(memberStore);
 const selectStation = ref({});
 const planList = ref([]);
 
-onMounted(() => {
+onUpdated(() => {
   getTripList();
 });
 
