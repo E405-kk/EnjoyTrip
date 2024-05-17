@@ -62,6 +62,8 @@ export const useMemberStore = defineStore("memberStore", () => {
         if (response.status === httpStatusCode.CREATE) {
           console.log("회원가입 성공!!!!");
           goLogin();
+        } else if (response.status === httpStatusCode.NOCONTENT) {
+          alert("사용할 수 없는 아이디입니다.");
         }
       },
       (error) => {
@@ -92,7 +94,6 @@ export const useMemberStore = defineStore("memberStore", () => {
       (response) => {
         if (response.status === httpStatusCode.CREATE) {
           console.log("회원 정보 수정 성공!!!!");
-          console.log(userInfo.value);
           goMyPage();
         }
       },

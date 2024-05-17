@@ -3,9 +3,6 @@ import { ref, onMounted } from "vue";
 import { listSido, listTrip } from "@/api/map";
 import { addPlanList } from "@/api/map";
 import { httpStatusCode } from "@/util/http-status";
-import { useMemberStore } from "@/stores/member";
-const memberStore = useMemberStore();
-const { userId } = memberStore;
 import VPlanMap from "@/components/common/VPlanMap.vue";
 import VSelect from "@/components/common/VSelect.vue";
 
@@ -44,7 +41,7 @@ onMounted(() => {
     }
 
     const plan = ref({
-      userId: userId,
+      userId: sessionStorage.getItem("userId"),
       planList: names.value,
     });
     addPlan(plan.value);
@@ -111,7 +108,7 @@ const addPlan = (plan) => {
 
   <div class="grid grid-cols-4 gap-4">
     <div class="col-span-3">
-      <div class="fluid-container text-center mt-3 mx-20">
+      <div class="fluid-container text-center mt-3 mx-auto w-10/12">
         <div class="flex items-center justify-center mb-10">
           <div class="mx-auto">
             <form class="flex">

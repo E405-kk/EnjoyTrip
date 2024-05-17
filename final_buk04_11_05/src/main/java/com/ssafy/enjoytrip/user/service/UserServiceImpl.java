@@ -13,14 +13,11 @@ public class UserServiceImpl implements UserService{
 	public UserServiceImpl(UserDao userDao) {
 		this.userDao = userDao;
 	}
-
-	@Override
-	public int idCheck(String userId) {
-		return userDao.idCheck(userId);
-	}
-
 	@Override
 	public int register(UserDto userDto) {
+		if (userDao.idCheck(userDto.getUserId()) > 0) {
+			return -1;
+		}
 		return userDao.register(userDto);
 	}
 

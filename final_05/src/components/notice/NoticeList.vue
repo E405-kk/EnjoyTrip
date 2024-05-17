@@ -1,14 +1,13 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import { listArticle } from "@/api/board.js";
+import { listArticle } from "@/api/notice.js";
 
 import { useMemberStore } from "@/stores/member";
 const memberStore = useMemberStore();
-const { userId } = memberStore;
 
 import VSelect from "@/components/common/VSelect.vue";
-import BoardListItem from "@/components/board/item/BoardListItem.vue";
+import NoticeListItem from "@/components/notice/item/NoticeListItem.vue";
 import PageNavigation from "@/components/common/PageNavigation.vue";
 
 const router = useRouter();
@@ -116,10 +115,10 @@ const moveWrite = () => {
               </tr>
             </thead>
             <tbody class="text-blue-gray-900">
-              <BoardListItem
+              <NoticeListItem
                 v-for="article in articles"
                 :key="article.articleNo"
-                :article="article"></BoardListItem>
+                :article="article"></NoticeListItem>
             </tbody>
           </table>
         </div>

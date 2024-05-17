@@ -39,7 +39,7 @@ public class BoardController {
 	
 	@PostMapping("/regist")
 	public ResponseEntity<?> regist(@RequestBody BoardDto boardDto){
-
+		System.out.println("boardController - regist: "+boardDto);
 		List<String> slangs = boardService.getSlang();
 		String full = boardDto.getSubject() + " " +  boardDto.getContent();
 		String slangFinded = null;		// 발견한 욕설(첫번째)

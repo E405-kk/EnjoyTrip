@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { detailArticle, deleteArticle } from "@/api/board";
+import { detailArticle, deleteArticle } from "@/api/notice";
 
 import { useMemberStore } from "@/stores/member";
 const memberStore = useMemberStore();
@@ -56,7 +56,7 @@ function onDeleteArticle() {
   <div class="container mx-auto">
     <div class="flex justify-center">
       <div class="w-full lg:w-10/12">
-        <h2 class="my-3 py-3 shadow-sm text-2xl text-center">글보기</h2>
+        <h2 class="my-3 py-3 shadow-sm text-2xl text-center">공지사항 확인</h2>
       </div>
     </div>
     <div class="flex justify-center">

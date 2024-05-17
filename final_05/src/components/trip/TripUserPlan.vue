@@ -51,7 +51,7 @@ const resetPlan = () => {
 
 <template>
   <div class="my-5 text-center font-semibold text-xl">나의 여행 계획</div>
-  <div class="fluid-container text-center mt-3 mx-60">
+  <div class="fluid-container text-center mt-3 mx-auto w-10/12">
     <VUserPlanMap :stations="planList" :selectStation="selectStation" />
     <!-- component -->
     <div class="bg-white my-5">

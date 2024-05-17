@@ -3,6 +3,12 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ssafy.enjoytrip.user.dao.UserDao">
+	<select id="idCheck" parameterType="string">
+		SELECT count(user_id)
+		FROM user
+		WHERE user_id = #{userId}
+	</select>
+
 	<insert id="register" parameterType="userDto">
 		INSERT INTO user (user_id, user_name, user_password, user_email)
 		VALUES (#{userId}, #{userName}, #{userPwd}, #{userEmail})

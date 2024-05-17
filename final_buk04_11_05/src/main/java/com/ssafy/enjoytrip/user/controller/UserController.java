@@ -64,6 +64,9 @@ public class UserController{
 		if (result > 0) {
 			status = HttpStatus.CREATED;
 		}
+		else if (result == -1) {
+			status = HttpStatus.NO_CONTENT;
+		}
 		else {
 			status = HttpStatus.UNAUTHORIZED;
 		}

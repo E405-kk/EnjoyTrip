@@ -75,7 +75,7 @@ const viewStation = (trip) => {
 
 <template>
   <div class="my-5 text-center font-semibold text-xl">전국 관광지 정보</div>
-  <div class="fluid-container text-center mt-3 mx-20">
+  <div class="fluid-container text-center mt-3 mx-auto w-11/12">
     <div class="flex items-center justify-center mb-10">
       <div class="mx-auto">
         <form class="flex">
