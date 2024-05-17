@@ -16,8 +16,6 @@ onMounted(() => {
 });
 
 const getArticle = () => {
-  // const { articleno } = route.params;
-  console.log(articleno + "번글 얻으러 가자!!!");
   detailArticle(
     articleno,
     ({ data }) => {
@@ -38,8 +36,6 @@ function moveModify() {
 }
 
 function onDeleteArticle() {
-  // const { articleno } = route.params;
-  console.log(articleno + "번글 삭제하러 가자!!!");
   deleteArticle(
     articleno,
     (response) => {

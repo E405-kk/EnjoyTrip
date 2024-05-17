@@ -36,8 +36,6 @@ onMounted(() => {
   tripPlanButton.addEventListener("click", function () {
     let list = document.getElementsByName("plan-list-item");
 
-    // 순서, 이름, 좌표를 준다.
-
     const names = ref([]);
 
     for (let i = 0; i < list.length; i++) {
@@ -144,8 +142,8 @@ const addPlan = (plan) => {
             <table class="table-auto w-full">
               <thead class="border-b">
                 <tr class="bg-emerald-500 text-white">
-                  <th class="text-center p-4 font-medium">관광지명</th>
                   <th class="text-center p-4 font-medium">대표이미지</th>
+                  <th class="text-center p-4 font-medium">관광지명</th>
                   <th class="text-center p-4 font-medium">주소</th>
                 </tr>
               </thead>

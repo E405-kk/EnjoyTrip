@@ -8,6 +8,7 @@ const markers = ref([]);
 const infowindows = ref([]);
 const tripPlanList = ref([]);
 const tripPlanPosList = ref([]);
+
 const props = defineProps({ stations: Array, selectStation: Object });
 watch(
   () => props.selectStation.value,
@@ -100,6 +101,8 @@ const loadMarkers = () => {
       clickable: true, // // 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정합니다
       image: markerImageTmp, // 마커의 이미지
     });
+
+    tripPlanPosList.value.push(position.latlng);
     var img = position.firstImage;
     if (img == "") {
       img = "/src/assets/about-bg.jpg";
@@ -127,28 +130,6 @@ const loadMarkers = () => {
       // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
       infowindows.value[i].close();
     });
-
-    kakao.maps.event.addListener(markers.value[i], "click", function () {
-      infowindows.value[i].close();
-      let pos = markers.value[i].getPosition();
-      // 여행 계획 마커를 생성합니다
-
-      let markerImageTmp = new kakao.maps.MarkerImage(
-        "/src/assets/plane.png",
-        imageSize
-      );
-      let marker = new kakao.maps.Marker({
-        map: map, // 마커를 표시할 지도  클러스터링위한  주석
-        position: pos, // 마커를 표시할 위치
-        title: pos.title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-        image: markerImageTmp, // 마커 이미지
-      });
-      tripPlanList.value.push(marker);
-      tripPlanPosList.value.push(pos);
-      marker.setMap(map);
-      addAnswer(positions.value[i].title, marker);
-      reloadPlanLine();
-    });
   }
   clusterer.addMarkers(markers.value);
   const bounds = positions.value.reduce(
@@ -157,6 +138,7 @@ const loadMarkers = () => {
   );
 
   map.setBounds(bounds);
+  reloadPlanLine();
 };
 
 const deleteMarkers = () => {
@@ -168,128 +150,6 @@ const deleteMarkers = () => {
 function hiderMarksersInCluster(clusterer) {
   clusterer.clear();
 }
-
-let addAnswer = function (title, marker) {
-  // 리스트
-  let listDiv = document.getElementById("plan-list");
-
-  //추가할 노드
-  let divEl = document.createElement("div");
-  divEl.setAttribute("class", "row mb-1 plan-list-item");
-  let divEl2 = document.createElement("div");
-  divEl2.setAttribute("class", "col-md-10 d-flex");
-
-  //인풋 추가
-  let inputEl = document.createElement("input");
-  inputEl.setAttribute("name", "plan-list-item");
-  inputEl.setAttribute("type", "text");
-  inputEl.setAttribute("class", "form-control");
-  inputEl.setAttribute("value", title);
-  inputEl.setAttribute("readonly", "readonly");
-
-  //삭제 버튼 추가
-  let btnEl = document.createElement("button");
-  btnEl.setAttribute("type", "button");
-  btnEl.setAttribute("class", "btn btn-outline-danger btn-sm");
-  btnEl.appendChild(document.createTextNode("삭제"));
-
-  btnEl.addEventListener("click", function () {
-    let parent = this.parentNode;
-    listDiv.removeChild(parent.parentNode);
-    // 리스트 에서 마커 삭제
-    for (var i = 0; i < tripPlanList.value.length; i++) {
-      if (toRaw(tripPlanList.value[i]) === marker) {
-        tripPlanList.value[i].setMap(null);
-        tripPlanList.value.splice(i, 1);
-        tripPlanPosList.value.splice(i, 1);
-        i--;
-      }
-    }
-
-    reloadPlanLine();
-  });
-
-  //위 버튼 추가
-  let btnEl2 = document.createElement("button");
-  btnEl2.setAttribute("type", "button");
-  btnEl2.setAttribute("class", "btn btn-outline-danger btn-sm");
-  btnEl2.appendChild(document.createTextNode("위"));
-
-  btnEl2.addEventListener("click", function () {
-    // 리스트 에서 마커 이동
-    for (var i = 0; i < tripPlanList.value.length; i++) {
-      if (toRaw(tripPlanList.value[i]) === marker) {
-        if (i == 0) {
-          return;
-        }
-
-        //DOM 변경
-        let target = this.parentNode.parentNode;
-
-        let listDiv = document.getElementById("plan-list");
-
-        listDiv.insertBefore(target, target.previousSibling);
-
-        // 마커 변경
-        let tmp = tripPlanList.value[i - 1];
-        tripPlanList.value[i - 1] = tripPlanList.value[i];
-        tripPlanList.value[i] = tmp;
-
-        let tmp2 = tripPlanPosList.value[i - 1];
-        tripPlanPosList.value[i - 1] = tripPlanPosList.value[i];
-        tripPlanPosList.value[i] = tmp2;
-
-        break;
-      }
-    }
-
-    reloadPlanLine();
-  });
-
-  //아래 버튼 추가
-  let btnEl3 = document.createElement("button");
-  btnEl3.setAttribute("type", "button");
-  btnEl3.setAttribute("class", "btn btn-outline-danger btn-sm");
-  btnEl3.appendChild(document.createTextNode("아래"));
-  btnEl3.addEventListener("click", function () {
-    // 리스트 에서 마커 이동
-    for (var i = 0; i < tripPlanList.value.length; i++) {
-      if (toRaw(tripPlanList.value[i]) === marker) {
-        if (i == tripPlanList.value.length - 1) {
-          return;
-        }
-
-        //DOM 변경
-        let target = this.parentNode.parentNode.nextSibling;
-
-        let listDiv = document.getElementById("plan-list");
-
-        listDiv.insertBefore(target, target.previousSibling);
-
-        //마커 변경
-        let tmp = tripPlanList.value[i + 1];
-        tripPlanList.value[i + 1] = tripPlanList.value[i];
-        tripPlanList.value[i] = tmp;
-
-        let tmp2 = tripPlanPosList.value[i + 1];
-        tripPlanPosList.value[i + 1] = tripPlanPosList.value[i];
-        tripPlanPosList.value[i] = tmp2;
-
-        break;
-      }
-    }
-
-    reloadPlanLine();
-  });
-
-  divEl2.appendChild(inputEl);
-  divEl2.appendChild(btnEl);
-  divEl2.appendChild(btnEl2);
-  divEl2.appendChild(btnEl3);
-
-  divEl.appendChild(divEl2);
-  listDiv.appendChild(divEl);
-};
 
 var polyline = null;
 
@@ -325,7 +185,7 @@ function reloadPlanLine() {
 <style>
 #map {
   width: 100%;
-  height: 600px;
+  height: 400px;
   border-radius: 20px;
 }
 .wrap {

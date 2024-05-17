@@ -7,12 +7,25 @@ function listSido(success, fail) {
 }
 
 function listTrip(param, success, fail) {
-  console.log(param);
   local.get("/trip/tripSearch", { params: param }).then(success).catch(fail);
 }
 
 function addPlanList(param, success, fail) {
-  console.log(param);
   local.post("/trip/tripPlanSave", param).then(success).catch(fail);
 }
-export { listSido, listTrip, addPlanList };
+
+function getPlanList(param, success, fail) {
+  local
+    .get("/trip/userTripPlanList", { params: param })
+    .then(success)
+    .catch(fail);
+}
+
+function deletePlanList(param, success, fail) {
+  local
+    .delete(`/trip/tripPlanDelete/${param.userId}`)
+    .then(success)
+    .catch(fail);
+}
+
+export { listSido, listTrip, addPlanList, getPlanList, deletePlanList };

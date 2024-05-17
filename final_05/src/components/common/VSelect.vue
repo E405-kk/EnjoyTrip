@@ -6,7 +6,6 @@ const emit = defineEmits(["onKeySelect"]);
 const key = ref("");
 
 const onSelect = () => {
-  console.log(key.value + "선택!!!");
   emit("onKeySelect", key.value);
 };
 </script>

@@ -22,7 +22,7 @@ const article = ref({
 
 if (props.type === "modify") {
   let { articleno } = route.params;
-  console.log(articleno + "번글 얻어와서 수정할거야");
+
   getModifyArticle(
     articleno,
     ({ data }) => {
@@ -60,8 +60,6 @@ watch(
 );
 
 function onSubmit() {
-  // event.preventDefault();
-
   if (subjectErrMsg.value) {
     alert(subjectErrMsg.value);
   } else if (contentErrMsg.value) {
@@ -72,7 +70,6 @@ function onSubmit() {
 }
 
 function writeArticle() {
-  console.log("글등록하자!!", article.value);
   registArticle(
     article.value,
     (response) => {
@@ -90,7 +87,6 @@ function writeArticle() {
 }
 
 function updateArticle() {
-  console.log(article.value.articleNo + "번글 수정하자!!", article.value);
   modifyArticle(
     article.value,
     (response) => {
@@ -98,8 +94,6 @@ function updateArticle() {
       if (response.status == 200) msg = "글정보 수정이 완료되었습니다.";
       alert(msg);
       moveList();
-      // router.push({ name: "article-view" });
-      // router.push(`/board/view/${article.value.articleNo}`);
     },
     (error) => console.log(error)
   );
@@ -143,10 +137,6 @@ function moveList() {
               :disabled="isUseId"
               class="ml-2 outline-none py-1 px-2 text-md border-2 rounded-md" />
           </div>
-          <!-- <button
-            class="px-6 py-2 mx-auto block rounded-md text-lg font-semibold text-indigo-100 bg-indigo-600">
-            ADD POST
-          </button> -->
           <div class="col-auto text-center">
             <button
               type="submit"

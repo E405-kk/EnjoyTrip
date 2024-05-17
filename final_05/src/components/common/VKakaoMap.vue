@@ -70,21 +70,13 @@ const initMap = () => {
     averageCenter: false, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
     minLevel: 7, // 클러스터 할 최소 지도 레벨
   });
-  // loadMarkers();
 };
 
 const loadMarkers = () => {
   // 현재 표시되어있는 marker들이 있다면 map에 등록된 marker를 제거한다.
   deleteMarkers();
   hiderMarksersInCluster(clusterer);
-  // 마커 이미지를 생성합니다
-  //   const imgSrc = require("@/assets/map/markerStar.png");
-  // 마커 이미지의 이미지 크기 입니다
-  //   const imgSize = new kakao.maps.Size(24, 35);
-  //   const markerImage = new kakao.maps.MarkerImage(imgSrc, imgSize);
-
   const imageSize = new kakao.maps.Size(25, 25);
-  // 마커를 생성합니다
   markers.value = [];
   infowindows.value = [];
 
@@ -94,7 +86,6 @@ const loadMarkers = () => {
     var imgsrc = "/src/assets/img_marker";
     imgsrc += position.contentTypeId;
     imgsrc += ".png";
-    // const imgsrcfull = new URL(imgsrc, import.meta.url).href;
     const markerImageTmp = new kakao.maps.MarkerImage(imgsrc, imageSize);
     const marker = new kakao.maps.Marker({
       map: map, // 마커를 표시할 지도
@@ -179,8 +170,6 @@ const loadMarkers = () => {
     });
   }
   clusterer.addMarkers(markers.value);
-  // 4. 지도를 이동시켜주기
-  // 배열.reduce( (누적값, 현재값, 인덱스, 요소)=>{ return 결과값}, 초기값);
   const bounds = positions.value.reduce(
     (bounds, position) => bounds.extend(position.latlng),
     new kakao.maps.LatLngBounds()

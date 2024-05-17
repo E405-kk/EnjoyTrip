@@ -25,8 +25,6 @@ const mvRegister = () => {
 const login = async () => {
   await userLogin(loginUser.value);
   let userId = sessionStorage.getItem("userId");
-  console.log(userId);
-  console.log("isLogin: " + isLogin.value);
   if (isLogin.value) {
     changeMenuState();
     router.replace("/");

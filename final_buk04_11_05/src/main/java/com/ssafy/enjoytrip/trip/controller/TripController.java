@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,8 +62,11 @@ public class TripController {
 		return ResponseEntity.ok(sidoList);
 	}
 	
-	@DeleteMapping("/tripPlanDelete")
-	public ResponseEntity<?> tripPlanDelete(@RequestBody UserDto userDto){
+	@DeleteMapping("/tripPlanDelete/{userId}")
+	public ResponseEntity<?> tripPlanDelete(@PathVariable String userId){
+		UserDto userDto = new UserDto();
+		userDto.setUserId(userId);
+		System.out.println("tripPlanDelete: "+userDto);
 		int result = tripService.tripPlanDelete(userDto);
 		return ResponseEntity.ok(result);
 	}
@@ -84,14 +88,19 @@ public class TripController {
 	}
 	
 	@GetMapping("/userTripPlanList")
-	public ResponseEntity<?> userTripPlanList(@RequestBody UserDto userDto){
+	public ResponseEntity<?> userTripPlanList(@ModelAttribute UserDto userDto){
 		// 유저가 등록한 여행계획 들고오기
 		TripPlanDto userTripPlan = tripService.userTripPlan(userDto);
+		List<TripDto> result  = new ArrayList<>();
 
 		//tripPlanDto에 있는 planList를 전부 검색해서 List<TripDto>로 변환하는 코드 작성
+		if (userTripPlan == null) {
+			return ResponseEntity.ok(result);
+		}
 		String[] titles = userTripPlan.getPlanList2().split(",");
+		
 		System.out.println(Arrays.toString(titles));
-		List<TripDto> result  = new ArrayList<>();
+		
 		for (String title : titles) {
 			result.add(tripService.tripPlanDtoToTripDtoList(title));
 		}

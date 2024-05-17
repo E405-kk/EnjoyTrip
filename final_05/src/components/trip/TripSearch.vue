@@ -107,8 +107,8 @@ const viewStation = (trip) => {
         <table class="table-auto w-full">
           <thead class="border-b">
             <tr class="bg-emerald-500 text-white">
-              <th class="text-center p-4 font-medium">관광지명</th>
               <th class="text-center p-4 font-medium">대표이미지</th>
+              <th class="text-center p-4 font-medium">관광지명</th>
               <th class="text-center p-4 font-medium">주소</th>
             </tr>
           </thead>

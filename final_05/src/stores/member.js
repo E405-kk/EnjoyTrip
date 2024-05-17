@@ -77,7 +77,6 @@ export const useMemberStore = defineStore("memberStore", () => {
       userId,
       ({ data }) => {
         userInfo.value = data.user;
-        console.log(userInfo.value);
       },
       (error) => {
         console.error(error);
