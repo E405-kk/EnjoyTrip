@@ -3,9 +3,9 @@ DROP TABLE IF EXISTS `ssafytrip`.`board` ;
 DROP TABLE IF EXISTS `ssafytrip`.`notice` ;
 DROP TABLE IF EXISTS `ssafytrip`.`tripplan`;
 DROP TABLE IF EXISTS `ssafytrip`.`user` ;
-DROP TABLE IF EXISTS `ssafytrip`.`hotplace` ;
 DROP TABLE IF EXISTS `ssafytrip`.`file_info` ;
 DROP TABLE IF EXISTS `ssafytrip`.`comment` ;
+DROP TABLE IF EXISTS `ssafytrip`.`hotplace` ;
 
 CREATE TABLE IF NOT EXISTS `ssafytrip`.`user` (
   `user_id` VARCHAR(16) NOT NULL,
@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS `hotplace` (
   `hit` int DEFAULT '0',
   `register_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `comment_cnt` int DEFAULT '0',
-  `like` int DEFAULT '0',
+  `good` int DEFAULT '0',
   PRIMARY KEY (`article_no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 

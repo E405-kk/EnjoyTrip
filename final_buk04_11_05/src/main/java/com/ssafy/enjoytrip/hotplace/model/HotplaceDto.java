@@ -3,12 +3,30 @@ package com.ssafy.enjoytrip.hotplace.model;
 public class HotplaceDto {
 	private int articleNo;
 	private String userId;
+	private String userName;
 	private String subject;
 	private String content;
 	private int hit;
 	private String registerTime;
 	private int commentCnt;
-	private int like;
+	private int good;
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public int getGood() {
+		return good;
+	}
+
+	public void setGood(int good) {
+		this.good = good;
+	}
+
 	private FileInfoDto fileInfo;
 	
 	public FileInfoDto getFileInfo() {
@@ -27,13 +45,6 @@ public class HotplaceDto {
 		this.commentCnt = commentCnt;
 	}
 
-	public int getLike() {
-		return like;
-	}
-
-	public void setLike(int like) {
-		this.like = like;
-	}
 
 	public int getArticleNo() {
 		return articleNo;
@@ -85,9 +96,10 @@ public class HotplaceDto {
 
 	@Override
 	public String toString() {
-		return "HotplaceDto [articleNo=" + articleNo + ", userId=" + userId + ", subject=" + subject + ", content="
-				+ content + ", hit=" + hit + ", registerTime=" + registerTime + ", commentCnt=" + commentCnt + ", like="
-				+ like + ", fileInfo=" + fileInfo + "]";
+		return "HotplaceDto [articleNo=" + articleNo + ", userId=" + userId + ", userName=" + userName + ", subject="
+				+ subject + ", content=" + content + ", hit=" + hit + ", registerTime=" + registerTime + ", commentCnt="
+				+ commentCnt + ", good=" + good + ", fileInfo=" + fileInfo + "]";
 	}
 
+	
 }

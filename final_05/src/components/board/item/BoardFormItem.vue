@@ -16,7 +16,7 @@ const article = ref({
   articleNo: 0,
   subject: "",
   content: "",
-  userId: userId,
+  userId: sessionStorage.getItem("userId"),
   userName: "",
   hit: 0,
   registerTime: "",

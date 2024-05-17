@@ -110,13 +110,10 @@ const moveWrite = () => {
               class="w-12/12 mx-auto rounded-2xl bg-white p-5 bg-opacity-40 backdrop-filter backdrop-blur-lg">
               <div
                 class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 text-center px-2 mx-auto">
-                <article
-                  class="bg-white p-6 mb-6 shadow transition duration-300 group transform hover:-translate-y-2 hover:shadow-2xl rounded-2xl cursor-pointer border">
-                  <HotplaceListItem
-                    v-for="article in articles"
-                    :key="article.articleNo"
-                    :article="article"></HotplaceListItem>
-                </article>
+                <HotplaceListItem
+                  v-for="article in articles"
+                  :key="article.articleNo"
+                  :article="article"></HotplaceListItem>
               </div>
             </div>
           </div>

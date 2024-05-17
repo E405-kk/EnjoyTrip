@@ -4,9 +4,9 @@
 
 <mapper namespace="com.ssafy.enjoytrip.hotplace.dao.HotplaceDao">
 
-	<select id="getArticle" parameterType="int" resultMap="HotplaceDto">
-		select b.article_no, b.user_id, b.subject, b.content, b.hit, b.register_time, m.user_name 
-		from board b, user m
+	<select id="getArticle" parameterType="int" resultType="HotplaceDto">
+		select b.article_no, b.user_id, b.subject, b.content, b.hit, b.register_time, m.user_name, b.good, b.comment_cnt
+		from hotplace b, user m
 		where b.user_id = m.user_id
 		and b.article_no = #{articleNo}
 	</select>
@@ -18,29 +18,30 @@
 	<sql id="search">
 		<if test="word != null and word != ''">
 			<if test="key == 'subject'">
-				where subject like concat('%', #{word}, '%')
+				and subject like concat('%', #{word}, '%')
 			</if>
 			<if test="key != 'subject'">
-				where ${key} = #{word}
+				and ${key} = #{word}
 			</if>
 		</if>
 	</sql>
 	<select id="list" resultType="HotplaceDto">
-		select article_no, user_id, subject, content, hit, register_time, comment_cnt, like
-		from hotplace
+		select b.article_no, b.user_id, b.subject, b.content, b.hit, b.register_time, m.user_name, b.good, b.comment_cnt
+		from hotplace b, user m
+		where b.user_id = m.user_id
 		<include refid="search"></include>
-		order by article_no desc
+		order by b.article_no desc
 		limit #{start}, #{listsize}
 	</select>
 	
 	<select id="getTotalArticleCount" parameterType="map" resultType="int">
 		select count(article_no)
 		from hotplace
-		<include refid="search"></include>
+		<where><include refid="search"></include></where>
 	</select>
 	
 	<select id="detail" parameterType="int" resultType="HotplaceDto">
-		select article_no, user_id, subject, content, hit, register_time, comment_cnt, like
+		select article_no, user_id, subject, content, hit, register_time, comment_cnt, good
 		from hotplace
 		where article_no = #{articleNo}
 	</select>

@@ -83,10 +83,10 @@ public class HotplaceController {
 
 	@GetMapping("/list")
 	public ResponseEntity<?> list(@RequestParam Map<String, String> map){
-		HotplaceListDto HotplaceListDto = hotplaceService.list(map);
+		HotplaceListDto hotplaceListDto = hotplaceService.list(map);
 		HttpHeaders header = new HttpHeaders();
 		header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
-		return ResponseEntity.ok().headers(header).body(HotplaceListDto);
+		return ResponseEntity.ok().headers(header).body(hotplaceListDto);
 	}
 
 	private boolean kmp(String full, String slang) {
