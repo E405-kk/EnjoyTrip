@@ -1,6 +1,7 @@
 package com.ssafy.enjoytrip.notice.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -9,7 +10,8 @@ import com.ssafy.enjoytrip.board.model.BoardDto;
 @Mapper
 public interface NoticeDao {
 	int regist(BoardDto boardDto);
-	List<BoardDto> list();
+	List<BoardDto> list(Map<String, Object> param);
+	int getTotalArticleCount(Map<String, Object> map);
 	BoardDto detail(int articleNo);
 	int updateHit(int articleNo);
 	int modify(BoardDto boardDto);

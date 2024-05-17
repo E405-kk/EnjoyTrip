@@ -41,7 +41,6 @@
 		update board
 		set hit = hit + 1
 		where article_no = #{articleNo}
-		
 	</update>
 	
 	<update id="modify" parameterType="BoardDto">

@@ -1,9 +1,15 @@
 package com.ssafy.enjoytrip.notice.controller;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,11 +17,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.enjoytrip.board.model.BoardDto;
+import com.ssafy.enjoytrip.board.model.BoardListDto;
 import com.ssafy.enjoytrip.notice.service.NoticeService;
 
+@CrossOrigin(origins = { "*" }, methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE} , maxAge = 6000)
 @RestController
 @RequestMapping("/notice")
 public class NoticeController  {
@@ -29,7 +39,6 @@ public class NoticeController  {
 	
 	@PostMapping("/regist")
 	public ResponseEntity<?> regist(@RequestBody BoardDto boardDto){
-
 		List<String> slangs = noticeService.getSlang();
 		String full = boardDto.getSubject() + " " +  boardDto.getContent();
 		String slangFinded = null;		// 발견한 욕설(첫번째)
@@ -41,37 +50,43 @@ public class NoticeController  {
 		}
 		if (slangFinded == null) {
 			int result = noticeService.regist(boardDto);
-			System.out.println("BoardController - regist(): " + boardDto);
-			return ResponseEntity.ok(result);
+
+			return new ResponseEntity<Void>(HttpStatus.CREATED);
 		} else {	// 욕설 있을 경우
 			String msg = "["+ slangFinded + "] 는 부적절한 단어입니다. 내용을 수정해주세요.";
 			return ResponseEntity.ok(msg);
 		}
 	}
-	
+
 	@GetMapping("/detail/{articleNo}")
 	public ResponseEntity<?> detail(@PathVariable int articleNo){
 		BoardDto boardDto = noticeService.detail(articleNo);
 		noticeService.updateHit(articleNo);
 		return ResponseEntity.ok(boardDto);
 	}
-	
+	@GetMapping("/modify/{articleNo}")
+	public ResponseEntity<?> getModifyArticle(@PathVariable int articleNo){
+		return ResponseEntity.ok(noticeService.detail(articleNo));
+	}
+
 	@PutMapping("/modify")
 	public ResponseEntity<?> modify(@RequestBody BoardDto boardDto){
 		int result = noticeService.modify(boardDto);
 		return ResponseEntity.ok(result);
 	}
-	
+
 	@DeleteMapping("/remove/{articleNo}")
 	public ResponseEntity<?> remove(@PathVariable int articleNo){
 		int result = noticeService.remove(articleNo);
 		return ResponseEntity.ok(result);
 	}
-	
+
 	@GetMapping("/list")
-	public ResponseEntity<?> list(){
-		List<BoardDto> list = noticeService.list();
-		return ResponseEntity.ok(list);
+	public ResponseEntity<?> list(@RequestParam Map<String, String> map){
+		BoardListDto boardListDto = noticeService.list(map);
+		HttpHeaders header = new HttpHeaders();
+		header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+		return ResponseEntity.ok().headers(header).body(boardListDto);
 	}
 
 	private boolean kmp(String full, String slang) {

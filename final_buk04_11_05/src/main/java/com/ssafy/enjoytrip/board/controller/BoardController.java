@@ -31,15 +31,14 @@ import com.ssafy.enjoytrip.board.service.BoardService;
 public class BoardController {
 
 	private final BoardService boardService;
-	
+
 	public BoardController(BoardService boardService) {
 		super();
 		this.boardService = boardService;
 	}
-	
+
 	@PostMapping("/regist")
 	public ResponseEntity<?> regist(@RequestBody BoardDto boardDto){
-		System.out.println("boardController - regist: "+boardDto);
 		List<String> slangs = boardService.getSlang();
 		String full = boardDto.getSubject() + " " +  boardDto.getContent();
 		String slangFinded = null;		// 발견한 욕설(첫번째)
@@ -50,16 +49,15 @@ public class BoardController {
 			}
 		}
 		if (slangFinded == null) {
-				int result = boardService.regist(boardDto);
-			
-			System.out.println("BoardController - regist(): " + boardDto);
+			int result = boardService.regist(boardDto);
+
 			return new ResponseEntity<Void>(HttpStatus.CREATED);
 		} else {	// 욕설 있을 경우
 			String msg = "["+ slangFinded + "] 는 부적절한 단어입니다. 내용을 수정해주세요.";
 			return ResponseEntity.ok(msg);
 		}
 	}
-	
+
 	@GetMapping("/detail/{articleNo}")
 	public ResponseEntity<?> detail(@PathVariable int articleNo){
 		BoardDto boardDto = boardService.detail(articleNo);
@@ -76,13 +74,13 @@ public class BoardController {
 		int result = boardService.modify(boardDto);
 		return ResponseEntity.ok(result);
 	}
-	
+
 	@DeleteMapping("/remove/{articleNo}")
 	public ResponseEntity<?> remove(@PathVariable int articleNo){
 		int result = boardService.remove(articleNo);
 		return ResponseEntity.ok(result);
 	}
-	
+
 	@GetMapping("/list")
 	public ResponseEntity<?> list(@RequestParam Map<String, String> map){
 		BoardListDto boardListDto = boardService.list(map);
@@ -90,7 +88,7 @@ public class BoardController {
 		header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
 		return ResponseEntity.ok().headers(header).body(boardListDto);
 	}
-	
+
 	private boolean kmp(String full, String slang) {
 
 		char[] T = full.toCharArray();
