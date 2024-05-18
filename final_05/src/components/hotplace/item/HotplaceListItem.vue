@@ -13,7 +13,7 @@ const props = defineProps({ article: Object });
     <div class="relative mb-4 rounded-2xl">
       <img
         class="max-h-80 rounded-2xl w-full object-cover transition-transform duration-300 transform group-hover:scale-105"
-        src="@/assets/about-bg.jpg"
+        src="http://localhost:5173/hotplace/images/1a108ff6-b13a-4040-8ada-2f0aaa8260b4.jpg"
         alt="" />
       <div
         class="absolute bottom-3 left-3 inline-flex items-center rounded-lg bg-white p-2 shadow-md">

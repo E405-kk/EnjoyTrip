@@ -19,7 +19,7 @@ public interface HotplaceDao {
 	int remove(int articleNo);
 	List<String> getSlang();
 	HotplaceDto getArticle(int articleNo);
-	void registerFile(HotplaceDto hotplaceDto) ;
-	void deleteFile(int articleNo);
+	int registerFile(HotplaceDto hotplaceDto) ;
+	int deleteFile(int articleNo);
 	FileInfoDto fileInfo(int articleNo);
 }

@@ -1,5 +1,7 @@
 package com.ssafy.enjoytrip.hotplace.model;
 
+import org.apache.tomcat.jni.FileInfo;
+
 public class HotplaceDto {
 	private int articleNo;
 	private String userId;
@@ -10,6 +12,15 @@ public class HotplaceDto {
 	private String registerTime;
 	private int commentCnt;
 	private int good;
+	private String img;
+	
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
+	}
 
 	public String getUserName() {
 		return userName;
@@ -98,8 +109,7 @@ public class HotplaceDto {
 	public String toString() {
 		return "HotplaceDto [articleNo=" + articleNo + ", userId=" + userId + ", userName=" + userName + ", subject="
 				+ subject + ", content=" + content + ", hit=" + hit + ", registerTime=" + registerTime + ", commentCnt="
-				+ commentCnt + ", good=" + good + ", fileInfo=" + fileInfo + "]";
+				+ commentCnt + ", good=" + good + ", img=" + img + ", fileInfo=" + fileInfo + "]";
 	}
 
-	
 }

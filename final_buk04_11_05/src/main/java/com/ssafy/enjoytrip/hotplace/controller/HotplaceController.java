@@ -3,6 +3,8 @@ package com.ssafy.enjoytrip.hotplace.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,6 +17,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,6 +38,7 @@ import com.ssafy.enjoytrip.hotplace.model.HotplaceListDto;
 import com.ssafy.enjoytrip.hotplace.service.HotplaceService;
 
 import jakarta.servlet.ServletContext;
+import jakarta.servlet.http.HttpServletRequest;
 
 @CrossOrigin(origins = { "*" }, methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE} , maxAge = 6000)
 @RestController
@@ -53,7 +57,7 @@ public class HotplaceController {
 
 	@PostMapping("/regist")
 	public ResponseEntity<?> regist(@RequestParam(value = "file", required = false) MultipartFile file,
-			@RequestPart HotplaceDto hotplaceDto) throws IllegalStateException, IOException{
+			@RequestPart HotplaceDto hotplaceDto, HttpServletRequest request) throws IllegalStateException, IOException, URISyntaxException{
 		List<String> slangs = hotplaceService.getSlang();
 		String full = hotplaceDto.getSubject() + " " +  hotplaceDto.getContent();
 		String slangFinded = null;		// 발견한 욕설(첫번째)
@@ -63,8 +67,9 @@ public class HotplaceController {
 				break;
 			}
 		}
+	
 		if (slangFinded == null) {
-			if (!file.isEmpty()) {
+			if (file != null) {
 				String realPath = servletContext.getRealPath("/upload");
 				String today = new SimpleDateFormat("yyMMdd").format(new Date());
 				String saveFolder = realPath + File.separator + today;
@@ -83,8 +88,15 @@ public class HotplaceController {
 				}
 				hotplaceDto.setFileInfo(fileInfoDto);
 			}
+			else {
+				FileInfoDto fileInfoDto = new FileInfoDto();
+				fileInfoDto.setSaveFile("about-bg.jpg");
+				fileInfoDto.setSaveFolder("default");
+				hotplaceDto.setFileInfo(fileInfoDto);
+			}
+			
 			int result = hotplaceService.regist(hotplaceDto);
-
+		
 			return new ResponseEntity<Void>(HttpStatus.CREATED);
 		} else {	// 욕설 있을 경우
 			String msg = "["+ slangFinded + "] 는 부적절한 단어입니다. 내용을 수정해주세요.";
@@ -95,6 +107,7 @@ public class HotplaceController {
 	@GetMapping("/detail/{articleNo}")
 	public ResponseEntity<?> detail(@PathVariable int articleNo){
 		HotplaceDto hotplaceDto = hotplaceService.detail(articleNo);
+		System.out.println(hotplaceDto.getImg());
 		hotplaceService.updateHit(articleNo);
 		return ResponseEntity.ok(hotplaceDto);
 	}
@@ -122,7 +135,7 @@ public class HotplaceController {
 		header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
 		return ResponseEntity.ok().headers(header).body(hotplaceListDto);
 	}
-
+	
 	private boolean kmp(String full, String slang) {
 
 		char[] T = full.toCharArray();

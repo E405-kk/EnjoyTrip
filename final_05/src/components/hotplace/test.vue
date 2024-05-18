@@ -8,7 +8,7 @@ const uploadFile = () => {
   console.log(photoFile.files[0]);
   const data = {
     userId: "ssafy",
-    articleNo: 1,
+    articleNo: 4,
   };
   formData.append("file", photoFile.files[0]);
   const blob = new Blob([JSON.stringify(data)], {
@@ -16,6 +16,8 @@ const uploadFile = () => {
   });
   // formData.append("hotplaceDto", JSON.stringify(data));
   formData.append("hotplaceDto", blob);
+  console.log(formData);
+  console.log(blob);
   const config = {
     headers: {
       "Content-Type": "multipart/form-data",
@@ -37,8 +39,10 @@ const uploadFile = () => {
 <template>
   <form>
     <input type="file" name="photo" id="photo" />
-    <button @click="uploadFile()">업로드</button>
+    <button @click="uploadFile">업로드</button>
   </form>
+  <img
+    src="C:/SSAFY/workspace/final_buk04_11_05/final_buk04_11_05/src/main/webapp/upload/240518/1a108ff6-b13a-4040-8ada-2f0aaa8260b4.jpg" />
 </template>
 
 <style scoped></style>

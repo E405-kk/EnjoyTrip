@@ -72,8 +72,25 @@ function onSubmit() {
 }
 
 function writeArticle() {
+  var formData = new FormData();
+  var photoFile = document.getElementById("photo");
+  console.log(photoFile.files[0]);
+  const blob = new Blob([JSON.stringify(article.value)], {
+    type: "application/json",
+  });
+  console.log(blob);
+  const config = {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  };
+
+  formData.append("file", photoFile.files[0]);
+  formData.append("hotplaceDto", blob);
+  console.log(formData);
   registArticle(
-    article.value,
+    formData,
+    config,
     (response) => {
       let msg = response.data;
       if (response.status == 201) {
@@ -107,7 +124,7 @@ function moveList() {
 </script>
 
 <template>
-  <form @submit.prevent="onSubmit">
+  <form>
     <div class="min-h-screen md:px-20 pt-6">
       <div
         class="border rounded-lg shadow-lg px-6 py-10 max-w-2xl mx-auto bg-grey-lighter">
@@ -123,7 +140,7 @@ function moveList() {
                 d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
             </svg>
             <span class="mt-2 text-base leading-normal">사진 업로드</span>
-            <input type="file" class="hidden" />
+            <input type="file" class="hidden" name="photo" id="photo" />
           </label>
 
           <div class="flex-1 space-y-4">
@@ -151,12 +168,14 @@ function moveList() {
           <button
             type="submit"
             class="px-6 py-2 mx-auto rounded-md text-lg font-semibold text-emerald-50 bg-emerald-600"
+            @click="onSubmit"
             v-if="type === 'regist'">
             글작성
           </button>
           <button
             type="submit"
             class="px-6 py-2 mx-auto rounded-md text-lg font-semibold text-emerald-50 bg-emerald-600"
+            @click="onSubmit"
             v-else>
             글수정
           </button>

@@ -4,12 +4,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.tomcat.jni.FileInfo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.enjoytrip.hotplace.dao.HotplaceDao;
 import com.ssafy.enjoytrip.hotplace.model.FileInfoDto;
 import com.ssafy.enjoytrip.hotplace.model.HotplaceDto;
 import com.ssafy.enjoytrip.hotplace.model.HotplaceListDto;
+
+import jakarta.servlet.ServletContext;
 
 @Service
 public class HotplaceServiceImpl implements HotplaceService{
@@ -22,8 +26,9 @@ public class HotplaceServiceImpl implements HotplaceService{
 
 	@Override
 	public int regist(HotplaceDto hotplaceDto) {
-		hotplaceDao.registerFile(hotplaceDto);
-		return hotplaceDao.regist(hotplaceDto);
+		int articleNo = hotplaceDao.regist(hotplaceDto);
+		hotplaceDto.setArticleNo(articleNo);
+		return hotplaceDao.registerFile(hotplaceDto);
 	}
 
 	@Override
@@ -39,7 +44,11 @@ public class HotplaceServiceImpl implements HotplaceService{
 		String key = map.get("key");
 		param.put("key", key == null ? "" : key);
 		List<HotplaceDto> list = hotplaceDao.list(param);
-
+		for (int i = 0; i < list.size(); i++) {
+			FileInfoDto fileInfoDto = hotplaceDao.fileInfo(list.get(i).getArticleNo());
+			list.get(i).setImg("/upload/" +  fileInfoDto.getSaveFolder() + "/" + fileInfoDto.getSaveFile());
+		}
+		
 		int totalArticleCount = hotplaceDao.getTotalArticleCount(param);
 		int totalPageCount = (totalArticleCount - 1) / sizePerPage + 1;
 
@@ -53,9 +62,9 @@ public class HotplaceServiceImpl implements HotplaceService{
 
 	@Override
 	public HotplaceDto detail(int articleNo) {
+		FileInfoDto fileInfoDto = hotplaceDao.fileInfo(articleNo);
 		HotplaceDto hotplaceDto = hotplaceDao.getArticle(articleNo);
-		FileInfoDto fileInfo = hotplaceDao.fileInfo(articleNo);
-		hotplaceDto.setFileInfo(fileInfo);
+		hotplaceDto.setImg("/upload/" +  fileInfoDto.getSaveFolder() + "/" + fileInfoDto.getSaveFile());
 		return hotplaceDto;
 	}
 
@@ -78,9 +87,6 @@ public class HotplaceServiceImpl implements HotplaceService{
 	public List<String> getSlang() {
 		return hotplaceDao.getSlang();
 	}
-
-	
-
 
 
 }
