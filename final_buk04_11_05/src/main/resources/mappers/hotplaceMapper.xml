@@ -40,12 +40,6 @@
 		<where><include refid="search"></include></where>
 	</select>
 	
-	<select id="detail" parameterType="int" resultType="HotplaceDto">
-		select article_no, user_id, subject, content, hit, register_time, comment_cnt, good
-		from hotplace
-		where article_no = #{articleNo}
-	</select>
-	
 	<update id="updateHit" parameterType="int">
 		update hotplace
 		set hit = hit + 1

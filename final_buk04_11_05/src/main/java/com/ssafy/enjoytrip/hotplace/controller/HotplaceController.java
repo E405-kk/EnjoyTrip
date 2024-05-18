@@ -1,10 +1,16 @@
 package com.ssafy.enjoytrip.hotplace.controller;
 
 
+import java.io.File;
+import java.io.IOException;
 import java.nio.charset.Charset;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,11 +25,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.ssafy.enjoytrip.hotplace.model.FileInfoDto;
 import com.ssafy.enjoytrip.hotplace.model.HotplaceDto;
 import com.ssafy.enjoytrip.hotplace.model.HotplaceListDto;
 import com.ssafy.enjoytrip.hotplace.service.HotplaceService;
+
+import jakarta.servlet.ServletContext;
 
 @CrossOrigin(origins = { "*" }, methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE} , maxAge = 6000)
 @RestController
@@ -32,13 +43,17 @@ public class HotplaceController {
 
 	private final HotplaceService hotplaceService;
 
+	@Autowired
+	private ServletContext servletContext;
+
 	public HotplaceController(HotplaceService hotplaceService) {
 		super();
 		this.hotplaceService = hotplaceService;
 	}
 
 	@PostMapping("/regist")
-	public ResponseEntity<?> regist(@RequestBody HotplaceDto hotplaceDto){
+	public ResponseEntity<?> regist(@RequestParam(value = "file", required = false) MultipartFile file,
+			@RequestPart HotplaceDto hotplaceDto) throws IllegalStateException, IOException{
 		List<String> slangs = hotplaceService.getSlang();
 		String full = hotplaceDto.getSubject() + " " +  hotplaceDto.getContent();
 		String slangFinded = null;		// 발견한 욕설(첫번째)
@@ -49,6 +64,25 @@ public class HotplaceController {
 			}
 		}
 		if (slangFinded == null) {
+			if (!file.isEmpty()) {
+				String realPath = servletContext.getRealPath("/upload");
+				String today = new SimpleDateFormat("yyMMdd").format(new Date());
+				String saveFolder = realPath + File.separator + today;
+				File folder = new File(saveFolder);
+				if (!folder.exists())
+					folder.mkdirs();
+				FileInfoDto fileInfoDto = new FileInfoDto();
+				String originalFileName = file.getOriginalFilename();
+				if (!originalFileName.isEmpty()) {
+					String saveFileName = UUID.randomUUID().toString()
+							+ originalFileName.substring(originalFileName.lastIndexOf('.'));
+					fileInfoDto.setSaveFolder(today);
+					fileInfoDto.setOriginalFile(originalFileName);
+					fileInfoDto.setSaveFile(saveFileName);
+					file.transferTo(new File(folder, saveFileName));
+				}
+				hotplaceDto.setFileInfo(fileInfoDto);
+			}
 			int result = hotplaceService.regist(hotplaceDto);
 
 			return new ResponseEntity<Void>(HttpStatus.CREATED);

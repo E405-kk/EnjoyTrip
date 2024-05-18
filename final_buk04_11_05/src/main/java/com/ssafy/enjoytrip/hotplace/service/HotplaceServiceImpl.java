@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.enjoytrip.hotplace.dao.HotplaceDao;
+import com.ssafy.enjoytrip.hotplace.model.FileInfoDto;
 import com.ssafy.enjoytrip.hotplace.model.HotplaceDto;
 import com.ssafy.enjoytrip.hotplace.model.HotplaceListDto;
 
@@ -21,6 +22,7 @@ public class HotplaceServiceImpl implements HotplaceService{
 
 	@Override
 	public int regist(HotplaceDto hotplaceDto) {
+		hotplaceDao.registerFile(hotplaceDto);
 		return hotplaceDao.regist(hotplaceDto);
 	}
 
@@ -51,7 +53,10 @@ public class HotplaceServiceImpl implements HotplaceService{
 
 	@Override
 	public HotplaceDto detail(int articleNo) {
-		return hotplaceDao.detail(articleNo);
+		HotplaceDto hotplaceDto = hotplaceDao.getArticle(articleNo);
+		FileInfoDto fileInfo = hotplaceDao.fileInfo(articleNo);
+		hotplaceDto.setFileInfo(fileInfo);
+		return hotplaceDto;
 	}
 
 	@Override

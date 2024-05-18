@@ -21,5 +21,5 @@ public interface HotplaceDao {
 	HotplaceDto getArticle(int articleNo);
 	void registerFile(HotplaceDto hotplaceDto) ;
 	void deleteFile(int articleNo);
-	List<FileInfoDto> fileInfoList(int articleNo);
+	FileInfoDto fileInfo(int articleNo);
 }
