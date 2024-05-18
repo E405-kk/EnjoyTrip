@@ -57,33 +57,23 @@ public class CommentController {
 			return ResponseEntity.ok(msg);
 		}
 	}
-
-	@GetMapping("/detail/{articleNo}")
-	public ResponseEntity<?> detail(@PathVariable int articleNo) {
-		CommentDto commentDto = commentService.detail(articleNo);
-		return ResponseEntity.ok(commentDto);
-	}
-
-	@GetMapping("/modify/{articleNo}")
-	public ResponseEntity<?> getModifyArticle(@PathVariable int articleNo) {
-		return ResponseEntity.ok(commentService.detail(articleNo));
-	}
-
+	
 	@PutMapping("/modify")
 	public ResponseEntity<?> modify(@RequestBody CommentDto commentDto) {
 		int result = commentService.modify(commentDto);
 		return ResponseEntity.ok(result);
 	}
 
-	@DeleteMapping("/remove/{articleNo}")
-	public ResponseEntity<?> remove(@PathVariable int articleNo) {
-		int result = commentService.remove(articleNo);
+	@DeleteMapping("/remove/{idx}")
+	public ResponseEntity<?> remove(@PathVariable int idx) {
+		int result = commentService.remove(idx);
 		return ResponseEntity.ok(result);
 	}
 
 	@GetMapping("/list")
-	public ResponseEntity<?> list(@RequestParam Map<String, String> map) {
+	public ResponseEntity<?> list(@RequestParam Map<String, Object> map) {
 		CommentListDto commentListDto = commentService.list(map);
+		System.out.println("CommentController - list: "+(String)map.get(("articleno")));
 		HttpHeaders header = new HttpHeaders();
 		header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
 		return ResponseEntity.ok().headers(header).body(commentListDto);

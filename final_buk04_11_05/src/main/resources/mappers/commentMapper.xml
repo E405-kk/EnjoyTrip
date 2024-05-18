@@ -7,10 +7,10 @@
 		insert into comment (article_no, user_id, content)
 		values (#{articleNo}, #{userId}, #{content})
 	</insert>
-	<select id="list" resultType="CommentDto">
-		select article_no, user_id, content, register_time
+	<select id="list" parameterType="map" resultType="CommentDto">
+		select idx, article_no, user_id, content, register_time
 		from comment
-		where article_no = #{articleNo}
+		where article_no = #{articleno}
 		order by register_time
 		limit #{start}, #{listsize}
 	</select>
@@ -18,7 +18,7 @@
 	<select id="getTotalArticleCount" parameterType="map" resultType="int">
 		select count(idx)
 		from comment
-		where article_no = #{articleNo}
+		where article_no = #{articleno}
 	</select>
 	
 	<update id="modify" parameterType="CommentDto">
@@ -30,7 +30,7 @@
 	
 	<delete id="remove" parameterType="int">
 		delete from comment
-		where article_no = #{articleNo}
+		where idx = #{idx}
 	</delete>
 	
 	<select id="getSlang" resultType="string">

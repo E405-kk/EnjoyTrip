@@ -3,6 +3,7 @@ import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { detailArticle, deleteArticle } from "@/api/board";
 import VArticle from "@/components/common/VArticle.vue";
+import BoardComment from "./BoardComment.vue";
 
 const userId = sessionStorage.getItem("userId");
 
@@ -81,6 +82,8 @@ function onDeleteArticle() {
             </button>
           </div>
         </div>
+
+        <BoardComment :article="article" />
       </div>
     </div>
   </div>

@@ -12,8 +12,7 @@ public interface CommentDao {
 	int regist(CommentDto commentDto);
 	List<CommentDto> list(Map<String, Object> param);
 	int getTotalArticleCount(Map<String, Object> map);
-	CommentDto detail(int articleNo);
-	int modify(CommentDto boardDto);
-	int remove(int articleNo);
+	int modify(CommentDto commentDto);
+	int remove(int idx);
 	List<String> getSlang();
 }
