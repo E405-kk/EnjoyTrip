@@ -13,7 +13,7 @@ const onSelect = () => {
 <template>
   <select
     v-model="key"
-    class="form-select form-select-sm ms-5 me-1 w-50 rounded-lg focus:outline-none focus:ring focus:ring-emerald-500"
+    class="form-select form-select-sm ms-5 me-1 w-50 rounded-lg focus:outline-none focus:ring-1 focus:ring-emerald-500"
     @change="onSelect">
     <option
       v-for="option in selectOption"

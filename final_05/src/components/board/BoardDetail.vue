@@ -2,15 +2,13 @@
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { detailArticle, deleteArticle } from "@/api/board";
+import VArticle from "@/components/common/VArticle.vue";
 
-import { useMemberStore } from "@/stores/member";
-const memberStore = useMemberStore();
-const { userId } = memberStore;
+const userId = sessionStorage.getItem("userId");
 
 const route = useRoute();
 const router = useRouter();
 
-// const articleno = ref(route.params.articleno);
 const { articleno } = route.params;
 
 const article = ref({});
@@ -53,59 +51,31 @@ function onDeleteArticle() {
 </script>
 
 <template>
-  <div class="container mx-auto">
+  <div class="container mx-auto p-5">
     <div class="flex justify-center">
-      <div class="w-full lg:w-10/12">
-        <h2 class="my-3 py-3 shadow-sm text-2xl text-center">글보기</h2>
-      </div>
-    </div>
-    <div class="flex justify-center">
-      <div class="w-full lg:w-10/12 text-start">
-        <div class="my-2">
-          <h2 class="text-secondary text-2xl font-semibold px-5 mb-5">
-            {{ article.articleNo }}. {{ article.subject }}
-          </h2>
-        </div>
-        <div class="flex">
-          <div class="w-full lg:w-8/12">
-            <div class="flex items-center">
-              <img
-                class="w-12 h-12 mr-2 rounded-full bg-light p-2"
-                src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg"
-                alt="User Avatar" />
-              <p class="font-bold text-lg">{{ article.userId }}</p>
-            </div>
-          </div>
-          <div class="w-full lg:w-4/12 flex items-center justify-end">
-            {{ article.registerTime }} | 조회 : {{ article.hit }}
-          </div>
-        </div>
-        <div class="divider my-3"></div>
-        <div class="text-secondary text-lg mx-5 min-h-96">
-          {{ article.content }}
-        </div>
-        <div class="divider my-3"></div>
-        <div class="flex mt-10">
-          <div class="justify-start ml-5">
-            <button
-              type="button"
-              class="bg-white text-gray-600 font-semibold py-2 px-4 border border-gray-600 rounded-md shadow-md hover:bg-gray-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-opacity-50"
-              @click="moveList">
-              글목록
-            </button>
-          </div>
-          <div class="justify-end mr-5 ml-auto">
+      <div
+        class="w-full lg:w-10/12 text-start bg-white shadow-md rounded-lg p-5">
+        <VArticle :article="article" />
+        <div class="border-t my-3"></div>
+        <div class="flex justify-between mt-10">
+          <button
+            type="button"
+            class="bg-gray-100 text-gray-700 font-semibold py-2 px-4 border border-gray-300 rounded-md shadow-sm hover:bg-gray-200 hover:text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-opacity-50"
+            @click="moveList">
+            글목록
+          </button>
+          <div class="flex">
             <button
               v-if="userId === article.userId"
               type="button"
-              class="mr-3 bg-white text-emerald-600 font-semibold py-2 px-4 border border-emerald-600 rounded-md shadow-md hover:bg-emerald-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:ring-opacity-50"
+              class="mr-3 bg-emerald-100 text-emerald-700 font-semibold py-2 px-4 border border-emerald-300 rounded-md shadow-sm hover:bg-emerald-200 hover:text-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-300 focus:ring-opacity-50"
               @click="moveModify">
               글수정
             </button>
             <button
               v-if="userId === article.userId"
               type="button"
-              class="bg-white text-red-600 font-semibold py-2 px-4 border border-red-600 rounded-md shadow-md hover:bg-red-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50"
+              class="bg-red-100 text-red-700 font-semibold py-2 px-4 border border-red-300 rounded-md shadow-sm hover:bg-red-200 hover:text-red-800 focus:outline-none focus:ring-2 focus:ring-red-300 focus:ring-opacity-50"
               @click="onDeleteArticle">
               글삭제
             </button>

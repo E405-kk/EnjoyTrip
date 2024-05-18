@@ -109,23 +109,32 @@ function moveList() {
 <template>
   <form @submit.prevent="onSubmit">
     <div class="min-h-screen md:px-20 pt-6">
-      <div class="border bg-white rounded-md px-6 py-10 max-w-2xl mx-auto">
+      <div
+        class="border rounded-lg shadow-lg px-6 py-10 max-w-2xl mx-auto bg-grey-lighter">
         <div class="flex">
-          <div class="mr-6 border w-1/3 flex justify-center items-center">
-            <input type="file" id="upload-img" hidden />
-            <label for="upload-img">
-              <img src="@/assets/upload-img.png" class="cursor-pointer" />
-            </label>
-          </div>
+          <label
+            class="w-60 mr-6 flex flex-col items-center justify-center px-4 py-6 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-white">
+            <svg
+              class="w-10 h-10"
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20">
+              <path
+                d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
+            </svg>
+            <span class="mt-2 text-base leading-normal">사진 업로드</span>
+            <input type="file" class="hidden" />
+          </label>
+
           <div class="flex-1 space-y-4">
             <div>
               <label for="subject" class="text-lx">제목:</label>
               <input
                 type="text"
-                placeholder="제목..."
+                placeholder="제목을 입력하세요."
                 id="subject"
                 v-model="article.subject"
-                class="ml-2 outline-none py-1 px-2 text-md border-2 rounded-md w-full" />
+                class="mt-2 outline-none py-2 px-2 text-md border-2 rounded-md w-full" />
             </div>
             <div>
               <label for="content" class="block mb-2 text-lg">내용:</label>

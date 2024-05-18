@@ -119,7 +119,7 @@ function moveList() {
                 placeholder="제목..."
                 id="subject"
                 v-model="article.subject"
-                class="ml-2 outline-none py-1 px-2 text-md border-2 rounded-md w-full" />
+                class="mt-2 outline-none py-2 px-2 text-md border-2 rounded-md w-full" />
             </div>
             <div>
               <label for="content" class="block mb-2 text-lg">내용:</label>

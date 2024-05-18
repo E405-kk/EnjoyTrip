@@ -14,7 +14,7 @@ import PageNavigation from "@/components/common/PageNavigation.vue";
 const router = useRouter();
 
 const selectOption = ref([
-  { text: "검색조건", value: "" },
+  { text: "검색 조건", value: "" },
   { text: "글번호", value: "article_no" },
   { text: "제목", value: "subject" },
   { text: "작성자아이디", value: "user_id" },
@@ -44,7 +44,6 @@ const getArticleList = () => {
     param.value,
     ({ data }) => {
       articles.value = data.articles;
-      console.log(articles.value);
       currentPage.value = data.currentPage;
       totalPage.value = data.totalPageCount;
     },
@@ -73,7 +72,6 @@ const moveWrite = () => {
 <template>
   <div class="fluid-container mb-20">
     <div class="row justify-content-center">
-      <h2 class="my-3 py-3 shadow-sm text-2xl text-center">Q&A</h2>
       <div class="flex items-center justify-center">
         <div class="ml-40 mr-auto">
           <button
@@ -86,18 +84,42 @@ const moveWrite = () => {
         <div class="mr-40 ml-auto">
           <form class="flex">
             <VSelect :selectOption="selectOption" @onKeySelect="changeKey" />
-            <div class="gap-4">
-              <input
-                type="text"
-                class="h-9 min-w-[10rem] rounded-lg border-emerald-500 indent-4 text-emerald-900 shadow-lg focus:outline-none focus:ring focus:ring-emerald-500"
-                v-model="param.word"
-                placeholder="검색어..." />
-              <button
-                class="h-9 min-w-[5rem] rounded-lg border text-emerald-50 shadow-lg bg-emerald-500 hover:bg-emerald-600 hover:text-white focus:outline-none focus:ring focus:ring-emerald-500"
-                type="button"
-                @click="getArticleList">
-                검색
-              </button>
+            <div
+              class="flex items-center max-w-md mx-auto bg-white rounded-lg"
+              x-data="{ search: '' }">
+              <div class="w-full">
+                <input
+                  type="search"
+                  class="w-full px-4 py-1 text-gray-800 rounded-full focus:outline-none"
+                  placeholder="search"
+                  x-model="search"
+                  v-model="param.word" />
+              </div>
+              <div>
+                <button
+                  type="button"
+                  class="flex items-center bg-emerald-500 justify-center w-12 h-12 text-white rounded-r-lg"
+                  :class="
+                    param.word.length > 0
+                      ? 'bg-emerald-500'
+                      : 'bg-gray-500 cursor-not-allowed'
+                  "
+                  :disabled="param.word.length == 0"
+                  @click="getArticleList">
+                  <svg
+                    class="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                  </svg>
+                </button>
+              </div>
             </div>
           </form>
         </div>
