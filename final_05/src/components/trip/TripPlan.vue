@@ -31,6 +31,10 @@ const param = ref({
 });
 
 onMounted(() => {
+  if (sessionStorage.getItem("userId") == null) {
+    alert("로그인이 필요한 화면입니다.");
+    router.push({ name: "user-login" });
+  }
   getSidoList();
   let tripPlanButton = document.getElementById("tripPlanSaveBtn");
   tripPlanButton.addEventListener("click", function () {
@@ -98,9 +102,11 @@ const addPlan = (plan) => {
       let msg = response.data;
       if (response.status === httpStatusCode.OK) {
         msg = "계획을 저장했습니다.";
-        router.push({ name: "trip-userPlan" });
       }
       alert(msg);
+      if (msg == "계획을 저장했습니다.") {
+        router.push({ name: "trip-userPlan" });
+      }
     },
     (error) => {
       console.error(error);
@@ -120,18 +126,36 @@ const addPlan = (plan) => {
             <form class="flex">
               <VSelect :selectOption="sidoList" @onKeySelect="onChangeSido" />
               <VSelect :selectOption="typeList" @onKeySelect="onChangeType" />
-              <div class="ml-5">
-                <input
-                  type="text"
-                  class="h-9 min-w-[10rem] rounded-lg border-emerald-500 indent-4 text-emerald-900 shadow-lg focus:outline-none focus:ring focus:ring-emerald-500"
-                  v-model="param.keyword"
-                  placeholder="검색어..." />
-                <button
-                  class="ml-2 h-9 min-w-[5rem] rounded-lg border text-emerald-50 shadow-lg bg-emerald-500 hover:bg-emerald-600 hover:text-white focus:outline-none focus:ring focus:ring-emerald-500"
-                  type="button"
-                  @click="getTripList">
-                  검색
-                </button>
+              <div
+                class="flex items-center max-w-md mx-auto bg-white rounded-lg"
+                x-data="{ search: '' }">
+                <div class="w-full">
+                  <input
+                    type="search"
+                    class="w-full px-4 py-1 text-gray-800 rounded-full focus:outline-none"
+                    v-model="param.keyword"
+                    placeholder="search"
+                    x-model="search" />
+                </div>
+                <div>
+                  <button
+                    class="flex items-center bg-emerald-500 justify-center w-12 h-12 text-white rounded-r-lg"
+                    type="button"
+                    @click="getTripList">
+                    <svg
+                      class="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                  </button>
+                </div>
               </div>
             </form>
           </div>
@@ -172,8 +196,14 @@ const addPlan = (plan) => {
     </div>
 
     <div class="col-span-1">
-      <button id="tripPlanSaveBtn">저장하기</button>
-      <div id="plan-list"></div>
+      <div class="mr-14">
+        <button
+          class="bg-white text-emerald-600 font-semibold py-2 px-4 border border-emerald-600 rounded-md shadow-md hover:bg-emerald-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:ring-opacity-50"
+          id="tripPlanSaveBtn">
+          저장하기
+        </button>
+        <div id="plan-list" class="mt-3"></div>
+      </div>
     </div>
   </div>
 </template>

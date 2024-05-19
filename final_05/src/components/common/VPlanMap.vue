@@ -105,10 +105,10 @@ const loadMarkers = () => {
       img = "/src/assets/about-bg.jpg";
     }
     var contentVal =
-      '        <div class="container border-1" style="padding: 5px; width: 250px; height: 200px;">' +
+      '        <div class="mb-10" style="padding: 5px;">' +
       `           <div> ${position.title} </div>` +
-      `           <img src="${img}" class="m-auto" width="150px" height="100px"/>` +
-      `        <span>${position.addr1}</span> </div>`;
+      `           <img src="${img}" class="m-auto" width="150px" height="auto"/>` +
+      `        <div>${position.addr1}</div> </div>`;
     var infowindow = new kakao.maps.InfoWindow({
       content: contentVal,
     });
@@ -175,22 +175,25 @@ let addAnswer = function (title, marker) {
 
   //추가할 노드
   let divEl = document.createElement("div");
-  divEl.setAttribute("class", "row mb-1 plan-list-item");
+  divEl.setAttribute("class", "row mb-1 plan-list-item border rounded-md");
   let divEl2 = document.createElement("div");
-  divEl2.setAttribute("class", "col-md-10 d-flex");
+  divEl2.setAttribute("class", "col-md-10 flex place-items-center");
 
   //인풋 추가
   let inputEl = document.createElement("input");
   inputEl.setAttribute("name", "plan-list-item");
   inputEl.setAttribute("type", "text");
-  inputEl.setAttribute("class", "form-control");
+  inputEl.setAttribute("class", "ml-2 form-control outline-none");
   inputEl.setAttribute("value", title);
   inputEl.setAttribute("readonly", "readonly");
 
   //삭제 버튼 추가
   let btnEl = document.createElement("button");
   btnEl.setAttribute("type", "button");
-  btnEl.setAttribute("class", "btn btn-outline-danger btn-sm");
+  btnEl.setAttribute(
+    "class",
+    "rounded-xl bg-red-500 px-2 py-1 text-base font-medium text-white transition duration-200 hover:bg-red-400 active:bg-red-600"
+  );
   btnEl.appendChild(document.createTextNode("삭제"));
 
   btnEl.addEventListener("click", function () {
@@ -212,8 +215,12 @@ let addAnswer = function (title, marker) {
   //위 버튼 추가
   let btnEl2 = document.createElement("button");
   btnEl2.setAttribute("type", "button");
-  btnEl2.setAttribute("class", "btn btn-outline-danger btn-sm");
-  btnEl2.appendChild(document.createTextNode("위"));
+  btnEl2.setAttribute(
+    "class",
+    "ml-auto mr-2 rounded-xl bg-white px-2 py-1 text-base font-medium text-indigo-600  transition duration-200 hover:text-white hover:bg-indigo-500 active:bg-indigo-600 border border-indigo-600"
+  );
+  btnEl2.setAttribute("style", "transform: rotate(90deg)");
+  btnEl2.appendChild(document.createTextNode("<"));
 
   btnEl2.addEventListener("click", function () {
     // 리스트 에서 마커 이동
@@ -249,8 +256,12 @@ let addAnswer = function (title, marker) {
   //아래 버튼 추가
   let btnEl3 = document.createElement("button");
   btnEl3.setAttribute("type", "button");
-  btnEl3.setAttribute("class", "btn btn-outline-danger btn-sm");
-  btnEl3.appendChild(document.createTextNode("아래"));
+  btnEl3.setAttribute(
+    "class",
+    "mr-2 rounded-xl bg-white px-2 py-1 text-base font-medium text-indigo-600 transition duration-200 hover:text-white hover:bg-indigo-500 active:bg-indigo-600 border border-indigo-600"
+  );
+  btnEl3.setAttribute("style", "transform: rotate(90deg)");
+  btnEl3.appendChild(document.createTextNode(">"));
   btnEl3.addEventListener("click", function () {
     // 리스트 에서 마커 이동
     for (var i = 0; i < tripPlanList.value.length; i++) {
@@ -283,10 +294,9 @@ let addAnswer = function (title, marker) {
   });
 
   divEl2.appendChild(inputEl);
-  divEl2.appendChild(btnEl);
   divEl2.appendChild(btnEl2);
   divEl2.appendChild(btnEl3);
-
+  divEl2.appendChild(btnEl);
   divEl.appendChild(divEl2);
   listDiv.appendChild(divEl);
 };

@@ -1,12 +1,11 @@
 <script setup>
-import { ref, watch, onMounted, toRaw } from "vue";
+import { ref, watch, onMounted } from "vue";
 
 var map;
 var clusterer;
 const positions = ref([]);
 const markers = ref([]);
 const infowindows = ref([]);
-const tripPlanList = ref([]);
 const tripPlanPosList = ref([]);
 
 const props = defineProps({ stations: Array, selectStation: Object });
@@ -108,10 +107,10 @@ const loadMarkers = () => {
       img = "/src/assets/about-bg.jpg";
     }
     var contentVal =
-      '        <div class="container border-1" style="padding: 5px; width: 250px; height: 200px;">' +
+      '        <div class="mb-10" style="padding: 5px;">' +
       `           <div> ${position.title} </div>` +
-      `           <img src="${img}" class="m-auto" width="150px" height="100px"/>` +
-      `        <span>${position.addr1}</span> </div>`;
+      `           <img src="${img}" class="m-auto" width="150px" height="auto"/>` +
+      `        <div>${position.addr1}</div> </div>`;
     var infowindow = new kakao.maps.InfoWindow({
       content: contentVal,
     });
@@ -148,7 +147,9 @@ const deleteMarkers = () => {
 };
 
 function hiderMarksersInCluster(clusterer) {
-  clusterer.clear();
+  if (clusterer != null) {
+    clusterer.clear();
+  }
 }
 
 var polyline = null;

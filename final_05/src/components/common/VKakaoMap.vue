@@ -99,10 +99,10 @@ const loadMarkers = () => {
       img = "/src/assets/about-bg.jpg";
     }
     var contentVal =
-      '        <div class="container border-1" style="padding: 5px; width: 250px; height: 200px;">' +
+      '        <div class="mb-10" style="padding: 5px;">' +
       `           <div> ${position.title} </div>` +
-      `           <img src="${img}" class="m-auto" width="150px" height="100px"/>` +
-      `        <span>${position.addr1}</span> </div>`;
+      `           <img src="${img}" class="m-auto" width="150px" height="auto"/>` +
+      `        <div>${position.addr1}</div> </div>`;
     var infowindow = new kakao.maps.InfoWindow({
       content: contentVal,
     });
@@ -116,7 +116,7 @@ const loadMarkers = () => {
       infowindows.value[i].open(map, markers.value[i]);
     });
 
-    // 마커에 마우스아웃 이벤트를 등록합니다
+    // // 마커에 마우스아웃 이벤트를 등록합니다
     kakao.maps.event.addListener(markers.value[i], "mouseout", function () {
       // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
       infowindows.value[i].close();

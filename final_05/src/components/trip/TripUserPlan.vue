@@ -14,11 +14,15 @@ const selectStation = ref({});
 const planList = ref([]);
 
 onMounted(() => {
+  if (sessionStorage.getItem("userId") == null) {
+    alert("로그인이 필요한 화면입니다.");
+    router.push({ name: "user-login" });
+  }
   getTripList();
 });
 
-const getTripList = () => {
-  getPlanList(
+const getTripList = async () => {
+  await getPlanList(
     userInfo.value,
     ({ data }) => {
       planList.value = data;
