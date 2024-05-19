@@ -47,6 +47,18 @@ function onDeleteArticle() {
     }
   );
 }
+function getImageUrl(article) {
+  if (article && article.fileInfo) {
+    return (
+      "/src/assets/upload/" +
+      article.fileInfo.saveFolder +
+      "/" +
+      article.fileInfo.saveFile
+    );
+  } else {
+    return "";
+  }
+}
 </script>
 
 <template>
@@ -54,7 +66,7 @@ function onDeleteArticle() {
     <div class="flex justify-center">
       <div
         class="w-full lg:w-10/12 text-start bg-white shadow-md rounded-lg p-5">
-        <img :src="article.img" />
+        <img :src="getImageUrl(article)" />
         <VArticle :article="article" />
         <div class="border-t my-3"></div>
         <div class="flex justify-between mt-10">

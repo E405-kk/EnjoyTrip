@@ -46,7 +46,7 @@ public class HotplaceServiceImpl implements HotplaceService{
 		List<HotplaceDto> list = hotplaceDao.list(param);
 		for (int i = 0; i < list.size(); i++) {
 			FileInfoDto fileInfoDto = hotplaceDao.fileInfo(list.get(i).getArticleNo());
-			list.get(i).setImg("/upload/" +  fileInfoDto.getSaveFolder() + "/" + fileInfoDto.getSaveFile());
+			list.get(i).setFileInfo(fileInfoDto);
 		}
 		
 		int totalArticleCount = hotplaceDao.getTotalArticleCount(param);
@@ -64,7 +64,7 @@ public class HotplaceServiceImpl implements HotplaceService{
 	public HotplaceDto detail(int articleNo) {
 		FileInfoDto fileInfoDto = hotplaceDao.fileInfo(articleNo);
 		HotplaceDto hotplaceDto = hotplaceDao.getArticle(articleNo);
-		hotplaceDto.setImg("/upload/" +  fileInfoDto.getSaveFolder() + "/" + fileInfoDto.getSaveFile());
+		hotplaceDto.setFileInfo(fileInfoDto);
 		return hotplaceDto;
 	}
 

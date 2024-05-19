@@ -12,16 +12,7 @@ public class HotplaceDto {
 	private String registerTime;
 	private int commentCnt;
 	private int good;
-	private String img;
 	
-	public String getImg() {
-		return img;
-	}
-
-	public void setImg(String img) {
-		this.img = img;
-	}
-
 	public String getUserName() {
 		return userName;
 	}
@@ -109,7 +100,6 @@ public class HotplaceDto {
 	public String toString() {
 		return "HotplaceDto [articleNo=" + articleNo + ", userId=" + userId + ", userName=" + userName + ", subject="
 				+ subject + ", content=" + content + ", hit=" + hit + ", registerTime=" + registerTime + ", commentCnt="
-				+ commentCnt + ", good=" + good + ", img=" + img + ", fileInfo=" + fileInfo + "]";
+				+ commentCnt + ", good=" + good + ", fileInfo=" + fileInfo + "]";
 	}
-
 }

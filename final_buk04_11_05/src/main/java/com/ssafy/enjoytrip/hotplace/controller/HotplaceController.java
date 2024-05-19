@@ -3,7 +3,6 @@ package com.ssafy.enjoytrip.hotplace.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
@@ -17,7 +16,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -70,9 +68,11 @@ public class HotplaceController {
 	
 		if (slangFinded == null) {
 			if (file != null) {
-				String realPath = servletContext.getRealPath("/upload");
+				String realPath = servletContext.getRealPath("\\");
+				String projectPath = realPath.replace("\\final_buk04_11_05\\src\\main\\webapp", "");
+				
 				String today = new SimpleDateFormat("yyMMdd").format(new Date());
-				String saveFolder = realPath + File.separator + today;
+				String saveFolder = projectPath + File.separator + "final_05\\src\\assets\\upload" + File.separator + today;
 				File folder = new File(saveFolder);
 				if (!folder.exists())
 					folder.mkdirs();
@@ -107,7 +107,6 @@ public class HotplaceController {
 	@GetMapping("/detail/{articleNo}")
 	public ResponseEntity<?> detail(@PathVariable int articleNo){
 		HotplaceDto hotplaceDto = hotplaceService.detail(articleNo);
-		System.out.println(hotplaceDto.getImg());
 		hotplaceService.updateHit(articleNo);
 		return ResponseEntity.ok(hotplaceDto);
 	}
