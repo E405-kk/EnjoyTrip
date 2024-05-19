@@ -2,6 +2,7 @@
 defineProps({ comment: Object });
 const emit = defineEmits(["commentChange"]);
 
+const userId = sessionStorage.getItem("userId");
 function onCommentChange(idx) {
   emit("commentChange", idx);
 }
@@ -9,12 +10,14 @@ function onCommentChange(idx) {
 
 <template>
   <div class="flex items-center mb-2">
-    <img
+    <!-- <img
       class="w-10 h-10 rounded-full mr-3"
       src="@/assets/plane.png"
-      alt="User Avatar" />
+      alt="User Avatar" /> -->
     <div>
-      <p class="font-semibold text-gray-700">{{ comment.userId }}</p>
+      <div>
+        <p class="font-semibold text-gray-700">{{ comment.userId }}</p>
+      </div>
       <p class="text-sm text-gray-500">{{ comment.registerTime }}</p>
     </div>
   </div>
