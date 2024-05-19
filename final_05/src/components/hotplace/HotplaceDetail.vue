@@ -64,9 +64,12 @@ function getImageUrl(article) {
 <template>
   <div class="container mx-auto p-5">
     <div class="flex justify-center">
+      <img
+        :src="getImageUrl(article)"
+        class="max-w-full h-auto"
+        style="width: 40%; max-width: 40%; height: auto" />
       <div
         class="w-full lg:w-10/12 text-start bg-white shadow-md rounded-lg p-5">
-        <img :src="getImageUrl(article)" />
         <VArticle :article="article" />
         <div class="border-t my-3"></div>
         <div class="flex justify-between mt-10">

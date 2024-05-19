@@ -1,9 +1,14 @@
 <script setup>
 const props = defineProps({ article: Object });
 function getImageUrl(article) {
-  var url = "/src/assets/upload/";
-  url += article.fileInfo.saveFolder + "/" + article.fileInfo.saveFile;
-  return url;
+  if (article.fileInfo != null) {
+    var url = "/src/assets/upload/";
+    url += article.fileInfo.saveFolder + "/" + article.fileInfo.saveFile;
+
+    return url;
+  } else {
+    return "/src/assets/about-bg.jpg";
+  }
 }
 </script>
 

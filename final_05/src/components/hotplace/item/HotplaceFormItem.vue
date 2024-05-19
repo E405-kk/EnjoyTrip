@@ -11,7 +11,7 @@ const route = useRoute();
 const props = defineProps({ type: String });
 
 const isUseId = ref(false);
-
+const imagePreview = ref("");
 const article = ref({
   articleNo: 0,
   subject: "",
@@ -20,6 +20,11 @@ const article = ref({
   userName: "",
   hit: 0,
   registerTime: "",
+  fileInfo: {
+    saveFile: "",
+    saveFolder: "",
+    originalFile: "",
+  },
 });
 
 if (props.type === "modify") {
@@ -30,6 +35,7 @@ if (props.type === "modify") {
     ({ data }) => {
       article.value = data;
       isUseId.value = true;
+      getImageUrl();
     },
     (error) => {
       console.log(error);
@@ -74,11 +80,9 @@ function onSubmit() {
 function writeArticle() {
   var formData = new FormData();
   var photoFile = document.getElementById("photo");
-  console.log(photoFile.files[0]);
   const blob = new Blob([JSON.stringify(article.value)], {
     type: "application/json",
   });
-  console.log(blob);
   const config = {
     headers: {
       "Content-Type": "multipart/form-data",
@@ -87,12 +91,12 @@ function writeArticle() {
 
   formData.append("file", photoFile.files[0]);
   formData.append("hotplaceDto", blob);
-  console.log(formData);
   registArticle(
     formData,
     config,
     (response) => {
       let msg = response.data;
+      console.log(response);
       if (response.status == 201) {
         msg = "글등록이 완료되었습니다.";
         alert(msg);
@@ -106,8 +110,23 @@ function writeArticle() {
 }
 
 function updateArticle() {
+  var formData = new FormData();
+  var photoFile = document.getElementById("photo");
+
+  const blob = new Blob([JSON.stringify(article.value)], {
+    type: "application/json",
+  });
+  const config = {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  };
+
+  formData.append("file", photoFile.files[0]);
+  formData.append("hotplaceDto", blob);
   modifyArticle(
-    article.value,
+    formData,
+    config,
     (response) => {
       let msg = "글수정 처리시 문제 발생했습니다.";
       if (response.status == 200) msg = "글정보 수정이 완료되었습니다.";
@@ -121,6 +140,35 @@ function updateArticle() {
 function moveList() {
   router.replace({ name: "hotplace-list" });
 }
+
+const previewImage = (event) => {
+  const file = event.target.files[0];
+  if (file && file.type.startsWith("image/")) {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      imagePreview.value = reader.result;
+    };
+  } else {
+    // 파일이 이미지가 아닌 경우에 대한 처리
+    console.error("이미지 파일을 선택해주세요.");
+  }
+};
+function getImageUrl() {
+  if (article.value == null) {
+    return null;
+  }
+  if (article.value.fileInfo != null) {
+    var url = "/src/assets/upload/";
+    url +=
+      article.value.fileInfo.saveFolder + "/" + article.value.fileInfo.saveFile;
+    imagePreview.value = url;
+    return url;
+  } else {
+    imagePreview.value = "/src/assets/about-bg.jpg";
+    return "/src/assets/about-bg.jpg";
+  }
+}
 </script>
 
 <template>
@@ -131,16 +179,28 @@ function moveList() {
         <div class="flex">
           <label
             class="w-60 mr-6 flex flex-col items-center justify-center px-4 py-6 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-white">
-            <svg
-              class="w-10 h-10"
-              fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20">
-              <path
-                d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
-            </svg>
-            <span class="mt-2 text-base leading-normal">사진 업로드</span>
-            <input type="file" class="hidden" name="photo" id="photo" />
+            <div v-if="imagePreview">
+              <img :src="imagePreview" class="fluid-container" />
+            </div>
+            <template v-else>
+              <svg
+                class="w-10 h-10"
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20">
+                <path
+                  d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
+              </svg>
+              <span class="mt-2 text-base leading-normal"> 사진 업로드</span>
+            </template>
+
+            <input
+              type="file"
+              class="hidden"
+              name="photo"
+              id="photo"
+              @change="previewImage"
+              accept="image/*" />
           </label>
 
           <div class="flex-1 space-y-4">
@@ -168,14 +228,14 @@ function moveList() {
           <button
             type="submit"
             class="px-6 py-2 mx-auto rounded-md text-lg font-semibold text-emerald-50 bg-emerald-600"
-            @click="onSubmit"
+            @click.prevent="onSubmit"
             v-if="type === 'regist'">
             글작성
           </button>
           <button
             type="submit"
             class="px-6 py-2 mx-auto rounded-md text-lg font-semibold text-emerald-50 bg-emerald-600"
-            @click="onSubmit"
+            @click.prevent="onSubmit"
             v-else>
             글수정
           </button>

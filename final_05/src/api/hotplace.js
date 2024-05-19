@@ -19,11 +19,8 @@ function getModifyArticle(articleno, success, fail) {
   local.get(`/hotplace/modify/${articleno}`).then(success).catch(fail);
 }
 
-function modifyArticle(article, success, fail) {
-  local
-    .put(`/hotplace/modify`, JSON.stringify(article))
-    .then(success)
-    .catch(fail);
+function modifyArticle(article, config, success, fail) {
+  local.put(`/hotplace/modify`, article, config).then(success).catch(fail);
 }
 
 function deleteArticle(articleno, success, fail) {

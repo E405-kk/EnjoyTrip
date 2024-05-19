@@ -27,7 +27,7 @@ public class HotplaceServiceImpl implements HotplaceService{
 	@Override
 	public int regist(HotplaceDto hotplaceDto) {
 		int articleNo = hotplaceDao.regist(hotplaceDto);
-		hotplaceDto.setArticleNo(articleNo);
+		hotplaceDto.setArticleNo(hotplaceDto.getArticleNo());
 		return hotplaceDao.registerFile(hotplaceDto);
 	}
 
@@ -46,7 +46,9 @@ public class HotplaceServiceImpl implements HotplaceService{
 		List<HotplaceDto> list = hotplaceDao.list(param);
 		for (int i = 0; i < list.size(); i++) {
 			FileInfoDto fileInfoDto = hotplaceDao.fileInfo(list.get(i).getArticleNo());
-			list.get(i).setFileInfo(fileInfoDto);
+			if (fileInfoDto != null) {
+				list.get(i).setFileInfo(fileInfoDto);
+			}
 		}
 		
 		int totalArticleCount = hotplaceDao.getTotalArticleCount(param);
@@ -75,6 +77,9 @@ public class HotplaceServiceImpl implements HotplaceService{
 
 	@Override
 	public int modify(HotplaceDto hotplaceDto) {
+		FileInfoDto fileInfo = hotplaceDto.getFileInfo();
+		fileInfo.setArticleNo(hotplaceDto.getArticleNo());
+		hotplaceDao.update(fileInfo);
 		return hotplaceDao.modify(hotplaceDto);
 	}
 

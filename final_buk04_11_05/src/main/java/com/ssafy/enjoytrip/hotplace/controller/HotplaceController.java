@@ -65,16 +65,13 @@ public class HotplaceController {
 				break;
 			}
 		}
-		System.out.println(file + " : " + hotplaceDto);
 		String realPath = servletContext.getRealPath("/");
-		String projectPath = realPath.replace("/final_buk04_11_05/src/main/webapp", "");
-		
+		String projectPath = realPath.replace("\\final_buk04_11_05\\src\\main\\webapp", "");
 		String today = new SimpleDateFormat("yyMMdd").format(new Date());
 		String saveFolder = projectPath  + "final_05/src/assets/upload" + File.separator + today;
 		if (slangFinded == null) {
 			if (file != null) {
 				File folder = new File(saveFolder);
-				System.out.println(saveFolder);
 				if (!folder.exists())
 					folder.mkdirs();
 				FileInfoDto fileInfoDto = new FileInfoDto();
@@ -88,16 +85,17 @@ public class HotplaceController {
 					file.transferTo(new File(folder, saveFileName));
 				}
 				hotplaceDto.setFileInfo(fileInfoDto);
+				
 			}
 			else {
 				FileInfoDto fileInfoDto = new FileInfoDto();
 				fileInfoDto.setSaveFile("about-bg.jpg");
-				fileInfoDto.setSaveFolder(projectPath  + "final_05/src/assets");
+				fileInfoDto.setSaveFolder("");
+				fileInfoDto.setOriginalFile("");
 				hotplaceDto.setFileInfo(fileInfoDto);
 			}
-			
 			int result = hotplaceService.regist(hotplaceDto);
-		
+			
 			return new ResponseEntity<Void>(HttpStatus.CREATED);
 		} else {	// 욕설 있을 경우
 			String msg = "["+ slangFinded + "] 는 부적절한 단어입니다. 내용을 수정해주세요.";
@@ -117,9 +115,54 @@ public class HotplaceController {
 	}
 
 	@PutMapping("/modify")
-	public ResponseEntity<?> modify(@RequestBody HotplaceDto hotplaceDto){
-		int result = hotplaceService.modify(hotplaceDto);
-		return ResponseEntity.ok(result);
+	public ResponseEntity<?> modify(@RequestParam(value = "file", required = false) MultipartFile file,
+			@RequestPart HotplaceDto hotplaceDto, HttpServletRequest request) throws IllegalStateException, IOException{
+		List<String> slangs = hotplaceService.getSlang();
+		String full = hotplaceDto.getSubject() + " " +  hotplaceDto.getContent();
+		String slangFinded = null;		// 발견한 욕설(첫번째)
+		for (String slang : slangs) {
+			if (kmp(full, slang)) { // 욕설 있을 경우
+				slangFinded = slang;
+				break;
+			}
+		}
+		String realPath = servletContext.getRealPath("/");
+		String projectPath = realPath.replace("\\final_buk04_11_05\\src\\main\\webapp", "");
+		String today = new SimpleDateFormat("yyMMdd").format(new Date());
+		String saveFolder = projectPath  + "final_05/src/assets/upload" + File.separator + today;
+		if (slangFinded == null) {
+			if (file != null) {
+				File folder = new File(saveFolder);
+				if (!folder.exists())
+					folder.mkdirs();
+				FileInfoDto fileInfoDto = new FileInfoDto();
+				String originalFileName = file.getOriginalFilename();
+				if (!originalFileName.isEmpty()) {
+					String saveFileName = UUID.randomUUID().toString()
+							+ originalFileName.substring(originalFileName.lastIndexOf('.'));
+					fileInfoDto.setSaveFolder(today);
+					fileInfoDto.setOriginalFile(originalFileName);
+					fileInfoDto.setSaveFile(saveFileName);
+					file.transferTo(new File(folder, saveFileName));
+				}
+				hotplaceDto.setFileInfo(fileInfoDto);
+				
+			}
+			else {
+				FileInfoDto fileInfoDto = new FileInfoDto();
+				fileInfoDto.setSaveFile("about-bg.jpg");
+				fileInfoDto.setSaveFolder("");
+				fileInfoDto.setOriginalFile("");
+				hotplaceDto.setFileInfo(fileInfoDto);
+			}
+			int result = hotplaceService.modify(hotplaceDto);
+			
+			return new ResponseEntity<Void>(HttpStatus.OK);
+		} else {	// 욕설 있을 경우
+			String msg = "["+ slangFinded + "] 는 부적절한 단어입니다. 내용을 수정해주세요.";
+			return ResponseEntity.ok(msg);
+		}
+		
 	}
 
 	@DeleteMapping("/remove/{articleNo}")

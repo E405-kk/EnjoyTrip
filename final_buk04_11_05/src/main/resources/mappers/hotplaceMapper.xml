@@ -11,12 +11,9 @@
 		and b.article_no = #{articleNo}
 	</select>
 	
-	<insert id="regist" parameterType="HotplaceDto">
+	<insert id="regist" parameterType="HotplaceDto" useGeneratedKeys="true" keyProperty="articleNo">
 		insert into hotplace (user_id, subject, content)
 		values (#{userId}, #{subject}, #{content})
-		<selectKey resultType="int" keyProperty="articleNo" order="AFTER">
-			select last_insert_id()
-		</selectKey>
 	</insert>
 	<sql id="search">
 		<if test="word != null and word != ''">
@@ -80,4 +77,9 @@
 		delete from file_info
 		where article_no = #{articleNo}
 	</delete>
+	<update id="update" parameterType="FileInfoDto">
+		update file_info
+		set save_folder = #{saveFolder}, original_file = #{originalFile}, save_file = #{saveFile}
+		where article_no = #{articleNo}
+	</update>
 </mapper>
