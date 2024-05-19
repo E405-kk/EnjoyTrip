@@ -1,10 +1,12 @@
 package com.ssafy.enjoytrip.hotplace.service;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.tomcat.jni.FileInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +19,12 @@ import jakarta.servlet.ServletContext;
 
 @Service
 public class HotplaceServiceImpl implements HotplaceService{
-	
+
 	private final HotplaceDao hotplaceDao;
-	
+
+	@Autowired
+	private ServletContext servletContext;
+
 	public HotplaceServiceImpl(HotplaceDao hotplaceDao) {
 		this.hotplaceDao = hotplaceDao;
 	}
@@ -50,7 +55,7 @@ public class HotplaceServiceImpl implements HotplaceService{
 				list.get(i).setFileInfo(fileInfoDto);
 			}
 		}
-		
+
 		int totalArticleCount = hotplaceDao.getTotalArticleCount(param);
 		int totalPageCount = (totalArticleCount - 1) / sizePerPage + 1;
 
@@ -77,7 +82,20 @@ public class HotplaceServiceImpl implements HotplaceService{
 
 	@Override
 	public int modify(HotplaceDto hotplaceDto) {
-		FileInfoDto fileInfo = hotplaceDto.getFileInfo();
+		FileInfoDto fileInfo = hotplaceDao.fileInfo(hotplaceDto.getArticleNo());
+		if (fileInfo.getSaveFile() != "about-bg.jpg") {
+			String realPath = servletContext.getRealPath("/");
+			String projectPath = realPath.replace(File.separator + "final_buk04_11_05" + File.separator + "src" + File.separator + "main" + File.separator + "webapp", "");
+			String saveFolder = projectPath  + File.separator + "final_05" + File.separator + "src" + File.separator + "assets" + File.separator + "upload";
+			String filePath = saveFolder + File.separator + fileInfo.getSaveFolder() + File.separator + fileInfo.getSaveFile();
+			File file = new File(filePath);
+			if (file.delete()) {
+				System.out.println("파일이 성공적으로 삭제되었습니다.");
+			} else {
+				System.out.println("파일을 삭제하는 데 문제가 발생했습니다.");
+			}
+		}
+		fileInfo = hotplaceDto.getFileInfo();
 		fileInfo.setArticleNo(hotplaceDto.getArticleNo());
 		hotplaceDao.update(fileInfo);
 		return hotplaceDao.modify(hotplaceDto);
@@ -85,6 +103,20 @@ public class HotplaceServiceImpl implements HotplaceService{
 
 	@Override
 	public int remove(int articleNo) {
+		FileInfoDto fileInfo = hotplaceDao.fileInfo(articleNo);
+		if (fileInfo.getSaveFile() != "about-bg.jpg") {
+			String realPath = servletContext.getRealPath("/");
+			String projectPath = realPath.replace(File.separator + "final_buk04_11_05" + File.separator + "src" + File.separator + "main" + File.separator + "webapp", "");
+			String saveFolder = projectPath  + File.separator + "final_05" + File.separator + "src" + File.separator + "assets" + File.separator + "upload";
+			String filePath = saveFolder + File.separator + fileInfo.getSaveFolder() + File.separator + fileInfo.getSaveFile();
+			File file = new File(filePath);
+			if (file.delete()) {
+				System.out.println("파일이 성공적으로 삭제되었습니다.");
+			} else {
+				System.out.println("파일을 삭제하는 데 문제가 발생했습니다.");
+			}
+		}
+		hotplaceDao.deleteFile(articleNo);
 		return hotplaceDao.remove(articleNo);
 	}
 

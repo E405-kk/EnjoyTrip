@@ -66,9 +66,9 @@ public class HotplaceController {
 			}
 		}
 		String realPath = servletContext.getRealPath("/");
-		String projectPath = realPath.replace("\\final_buk04_11_05\\src\\main\\webapp", "");
+		String projectPath = realPath.replace(File.separator + "final_buk04_11_05" + File.separator + "src" + File.separator + "main" + File.separator + "webapp", "");
 		String today = new SimpleDateFormat("yyMMdd").format(new Date());
-		String saveFolder = projectPath  + "final_05/src/assets/upload" + File.separator + today;
+		String saveFolder = projectPath  + File.separator + "final_05" + File.separator + "src" + File.separator + "assets" + File.separator + "upload" + File.separator + today;
 		if (slangFinded == null) {
 			if (file != null) {
 				File folder = new File(saveFolder);
@@ -127,9 +127,9 @@ public class HotplaceController {
 			}
 		}
 		String realPath = servletContext.getRealPath("/");
-		String projectPath = realPath.replace("\\final_buk04_11_05\\src\\main\\webapp", "");
+		String projectPath = realPath.replace(File.separator + "final_buk04_11_05" + File.separator + "src" + File.separator + "main" + File.separator + "webapp", "");
 		String today = new SimpleDateFormat("yyMMdd").format(new Date());
-		String saveFolder = projectPath  + "final_05/src/assets/upload" + File.separator + today;
+		String saveFolder = projectPath  + File.separator + "final_05" + File.separator + "src" + File.separator + "assets" + File.separator + "upload" + File.separator + today;
 		if (slangFinded == null) {
 			if (file != null) {
 				File folder = new File(saveFolder);

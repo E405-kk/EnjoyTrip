@@ -40,7 +40,10 @@ function onDeleteArticle() {
   deleteArticle(
     articleno,
     (response) => {
-      if (response.status == 200) moveList();
+      if (response.status == 200) {
+        alert("글이 삭제 되었습니다.");
+        moveList();
+      }
     },
     (error) => {
       console.log(error);
