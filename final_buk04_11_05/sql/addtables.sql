@@ -91,9 +91,9 @@ CREATE TABLE IF NOT EXISTS `comment` (
 	`content` varchar(2000) DEFAULT NULL,
 	`register_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (`idx`),
-	KEY `comment_to_hotplace_article_no_fk` (`article_no`),
-	CONSTRAINT `comment_to_hotplace_article_no_fk` FOREIGN KEY (`article_no`) REFERENCES `hotplace` (`article_no`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3
+	KEY `comment_to_board_article_no_fk` (`article_no`),
+	CONSTRAINT `comment_to_board_article_no_fk` FOREIGN KEY (`article_no`) REFERENCES `board` (`article_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 INSERT INTO slang (word)
 VALUES 

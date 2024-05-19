@@ -2,7 +2,7 @@
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { detailArticle, deleteArticle } from "@/api/board";
-import { listComment } from "@/api/comment";
+import { listComment, deleteComment } from "@/api/comment";
 import VArticle from "@/components/common/VArticle.vue";
 import PageNavigation from "@/components/common/PageNavigation.vue";
 import CommentFormItem from "@/components/board/item/CommentFormItem.vue";
@@ -86,7 +86,36 @@ const onPageChange = (val) => {
   getCommentList();
 };
 
-const onCommentChange = (val) => {};
+const handleUpdateComment = (commentIdx, newComment) => {
+  // 댓글 데이터 업데이트 로직 (CommentFormItem에서 처리)
+  const comment = comments.value.find((comment) => comment.idx === commentIdx);
+  if (comment) {
+    console.log(newComment.content);
+    comment.content = newComment.content;
+    console.log(comment.content);
+  }
+};
+
+const handleDeleteComment = (commentIdx) => {
+  // 댓글 삭제 로직
+  deleteComment(
+    commentIdx,
+    (response) => {
+      if (response.status == 200) {
+        // 출력
+        comments.value = comments.value.filter(
+          (comment) => comment.idx !== commentIdx
+        );
+      }
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+};
+const handleWriteComment = () => {
+  getCommentList();
+};
 </script>
 
 <template>
@@ -127,7 +156,9 @@ const onCommentChange = (val) => {};
             <CommentListItem
               v-for="comment in comments"
               :key="comment.idx"
-              :comment="comment"></CommentListItem>
+              :comment="comment"
+              @update-comment="handleUpdateComment"
+              @delete-comment="handleDeleteComment"></CommentListItem>
           </div>
           <div v-if="comments.length === 0" class="text-gray-500">
             댓글이 없습니다.
@@ -141,7 +172,8 @@ const onCommentChange = (val) => {};
           <CommentFormItem
             v-if="userId"
             type="regist"
-            :articleno="article.articleNo"></CommentFormItem>
+            @write-comment="handleWriteComment"
+            :articleno="articleno"></CommentFormItem>
         </div>
       </div>
     </div>

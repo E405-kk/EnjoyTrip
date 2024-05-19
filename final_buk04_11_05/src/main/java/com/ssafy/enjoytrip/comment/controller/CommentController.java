@@ -61,6 +61,7 @@ public class CommentController {
 	@PutMapping("/modify")
 	public ResponseEntity<?> modify(@RequestBody CommentDto commentDto) {
 		int result = commentService.modify(commentDto);
+		System.out.println("modify: "+ commentDto);
 		return ResponseEntity.ok(result);
 	}
 
@@ -73,8 +74,6 @@ public class CommentController {
 	@GetMapping("/list")
 	public ResponseEntity<?> list(@RequestParam Map<String, String> map) {
 		CommentListDto commentListDto = commentService.list(map);
-		System.out.println("CommentController - articleno: "+map.get(("articleno")));
-		System.out.println(commentListDto);
 		HttpHeaders header = new HttpHeaders();
 		header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
 		return ResponseEntity.ok().headers(header).body(commentListDto);
