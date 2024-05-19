@@ -86,16 +86,7 @@ const onPageChange = (val) => {
   getCommentList();
 };
 
-// watch(
-//   () => comment.value.content,
-//   (value) => {
-//     let len = value.length;
-//     if (len == 0 || len > 500) {
-//       contentErrMsg.value = "내용을 확인해 주세요!!!";
-//     } else contentErrMsg.value = "";
-//   },
-//   { immediate: true }
-// );
+const onCommentChange = (val) => {};
 </script>
 
 <template>

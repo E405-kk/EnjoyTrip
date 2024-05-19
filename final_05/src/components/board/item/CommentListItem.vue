@@ -1,5 +1,10 @@
 <script setup>
 defineProps({ comment: Object });
+const emit = defineEmits(["commentChange"]);
+
+function onCommentChange(idx) {
+  emit("commentChange", idx);
+}
 </script>
 
 <template>

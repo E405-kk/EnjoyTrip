@@ -65,15 +65,16 @@ public class HotplaceController {
 				break;
 			}
 		}
-	
+		System.out.println(file + " : " + hotplaceDto);
+		String realPath = servletContext.getRealPath("/");
+		String projectPath = realPath.replace("/final_buk04_11_05/src/main/webapp", "");
+		
+		String today = new SimpleDateFormat("yyMMdd").format(new Date());
+		String saveFolder = projectPath  + "final_05/src/assets/upload" + File.separator + today;
 		if (slangFinded == null) {
 			if (file != null) {
-				String realPath = servletContext.getRealPath("\\");
-				String projectPath = realPath.replace("\\final_buk04_11_05\\src\\main\\webapp", "");
-				
-				String today = new SimpleDateFormat("yyMMdd").format(new Date());
-				String saveFolder = projectPath + File.separator + "final_05\\src\\assets\\upload" + File.separator + today;
 				File folder = new File(saveFolder);
+				System.out.println(saveFolder);
 				if (!folder.exists())
 					folder.mkdirs();
 				FileInfoDto fileInfoDto = new FileInfoDto();
@@ -91,7 +92,7 @@ public class HotplaceController {
 			else {
 				FileInfoDto fileInfoDto = new FileInfoDto();
 				fileInfoDto.setSaveFile("about-bg.jpg");
-				fileInfoDto.setSaveFolder("default");
+				fileInfoDto.setSaveFolder(projectPath  + "final_05/src/assets");
 				hotplaceDto.setFileInfo(fileInfoDto);
 			}
 			
