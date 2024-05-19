@@ -9,7 +9,7 @@ import com.ssafy.enjoytrip.comment.model.CommentListDto;
 public interface CommentService {
 
 	int regist(CommentDto commentDto);
-	CommentListDto list(Map<String, Object> map);
+	CommentListDto list(Map<String, String> map);
 	int modify(CommentDto commentDto);
 	int remove(int idx);
 	List<String> getSlang();

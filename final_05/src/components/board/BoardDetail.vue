@@ -2,16 +2,28 @@
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { detailArticle, deleteArticle } from "@/api/board";
+import { listComment } from "@/api/comment";
 import VArticle from "@/components/common/VArticle.vue";
-import BoardComment from "./BoardComment.vue";
+import PageNavigation from "@/components/common/PageNavigation.vue";
+import CommentFormItem from "@/components/board/item/CommentFormItem.vue";
+import CommentListItem from "@/components/board/item/CommentListItem.vue";
 
 const userId = sessionStorage.getItem("userId");
 
 const route = useRoute();
 const router = useRouter();
 
-const { articleno } = route.params;
+const comments = ref([]);
+const currentPage = ref(1);
+const totalPage = ref(0);
+const { VITE_ARTICLE_LIST_SIZE } = import.meta.env;
 
+const { articleno } = route.params;
+const param = ref({
+  pgno: currentPage.value,
+  spp: VITE_ARTICLE_LIST_SIZE,
+  articleno: 0,
+});
 const article = ref({});
 
 onMounted(() => {
@@ -23,6 +35,10 @@ const getArticle = () => {
     articleno,
     ({ data }) => {
       article.value = data;
+      console.log(data);
+      param.value.articleno = articleno;
+      console.log(param.value.articleno);
+      getCommentList();
     },
     (error) => {
       console.log(error);
@@ -49,6 +65,37 @@ function onDeleteArticle() {
     }
   );
 }
+
+const getCommentList = () => {
+  listComment(
+    param.value,
+    ({ data }) => {
+      comments.value = data.articles;
+      currentPage.value = data.currentPage;
+      totalPage.value = data.totalPageCount;
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+};
+
+const onPageChange = (val) => {
+  currentPage.value = val;
+  param.value.pgno = val;
+  getCommentList();
+};
+
+// watch(
+//   () => comment.value.content,
+//   (value) => {
+//     let len = value.length;
+//     if (len == 0 || len > 500) {
+//       contentErrMsg.value = "내용을 확인해 주세요!!!";
+//     } else contentErrMsg.value = "";
+//   },
+//   { immediate: true }
+// );
 </script>
 
 <template>
@@ -83,7 +130,28 @@ function onDeleteArticle() {
           </div>
         </div>
 
-        <BoardComment :article="article" />
+        <div class="bg-white shadow-md rounded-lg p-5 mt-5">
+          <h3 class="text-xl font-semibold text-gray-800 mb-4">댓글</h3>
+          <div class="border-b border-gray-200 pb-4 mb-4">
+            <CommentListItem
+              v-for="comment in comments"
+              :key="comment.idx"
+              :comment="comment"></CommentListItem>
+          </div>
+          <div v-if="comments.length === 0" class="text-gray-500">
+            댓글이 없습니다.
+          </div>
+
+          <PageNavigation
+            :current-page="currentPage"
+            :total-page="totalPage"
+            @pageChange="onPageChange"></PageNavigation>
+
+          <CommentFormItem
+            v-if="userId"
+            type="regist"
+            :articleno="article.articleNo"></CommentFormItem>
+        </div>
       </div>
     </div>
   </div>

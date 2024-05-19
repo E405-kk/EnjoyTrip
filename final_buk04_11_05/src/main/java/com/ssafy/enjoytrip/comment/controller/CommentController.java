@@ -71,9 +71,10 @@ public class CommentController {
 	}
 
 	@GetMapping("/list")
-	public ResponseEntity<?> list(@RequestParam Map<String, Object> map) {
+	public ResponseEntity<?> list(@RequestParam Map<String, String> map) {
 		CommentListDto commentListDto = commentService.list(map);
-		System.out.println("CommentController - list: "+(String)map.get(("articleno")));
+		System.out.println("CommentController - articleno: "+map.get(("articleno")));
+		System.out.println(commentListDto);
 		HttpHeaders header = new HttpHeaders();
 		header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
 		return ResponseEntity.ok().headers(header).body(commentListDto);
