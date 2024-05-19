@@ -55,15 +55,17 @@ function moveModify() {
 }
 
 function onDeleteArticle() {
-  deleteArticle(
-    articleno,
-    (response) => {
-      if (response.status == 200) moveList();
-    },
-    (error) => {
-      console.log(error);
-    }
-  );
+  if (confirm("게시글을 삭제하시겠습니까?")) {
+    deleteArticle(
+      articleno,
+      (response) => {
+        if (response.status == 200) moveList();
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
 }
 
 const getCommentList = () => {
@@ -97,21 +99,26 @@ const handleUpdateComment = (commentIdx, newComment) => {
 };
 
 const handleDeleteComment = (commentIdx) => {
-  // 댓글 삭제 로직
-  deleteComment(
-    commentIdx,
-    (response) => {
-      if (response.status == 200) {
-        // 출력
-        comments.value = comments.value.filter(
-          (comment) => comment.idx !== commentIdx
-        );
+  if (confirm("댓글을 삭제하시겠습니까?")) {
+    // 댓글 삭제 로직
+    deleteComment(
+      commentIdx,
+      (response) => {
+        let msg = response.data;
+        if (response.status == 200) {
+          msg = "댓글 삭제가 완료되었습니다.";
+          // 출력
+          comments.value = comments.value.filter(
+            (comment) => comment.idx !== commentIdx
+          );
+        }
+        alert(msg);
+      },
+      (error) => {
+        console.log(error);
       }
-    },
-    (error) => {
-      console.log(error);
-    }
-  );
+    );
+  }
 };
 const handleWriteComment = () => {
   getCommentList();
@@ -151,7 +158,9 @@ const handleWriteComment = () => {
         </div>
 
         <div class="bg-white shadow-md rounded-lg p-5 mt-5">
-          <h3 class="text-xl font-semibold text-gray-800 mb-4">댓글</h3>
+          <h3 class="text-xl font-semibold text-gray-800 mb-4">
+            댓글 ({{ comments.length }})
+          </h3>
           <div class="border-b border-gray-200 pb-4 mb-4">
             <CommentListItem
               v-for="comment in comments"

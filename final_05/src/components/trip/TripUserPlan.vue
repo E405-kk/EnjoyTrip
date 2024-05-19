@@ -33,19 +33,23 @@ const viewStation = (trip) => {
 };
 
 const resetPlan = () => {
-  deletePlanList(
-    userInfo.value,
-    (response) => {
-      if (response.status === httpStatusCode.OK) {
-        console.log("계획 삭제 성공");
-        getTripList();
-        router.push({ name: "trip-plan" });
+  if (confirm("계획을 삭제하시겠습니까?")) {
+    deletePlanList(
+      userInfo.value,
+      (response) => {
+        let msg = response.data;
+        if (response.status === httpStatusCode.OK) {
+          msg = `계획을 삭제했습니다. 새로운 여행을 계획해보세요!`;
+          getTripList();
+          router.push({ name: "trip-plan" });
+        }
+        alert(msg);
+      },
+      (err) => {
+        console.log(err);
       }
-    },
-    (err) => {
-      console.log(err);
-    }
-  );
+    );
+  }
 };
 </script>
 

@@ -5,6 +5,9 @@ import { addPlanList } from "@/api/map";
 import { httpStatusCode } from "@/util/http-status";
 import VPlanMap from "@/components/common/VPlanMap.vue";
 import VSelect from "@/components/common/VSelect.vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const sidoList = ref([]);
 const tripList = ref([]);
@@ -92,9 +95,12 @@ const addPlan = (plan) => {
   addPlanList(
     plan,
     (response) => {
-      if (response.status === httpStatusCode.CREATE) {
-        console.log("저장 성공!!!!");
+      let msg = response.data;
+      if (response.status === httpStatusCode.OK) {
+        msg = "계획을 저장했습니다.";
+        router.push({ name: "trip-userPlan" });
       }
+      alert(msg);
     },
     (error) => {
       console.error(error);

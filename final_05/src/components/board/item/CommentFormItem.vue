@@ -46,7 +46,7 @@ function writeComment() {
       let msg = response.data;
 
       if (response.status == 201) {
-        msg = "글등록이 완료되었습니다.";
+        msg = "댓글 등록이 완료되었습니다.";
         emit("write-comment");
         // 등록 후에 textarea 비우기
         comment.value.content = "";
