@@ -65,6 +65,7 @@
 		SELECT content_id, content_type_id, title, addr1, addr2, zipcode, tel, first_image, first_image2, readcount, sido_code, gugun_code, latitude, longitude, mlevel
 		FROM attraction_info
 		WHERE readcount >= 1 AND content_type_id = 39
+		AND first_image != ''
 	</select>
 	
 	<delete id="tripPlanDelete" parameterType="userDto">

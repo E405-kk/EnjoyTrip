@@ -2,9 +2,9 @@
 
 <template>
   <!-- component -->
-  <footer class="text-gray-600 body-font">
+  <footer class="text-gray-600 body-font bg-gray-100">
     <div
-      class="container px-5 py-24 mx-auto flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col">
+      class="container px-5 py-5 mx-auto flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col">
       <div
         class="w-64 flex-shrink-0 md:mx-0 mx-auto text-center md:text-left md:mt-0 mt-10">
         <a
@@ -23,15 +23,16 @@
           </svg>
           <span class="ml-3 text-xl">Enjoy Trip</span>
         </a>
-        <p class="mt-2 text-sm text-gray-500">
-          지역 유형별 관광지를 검색하고 나만의 여행 계획을 세워보세요!
+        <p class="mt-4 text-sm text-gray-500">
+          지역/유형별 관광지를 검색하고 <br />
+          나만의 여행 계획을 세워보세요!
         </p>
       </div>
       <div
         class="flex-grow flex flex-wrap md:pr-20 -mb-10 md:text-left text-center order-first">
         <div class="lg:w-1/4 md:w-1/2 w-full px-4">
           <h2
-            class="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">
+            class="title-font font-bold text-gray-900 tracking-widest text-sm mb-3">
             여행
           </h2>
           <nav class="list-none mb-10">
@@ -60,7 +61,7 @@
         </div>
         <div class="lg:w-1/4 md:w-1/2 w-full px-4">
           <h2
-            class="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">
+            class="title-font font-bold text-gray-900 tracking-widest text-sm mb-3">
             게시판
           </h2>
           <nav class="list-none mb-10">
@@ -89,7 +90,7 @@
         </div>
       </div>
     </div>
-    <div class="bg-gray-100">
+    <div class="">
       <div
         class="container mx-auto py-4 px-5 flex flex-wrap flex-col sm:flex-row">
         <p class="text-gray-500 text-sm text-center sm:text-left">

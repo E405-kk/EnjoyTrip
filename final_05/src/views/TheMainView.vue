@@ -43,9 +43,9 @@ const getRankList = () => {
       data-aos-easing="ease-in-out"
       data-aos-offset="100"
       data-aos-duration="1500"
-      data-aos-once="false"
+      data-aos-once="true"
       data-aos-delay="400"
-      style="top: 30%; left: 10%">
+      style="top: 30%; left: 15%">
       <router-link
         class="flex items-center text-lg font-bold text-white md:hover:text-gray-700"
         :to="{ name: 'trip-search' }"
@@ -58,9 +58,9 @@ const getRankList = () => {
       data-aos-easing="ease-in-out"
       data-aos-offset="100"
       data-aos-duration="1500"
-      data-aos-once="false"
+      data-aos-once="true"
       data-aos-delay="800"
-      style="top: 50%; right: 10%">
+      style="top: 50%; right: 15%">
       <router-link
         class="flex items-center text-lg font-bold text-white md:hover:text-gray-700"
         :to="{ name: 'trip-plan' }"
@@ -73,9 +73,9 @@ const getRankList = () => {
       data-aos-easing="ease-in-out"
       data-aos-offset="100"
       data-aos-duration="1000"
-      data-aos-once="false"
-      data-aos-delay="600"
-      style="bottom: 20%; left: 10%">
+      data-aos-once="true"
+      data-aos-delay="0"
+      style="bottom: 20%; left: 15%">
       <router-link
         class="flex items-center text-lg font-bold text-white md:hover:text-gray-700"
         :to="{ name: 'hotplace' }"
@@ -84,8 +84,8 @@ const getRankList = () => {
     </div>
   </div>
   <div id="recommend" class="mx-auto my-20" style="width: 80%">
-    <h2 class="text-left font-bold text-xl mb-4 ml-4">이 달의 추천 여행지</h2>
-    <div class="flex overflow-x-auto scrollbar">
+    <h2 class="text-left font-bold text-2xl ml-4">이 달의 추천 여행지</h2>
+    <div class="py-5 flex overflow-x-auto scrollbar">
       <VCard
         v-for="recommend in recommends"
         :key="recommend.title"
@@ -95,36 +95,13 @@ const getRankList = () => {
   </div>
 
   <div id="rank" class="mx-auto my-20" style="width: 80%">
-    <h2 class="text-left font-bold text-xl mb-4 ml-4">인기 맛집</h2>
-    <div class="flex overflow-x-auto scrollbar">
-      <div
+    <h2 class="text-left font-bold text-2xl ml-4">인기 맛집</h2>
+    <div class="py-5 flex overflow-x-auto scrollbar">
+      <VCard
         v-for="rank in ranks"
         :key="rank.title"
-        :rank="rank"
-        class="flex-none shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 max-w-sm mr-4">
-        <a
-          href=""
-          class="hover:text-orange-600 absolute z-30 top-2 right-0 mt-2 mr-3"></a>
-        <a href="" class="z-20 absolute h-full w-full top-0 left-0">&nbsp;</a>
-        <div class="h-auto overflow-hidden">
-          <div class="h-44 overflow-hidden relative">
-            <img :src="rank.firstImage" alt="" />
-          </div>
-        </div>
-        <div class="bg-white py-4 px-3">
-          <h3 class="text-xs mb-2 font-medium">{{ rank.title }}</h3>
-          <div class="flex justify-between items-center">
-            <p class="text-xs text-gray-400">
-              {{ rank.addr1 }} {{ rank.addr2 }}
-            </p>
-          </div>
-        </div>
-      </div>
-      <!-- <VCard
-        v-for="rank in ranks"
-        :key="rank.title"
-        :rank="rank"
-        class="flex-none shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 max-w-sm mr-4" /> -->
+        :recommend="rank"
+        class="flex-none shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 max-w-sm mr-4" />
     </div>
   </div>
 </template>

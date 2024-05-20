@@ -65,7 +65,7 @@ public class TripServiceImpl implements TripService {
 	
 		sort(list);	
 		
-		for (int i = list.size() - 1; i > list.size() - 7; i-- ) {
+		for (int i = list.size() - 1; i > list.size() - 11; i-- ) {
 			result.add(list.get(i));
 		}
 		return result;
