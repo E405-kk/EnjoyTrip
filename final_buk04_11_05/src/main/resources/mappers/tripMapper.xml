@@ -64,7 +64,7 @@
 	<select id="rankList" resultType="tripDto">
 		SELECT content_id, content_type_id, title, addr1, addr2, zipcode, tel, first_image, first_image2, readcount, sido_code, gugun_code, latitude, longitude, mlevel
 		FROM attraction_info
-		WHERE readcount >= 1
+		WHERE readcount >= 1 AND content_type_id = 39
 	</select>
 	
 	<delete id="tripPlanDelete" parameterType="userDto">
@@ -73,4 +73,12 @@
 		WHERE user_id = #{userId}
 	</delete>
 	
+	<select id="monthlyList" resultType="monthlyDto">
+		SELECT m.mon, m.region, m.title, m.latitude, m.longitude, MAX(d.overview) as overview, MAX(i.addr1) as addr1, MAX(i.addr2) as addr2, MAX(i.first_image) as first_image
+		FROM attraction_info i 
+		JOIN attraction_description d ON i.content_id = d.content_id 
+		JOIN monthly m ON i.title LIKE CONCAT('%', m.title, '%') 
+		WHERE i.first_image != '' AND m.mon = MONTH(CURDATE())
+		GROUP BY m.mon, m.region, m.title, m.latitude, m.longitude;
+	</select>
 </mapper>

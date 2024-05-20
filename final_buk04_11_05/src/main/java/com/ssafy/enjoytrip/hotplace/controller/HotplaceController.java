@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -148,13 +147,14 @@ public class HotplaceController {
 				hotplaceDto.setFileInfo(fileInfoDto);
 				
 			}
-			else {
+			else if (hotplaceDto.getFileInfo() == null){
 				FileInfoDto fileInfoDto = new FileInfoDto();
 				fileInfoDto.setSaveFile("about-bg.jpg");
 				fileInfoDto.setSaveFolder("");
 				fileInfoDto.setOriginalFile("");
 				hotplaceDto.setFileInfo(fileInfoDto);
 			}
+			
 			int result = hotplaceService.modify(hotplaceDto);
 			
 			return new ResponseEntity<Void>(HttpStatus.OK);

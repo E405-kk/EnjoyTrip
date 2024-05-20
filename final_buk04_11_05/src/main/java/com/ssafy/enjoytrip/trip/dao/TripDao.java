@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.ssafy.enjoytrip.trip.model.MonthlyDto;
 import com.ssafy.enjoytrip.trip.model.SidoDto;
 import com.ssafy.enjoytrip.trip.model.TripDto;
 import com.ssafy.enjoytrip.trip.model.TripPlanDto;
@@ -21,4 +22,5 @@ public interface TripDao {
 	List<TripDto> rankList();
 	int tripPlanDelete(UserDto userDto);
 	String tripDetailSearch(int contentId);
+	List<MonthlyDto> monthlyList();
 }

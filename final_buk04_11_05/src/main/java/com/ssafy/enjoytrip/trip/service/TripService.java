@@ -3,7 +3,7 @@ package com.ssafy.enjoytrip.trip.service;
 import java.sql.SQLException;
 import java.util.List;
 
-
+import com.ssafy.enjoytrip.trip.model.MonthlyDto;
 import com.ssafy.enjoytrip.trip.model.SidoDto;
 import com.ssafy.enjoytrip.trip.model.TripDto;
 import com.ssafy.enjoytrip.trip.model.TripPlanDto;
@@ -20,4 +20,5 @@ public interface TripService {
 	TripDto tripPlanDtoToTripDtoList(String title);
 	List<TripDto> rankList();
 	int tripPlanDelete(UserDto userDto);
+	List<MonthlyDto> monthlyList();
 }

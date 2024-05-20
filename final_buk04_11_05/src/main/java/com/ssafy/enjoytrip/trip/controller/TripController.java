@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ssafy.enjoytrip.trip.model.MonthlyDto;
 import com.ssafy.enjoytrip.trip.model.SidoDto;
 import com.ssafy.enjoytrip.trip.model.TripDto;
 import com.ssafy.enjoytrip.trip.model.TripPlanDto;
@@ -108,5 +109,37 @@ public class TripController {
 		//클라이언트로 리턴
 		return ResponseEntity.ok(result);
 	}
+	
+	@GetMapping("/monthlyList")
+	public ResponseEntity<?> monthlyList(){
+		
+		List<MonthlyDto> list = tripService.monthlyList();
+		ObjectMapper mapper = new ObjectMapper();
+		String result;
+		try {
+			result = mapper.writeValueAsString(list);
+		} catch (JsonProcessingException e) {
+//			e.printStackTrace();
+			return ResponseEntity.badRequest().build();
+		}
+		return ResponseEntity.ok(result);
+	}
+	
+	@GetMapping("/rankList")
+	public ResponseEntity<?> rankList() {
+		
+		List<TripDto> list = tripService.rankList();
+		
+		ObjectMapper mapper = new ObjectMapper();
+		String result;
+		try {
+			result = mapper.writeValueAsString(list);
+		} catch (JsonProcessingException e) {
+//			e.printStackTrace();
+			return ResponseEntity.badRequest().build();
+		}
+		return ResponseEntity.ok(result);
+	}
+	
 
 }

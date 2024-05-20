@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.enjoytrip.trip.dao.TripDao;
+import com.ssafy.enjoytrip.trip.model.MonthlyDto;
 import com.ssafy.enjoytrip.trip.model.SidoDto;
 import com.ssafy.enjoytrip.trip.model.TripDto;
 import com.ssafy.enjoytrip.trip.model.TripPlanDto;
@@ -113,6 +114,13 @@ public class TripServiceImpl implements TripService {
 
         return i + 1;
     }
+
+	@Override
+	public List<MonthlyDto> monthlyList() {
+		List<MonthlyDto> list = tripDao.monthlyList();
+		
+		return tripDao.monthlyList();
+	}
 
 
 

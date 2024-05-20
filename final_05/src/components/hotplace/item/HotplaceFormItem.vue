@@ -112,7 +112,6 @@ function writeArticle() {
 function updateArticle() {
   var formData = new FormData();
   var photoFile = document.getElementById("photo");
-
   const blob = new Blob([JSON.stringify(article.value)], {
     type: "application/json",
   });
