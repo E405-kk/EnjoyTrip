@@ -3,19 +3,31 @@ import { onMounted, ref } from "vue";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import VCard from "@/components/common/VCard.vue";
-import { listMonthly } from "@/api/map";
+import { listMonthly, listRank } from "@/api/map";
 
 const recommends = ref([]);
+const ranks = ref([]);
 onMounted(() => {
   AOS.init();
   getRecommendList();
+  getRankList();
 });
 const getRecommendList = () => {
   listMonthly(
     ({ data }) => {
       recommends.value = data;
     },
-    (error) => {
+    (err) => {
+      console.log(err);
+    }
+  );
+};
+const getRankList = () => {
+  listRank(
+    ({ data }) => {
+      ranks.value = data;
+    },
+    (err) => {
       console.log(err);
     }
   );
@@ -71,31 +83,62 @@ const getRecommendList = () => {
       >
     </div>
   </div>
-  <div id="recommend" class="mt-10 overflow-x-auto" style="width: 300px">
-    <div class="white-space-nowrap">
-      <ul>
-        <li>
-          <VCard
-            v-for="recommend in recommends"
-            :key="recommend.title"
-            :recommend="recommend" />
-        </li>
-      </ul>
+  <div id="recommend" class="mx-auto my-20" style="width: 80%">
+    <h2 class="text-left font-bold text-xl mb-4 ml-4">이 달의 추천 여행지</h2>
+    <div class="flex overflow-x-auto scrollbar">
+      <VCard
+        v-for="recommend in recommends"
+        :key="recommend.title"
+        :recommend="recommend"
+        class="flex-none shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 max-w-sm mr-4" />
     </div>
   </div>
-  <div id="rank"></div>
+
+  <div id="rank" class="mx-auto my-20" style="width: 80%">
+    <h2 class="text-left font-bold text-xl mb-4 ml-4">인기 맛집</h2>
+    <div class="flex overflow-x-auto scrollbar">
+      <div
+        v-for="rank in ranks"
+        :key="rank.title"
+        :rank="rank"
+        class="flex-none shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 max-w-sm mr-4">
+        <a
+          href=""
+          class="hover:text-orange-600 absolute z-30 top-2 right-0 mt-2 mr-3"></a>
+        <a href="" class="z-20 absolute h-full w-full top-0 left-0">&nbsp;</a>
+        <div class="h-auto overflow-hidden">
+          <div class="h-44 overflow-hidden relative">
+            <img :src="rank.firstImage" alt="" />
+          </div>
+        </div>
+        <div class="bg-white py-4 px-3">
+          <h3 class="text-xs mb-2 font-medium">{{ rank.title }}</h3>
+          <div class="flex justify-between items-center">
+            <p class="text-xs text-gray-400">
+              {{ rank.addr1 }} {{ rank.addr2 }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <!-- <VCard
+        v-for="rank in ranks"
+        :key="rank.title"
+        :rank="rank"
+        class="flex-none shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 max-w-sm mr-4" /> -->
+    </div>
+  </div>
 </template>
 
 <style scoped>
 .image-container {
   position: relative;
   width: 100%;
-  height: 150vh;
+  height: 120vh;
 }
 
 .full-width-image {
   width: 100%;
-  height: 150vh;
+  height: 120vh;
   display: block;
 }
 
