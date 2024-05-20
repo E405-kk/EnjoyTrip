@@ -100,7 +100,6 @@ public class TripController {
 		}
 		String[] titles = userTripPlan.getPlanList2().split(",");
 		
-		System.out.println(Arrays.toString(titles));
 		
 		for (String title : titles) {
 			result.add(tripService.tripPlanDtoToTripDtoList(title));

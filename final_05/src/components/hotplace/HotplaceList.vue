@@ -6,7 +6,7 @@ import { listArticle } from "@/api/hotplace.js";
 import VSelect from "@/components/common/VSelect.vue";
 import HotplaceListItem from "@/components/hotplace/item/HotplaceListItem.vue";
 import PageNavigation from "@/components/common/PageNavigation.vue";
-
+import TheFooter from "@/components/layout/TheFooter.vue";
 const router = useRouter();
 
 const selectOption = ref([
@@ -148,6 +148,7 @@ const moveWrite = () => {
       :total-page="totalPage"
       @pageChange="onPageChange"></PageNavigation>
   </div>
+  <TheFooter></TheFooter>
 </template>
 
 <style scoped></style>
