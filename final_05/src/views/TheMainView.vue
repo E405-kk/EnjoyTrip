@@ -88,22 +88,22 @@ const getRankList = () => {
     <div class="py-5 flex overflow-x-auto scrollbar">
       <VCard
         v-for="recommend in recommends"
-        :key="recommend.title"
+        :key="recommend.idx"
         :recommend="recommend"
         class="flex-none shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 max-w-sm mr-4" />
     </div>
   </div>
 
-  <div id="rank" class="mx-auto my-20" style="width: 80%">
+  <!-- <div id="rank" class="mx-auto my-20" style="width: 80%">
     <h2 class="text-left font-bold text-2xl ml-4">인기 맛집</h2>
     <div class="py-5 flex overflow-x-auto scrollbar">
       <VCard
         v-for="rank in ranks"
-        :key="rank.title"
+        :key="rank.contentId"
         :recommend="rank"
         class="flex-none shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 max-w-sm mr-4" />
     </div>
-  </div>
+  </div> -->
 </template>
 
 <style scoped>

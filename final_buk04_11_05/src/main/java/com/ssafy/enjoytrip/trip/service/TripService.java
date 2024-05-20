@@ -21,4 +21,5 @@ public interface TripService {
 	List<TripDto> rankList();
 	int tripPlanDelete(UserDto userDto);
 	List<MonthlyDto> monthlyList();
+	MonthlyDto detail(int idx);
 }

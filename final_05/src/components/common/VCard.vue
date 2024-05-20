@@ -1,25 +1,24 @@
 <script setup>
-defineProps({
+const props = defineProps({
   recommend: Object,
 });
+console.log(props.recommend.idx);
 </script>
 
 <template>
   <div
     class="relative flex flex-col shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 max-w-sm">
-    <!-- <a
-      href=""
-      class="hover:text-orange-600 absolute z-30 top-2 right-0 mt-2 mr-3"></a> -->
     <router-link
       class="hover:text-orange-600 absolute z-30 top-2 right-0 mt-2 mr-3"
-      :to="{ name: 'main-detail' }"></router-link>
-    <!-- <a href="" class="z-20 absolute h-full w-full top-0 left-0">&nbsp;</a> -->
+      :to="{
+        name: 'main-detail',
+        params: { idx: recommend.idx },
+      }"></router-link>
     <router-link
       class="z-20 absolute h-full w-full top-0 left-0"
-      :to="{ name: 'main-detail' }"
+      :to="{ name: 'main-detail', params: { idx: recommend.idx } }"
       >&nbsp;</router-link
     >
-
     <div class="h-auto overflow-hidden">
       <div class="h-44 overflow-hidden relative">
         <img :src="recommend.firstImage" alt="" />

@@ -5,14 +5,14 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: "/detail",
-      name: "main-detail",
-      component: () => import("@/components/common/VRecommend.vue"),
-    },
-    {
       path: "/",
       name: "main",
       component: TheMainView,
+    },
+    {
+      path: "/detail/:idx",
+      name: "main-detail",
+      component: () => import("@/views/TheMainDetailView.vue"),
     },
     {
       path: "/trip",

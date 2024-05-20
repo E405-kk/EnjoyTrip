@@ -1,6 +1,7 @@
 package com.ssafy.enjoytrip.trip.model;
 
 public class MonthlyDto {
+	int idx;
 	int mon;
 	String region;
 	String title;
@@ -10,6 +11,13 @@ public class MonthlyDto {
 	double latitude;
 	double longitude;
 	String overview;
+	
+	public int getIdx() {
+		return idx;
+	}
+	public void setIdx(int idx) {
+		this.idx = idx;
+	}
 	public int getMon() {
 		return mon;
 	}
@@ -66,9 +74,10 @@ public class MonthlyDto {
 	}
 	@Override
 	public String toString() {
-		return "MonthlyDto [mon=" + mon + ", region=" + region + ", title=" + title + ", addr1=" + addr1 + ", addr2="
-				+ addr2 + ", firstImage=" + firstImage + ", latitude=" + latitude + ", longitude=" + longitude
-				+ ", overview=" + overview + "]";
+		return "MonthlyDto [idx=" + idx + ", mon=" + mon + ", region=" + region + ", title=" + title + ", addr1="
+				+ addr1 + ", addr2=" + addr2 + ", firstImage=" + firstImage + ", latitude=" + latitude + ", longitude="
+				+ longitude + ", overview=" + overview + "]";
 	}
+
 	
 }

@@ -76,12 +76,18 @@
 	</delete>
 	
 	<select id="monthlyList" resultType="monthlyDto">
-		SELECT m.mon, m.region, m.title, m.latitude, m.longitude, MAX(d.overview) as overview, MAX(i.addr1) as addr1, MAX(i.addr2) as addr2, MAX(i.first_image) as first_image
+		SELECT m.idx, m.mon, m.region, m.title, m.latitude, m.longitude, MAX(d.overview) as overview, MAX(i.addr1) as addr1, MAX(i.addr2) as addr2, MAX(i.first_image) as first_image
 		FROM attraction_info i 
 		JOIN attraction_description d ON i.content_id = d.content_id 
 		JOIN monthly m ON i.title LIKE CONCAT('%', m.title, '%') 
 		WHERE i.first_image != '' AND m.mon = MONTH(CURDATE())
 		AND i.content_type_id = 12
-		GROUP BY m.mon, m.region, m.title, m.latitude, m.longitude;
+		GROUP BY m.idx, m.mon, m.region, m.title, m.latitude, m.longitude;
+	</select>
+	
+	<select id = "detail" parameterType="int" resultType="monthlyDto">
+		SELECT idx, mon, region, title, addr1, addr2, firstImage, latitude, longitude, overview
+		FROM monthly
+		WHERE idx = #{idx}
 	</select>
 </mapper>

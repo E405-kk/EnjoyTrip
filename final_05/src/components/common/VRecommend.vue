@@ -1,5 +1,9 @@
 <script setup>
-import { onMounted } from "vue";
+import { detailMonthly } from "@/api/map";
+import { onMounted, ref } from "vue";
+const props = defineProps({ idx: Number });
+const recommend = ref({});
+var map;
 onMounted(() => {
   if (window.kakao && window.kakao.maps) {
     initMap();
@@ -12,7 +16,21 @@ onMounted(() => {
     script.onload = () => kakao.maps.load(() => initMap());
     document.head.appendChild(script);
   }
+  console.log(props.idx);
+  getRecommend();
 });
+
+const getRecommend = () => {
+  detailMonthly(
+    props.idx,
+    ({ data }) => {
+      recommend.value = data;
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+};
 
 const initMap = () => {
   const container = document.getElementById("map");
@@ -30,13 +48,16 @@ const initMap = () => {
   });
 
   // 마커가 지도 위에 표시되도록 설정합니다
-  marker.value.setMap(map);
+  marker.setMap(map);
 };
 </script>
 
 <template>
   <div class="w-full lg:w-10/12 text-start bg-white shadow-md rounded-lg p-5">
-    <div id="map" style="width: 100%; height: 350px"></div>
+    <div class="flex">
+      <div id="map" style="width: 100%; height: 350px"></div>
+      <img :src="recommend.firstImage" alt="" />
+    </div>
   </div>
 </template>
 

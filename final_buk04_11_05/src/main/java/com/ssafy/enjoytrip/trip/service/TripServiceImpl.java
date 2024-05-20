@@ -122,7 +122,13 @@ public class TripServiceImpl implements TripService {
 		return tripDao.monthlyList();
 	}
 
+	@Override
+	public MonthlyDto detail(int idx) {
+		
+		return tripDao.detail(idx);
+	}
 
+	
 
 
 	

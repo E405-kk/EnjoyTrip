@@ -36,6 +36,10 @@ function listRank(success, fail) {
   local.get("/trip/rankList").then(success).catch(fail);
 }
 
+function detailMonthly(idx, success, fail) {
+  local.get(`/trip/monthlyDetail/${idx}`).then(success).catch(fail);
+}
+
 export {
   listSido,
   listTrip,
@@ -44,4 +48,5 @@ export {
   deletePlanList,
   listMonthly,
   listRank,
+  detailMonthly,
 };

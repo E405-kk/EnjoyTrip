@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ssafy.enjoytrip.board.model.BoardDto;
 import com.ssafy.enjoytrip.trip.model.MonthlyDto;
 import com.ssafy.enjoytrip.trip.model.SidoDto;
 import com.ssafy.enjoytrip.trip.model.TripDto;
@@ -124,6 +125,12 @@ public class TripController {
 		return ResponseEntity.ok(result);
 	}
 	
+	@GetMapping("/monthlyDetail/{idx}")
+	public ResponseEntity<?> detail(@PathVariable int idx){
+		MonthlyDto monthlyDto = tripService.detail(idx);
+		return ResponseEntity.ok(monthlyDto);
+	}
+	
 	@GetMapping("/rankList")
 	public ResponseEntity<?> rankList() {
 		
@@ -140,5 +147,5 @@ public class TripController {
 		return ResponseEntity.ok(result);
 	}
 	
-
+	
 }
