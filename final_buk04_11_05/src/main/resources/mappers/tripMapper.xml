@@ -62,10 +62,11 @@
 	
 	
 	<select id="rankList" resultType="tripDto">
-		SELECT content_id, content_type_id, title, addr1, addr2, zipcode, tel, first_image, first_image2, readcount, sido_code, gugun_code, latitude, longitude, mlevel
-		FROM attraction_info
-		WHERE readcount >= 1 AND content_type_id = 39
-		AND first_image != ''
+		SELECT i.content_id, i.content_type_id, i.title, i.addr1, i.addr2, i.zipcode, i.tel, i.first_image, i.first_image2, i.readcount, i.sido_code, i.gugun_code, i.latitude, i.longitude, i.mlevel, d.overview
+		FROM attraction_info i JOIN attraction_description d
+		ON i.content_id = d.content_id
+		WHERE i.readcount >= 1 AND i.content_type_id = 39
+		AND i.first_image != ''
 	</select>
 	
 	<delete id="tripPlanDelete" parameterType="userDto">
