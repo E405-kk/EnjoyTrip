@@ -3,13 +3,8 @@ import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { detailArticle, deleteArticle } from "@/api/notice";
 import VArticle from "@/components/common/VArticle.vue";
-import { useMemberStore } from "@/stores/member";
-const memberStore = useMemberStore();
 
 const userId = sessionStorage.getItem("userId");
-
-import { storeToRefs } from "pinia";
-const { userInfo } = storeToRefs(memberStore);
 
 const route = useRoute();
 const router = useRouter();

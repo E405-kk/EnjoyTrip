@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.ssafy.enjoytrip.board.model.BoardDto;
 import com.ssafy.enjoytrip.board.model.BoardListDto;
-import com.ssafy.enjoytrip.util.PageNavigation;
 
 public interface BoardService {
 	int regist(BoardDto boardDto);

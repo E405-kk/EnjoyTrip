@@ -23,5 +23,5 @@ public interface TripDao {
 	int tripPlanDelete(UserDto userDto);
 	String tripDetailSearch(int contentId);
 	List<MonthlyDto> monthlyList();
-	MonthlyDto detail(int idx);
+	TripDto tripDetail(int contentId);
 }

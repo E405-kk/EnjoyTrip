@@ -40,6 +40,9 @@ function detailMonthly(idx, success, fail) {
   local.get(`/trip/monthlyDetail/${idx}`).then(success).catch(fail);
 }
 
+function detailRank(idx, success, fail) {
+  local.get(`/trip/tripDetail/${idx}`).then(success).catch(fail);
+}
 export {
   listSido,
   listTrip,
@@ -48,5 +51,6 @@ export {
   deletePlanList,
   listMonthly,
   listRank,
+  detailRank,
   detailMonthly,
 };

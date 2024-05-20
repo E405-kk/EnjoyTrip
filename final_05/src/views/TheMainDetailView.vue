@@ -1,14 +1,16 @@
 <script setup>
 import VRecommend from "@/components/common/VRecommend.vue";
-import { useRoute } from "vue-router";
-const route = useRoute();
-const { idx } = route.params;
-console.log(idx);
+const props = defineProps({
+  idx: Number,
+  type: String,
+});
+const numericIdx = Number(props.idx);
+const StringType = String(props.type);
 </script>
 
 <template>
   <router-view>
-    <VRecommend :idx="idx"></VRecommend>
+    <VRecommend :idx="numericIdx" :type="StringType"></VRecommend>
   </router-view>
 </template>
 

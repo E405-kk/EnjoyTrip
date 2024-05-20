@@ -85,9 +85,11 @@
 		GROUP BY m.idx, m.mon, m.region, m.title, m.latitude, m.longitude;
 	</select>
 	
-	<select id = "detail" parameterType="int" resultType="monthlyDto">
-		SELECT idx, mon, region, title, addr1, addr2, firstImage, latitude, longitude, overview
-		FROM monthly
-		WHERE idx = #{idx}
+	<select id="tripDetail" parameterType="int" resultType="tripDto">
+		SELECT i.content_id, i.content_type_id, i.title, i.addr1, i.addr2, i.zipcode, i.tel, i.first_image, i.first_image2, i.readcount, i.sido_code, i.gugun_code, i.latitude, i.longitude, i.mlevel, d.overview
+		FROM attraction_info i JOIN attraction_description d
+		ON i.content_id = d.content_id
+		WHERE i.content_id = #{contentId}
 	</select>
+	
 </mapper>

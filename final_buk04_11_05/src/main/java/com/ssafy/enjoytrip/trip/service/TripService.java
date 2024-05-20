@@ -1,6 +1,5 @@
 package com.ssafy.enjoytrip.trip.service;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import com.ssafy.enjoytrip.trip.model.MonthlyDto;
@@ -22,4 +21,5 @@ public interface TripService {
 	int tripPlanDelete(UserDto userDto);
 	List<MonthlyDto> monthlyList();
 	MonthlyDto detail(int idx);
+	TripDto tripDetail(int contentId);
 }

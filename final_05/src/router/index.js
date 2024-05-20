@@ -10,8 +10,9 @@ const router = createRouter({
       component: TheMainView,
     },
     {
-      path: "/detail/:idx",
+      path: "/detail/:idx/:type",
       name: "main-detail",
+      props: true,
       component: () => import("@/views/TheMainDetailView.vue"),
     },
     {

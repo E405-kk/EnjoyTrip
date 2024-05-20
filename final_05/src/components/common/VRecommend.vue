@@ -1,7 +1,10 @@
 <script setup>
-import { detailMonthly } from "@/api/map";
+import { detailMonthly, detailRank } from "@/api/map";
 import { onMounted, ref } from "vue";
-const props = defineProps({ idx: Number });
+const props = defineProps({
+  idx: Number,
+  type: String,
+});
 const recommend = ref({});
 var map;
 onMounted(() => {
@@ -16,13 +19,16 @@ onMounted(() => {
     script.onload = () => kakao.maps.load(() => initMap());
     document.head.appendChild(script);
   }
-  console.log(props.idx);
-  getRecommend();
+  if (props.type == "rank") {
+    getTrip();
+  } else {
+    getRecommend();
+  }
 });
 
 const getRecommend = () => {
   detailMonthly(
-    props.idx,
+    Number(props.idx),
     ({ data }) => {
       recommend.value = data;
     },
@@ -32,6 +38,17 @@ const getRecommend = () => {
   );
 };
 
+const getTrip = () => {
+  detailRank(
+    Number(props.idx),
+    ({ data }) => {
+      recommend.value = data;
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+};
 const initMap = () => {
   const container = document.getElementById("map");
   const options = {
@@ -58,6 +75,9 @@ const initMap = () => {
       <div id="map" style="width: 100%; height: 350px"></div>
       <img :src="recommend.firstImage" alt="" />
     </div>
+    <div>{{ recommend.title }}</div>
+    <div>{{ recommend.addr1 }} {{ recommend.addr2 }}</div>
+    <div>{{ recommend.overview }}</div>
   </div>
 </template>
 

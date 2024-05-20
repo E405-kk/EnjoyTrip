@@ -1,5 +1,5 @@
 <script setup>
-const props = defineProps({ article: Object });
+defineProps({ article: Object });
 function getImageUrl(article) {
   if (article.fileInfo != null) {
     var url = "/src/assets/upload/";
@@ -69,7 +69,7 @@ function getImageUrl(article) {
         <div class="pr-3">
           <img
             class="h-12 w-12 rounded-full object-cover"
-            src="https://images.pexels.com/photos/163097/twitter-social-media-communication-internet-network-163097.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+            src="@/assets/user.png"
             alt="" />
         </div>
         <div class="flex flex-1">

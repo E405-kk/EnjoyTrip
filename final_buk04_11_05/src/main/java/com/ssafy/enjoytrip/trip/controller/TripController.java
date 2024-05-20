@@ -1,7 +1,6 @@
 package com.ssafy.enjoytrip.trip.controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ssafy.enjoytrip.board.model.BoardDto;
 import com.ssafy.enjoytrip.trip.model.MonthlyDto;
 import com.ssafy.enjoytrip.trip.model.SidoDto;
 import com.ssafy.enjoytrip.trip.model.TripDto;
@@ -52,7 +50,7 @@ public class TripController {
 		try {
 			result = mapper.writeValueAsString(tripSearchList);
 		} catch (JsonProcessingException e) {
-//			e.printStackTrace();
+			e.printStackTrace();
 			return ResponseEntity.badRequest().build();
 		}
 		return ResponseEntity.ok(result);
@@ -119,7 +117,7 @@ public class TripController {
 		try {
 			result = mapper.writeValueAsString(list);
 		} catch (JsonProcessingException e) {
-//			e.printStackTrace();
+			e.printStackTrace();
 			return ResponseEntity.badRequest().build();
 		}
 		return ResponseEntity.ok(result);
@@ -141,11 +139,16 @@ public class TripController {
 		try {
 			result = mapper.writeValueAsString(list);
 		} catch (JsonProcessingException e) {
-//			e.printStackTrace();
+			e.printStackTrace();
 			return ResponseEntity.badRequest().build();
 		}
 		return ResponseEntity.ok(result);
 	}
 	
-	
+	@GetMapping("/tripDetail/{contentId}")
+	public ResponseEntity<?> tripDetail(@PathVariable int contentId){
+		TripDto tripDto = tripService.tripDetail(contentId);
+		System.out.println(tripDto);
+		return ResponseEntity.ok(tripDto);
+	}
 }

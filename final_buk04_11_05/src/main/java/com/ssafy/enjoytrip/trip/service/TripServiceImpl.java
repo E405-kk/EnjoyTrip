@@ -1,8 +1,6 @@
 package com.ssafy.enjoytrip.trip.service;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -117,15 +115,24 @@ public class TripServiceImpl implements TripService {
 
 	@Override
 	public List<MonthlyDto> monthlyList() {
-		List<MonthlyDto> list = tripDao.monthlyList();
-		
 		return tripDao.monthlyList();
 	}
 
 	@Override
 	public MonthlyDto detail(int idx) {
-		
-		return tripDao.detail(idx);
+		List<MonthlyDto> list = tripDao.monthlyList();
+		MonthlyDto monthlyDto = null;
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).getIdx() == idx) {
+				 monthlyDto = list.get(i);
+			}
+		}
+		return monthlyDto;
+	}
+
+	@Override
+	public TripDto tripDetail(int contentId) {
+		return tripDao.tripDetail(contentId);
 	}
 
 	
