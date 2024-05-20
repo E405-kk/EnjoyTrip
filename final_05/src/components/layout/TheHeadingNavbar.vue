@@ -7,12 +7,13 @@ import { storeToRefs } from "pinia";
 const menuStore = useMenuStore();
 const memberStore = useMemberStore();
 
-const { menuList, userInfo } = storeToRefs(menuStore);
+const { menuList } = storeToRefs(menuStore);
 
 const { userLogout } = memberStore;
-
+const userId = sessionStorage.getItem("userId");
 const logout = () => {
   userLogout();
+  toggleDropdown();
 };
 if (sessionStorage.getItem("userId")) {
   menuList.value[0].show = false;
@@ -96,26 +97,22 @@ const toggleDropdown = () => {
             <!-- Dropdown menu -->
             <div
               v-if="showDropdown"
-              class="absolute right-0 z-20 w-56 py-2 mt-2 overflow-hidden bg-white rounded-md shadow-xl dark:bg-gray-800">
-              <a
-                href="#"
+              class="absolute right-30 z-30 w-40 py-2 mt-2 overflow-hidden bg-white rounded-md shadow-xl dark:bg-gray-800">
+              <router-link
+                @click="toggleDropdown"
+                :to="{ name: 'user-mypage' }"
                 class="flex items-center p-3 -mt-2 text-sm text-gray-600 transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
                 <img
-                  class="flex-shrink-0 object-cover mx-1 rounded-full w-9 h-9"
+                  class="border flex-shrink-0 object-cover ml-3 rounded-full w-9 h-9"
                   src="@/assets/user.png" />
-                <div class="mx-1">
+                <div class="mx-auto">
                   <h1
-                    v-if="userInfo"
+                    v-if="userId"
                     class="text-sm font-semibold text-gray-700 dark:text-gray-200">
-                    {{ userInfo.userName }}
+                    {{ userId }}
                   </h1>
-                  <p
-                    v-if="userInfo"
-                    class="text-sm text-gray-500 dark:text-gray-400">
-                    {{ userInfo.userEmail }}
-                  </p>
                 </div>
-              </a>
+              </router-link>
 
               <hr class="border-gray-200 dark:border-gray-700" />
               <template v-for="menu in menuList" :key="menu.routeName">
@@ -125,7 +122,7 @@ const toggleDropdown = () => {
                       <router-link
                         to="/"
                         @click.prevent="logout"
-                        class="nav-link block py-2 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                        class="nav-link block mt-2 py-2 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                         >{{ menu.name }}</router-link
                       >
                     </li>
@@ -133,7 +130,8 @@ const toggleDropdown = () => {
                   <template v-else>
                     <li class="nav-item">
                       <router-link
-                        class="nav-link block py-2 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                        @click="toggleDropdown"
+                        class="nav-link mt-2 block py-2 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                         :to="{ name: menu.routeName }"
                         >{{ menu.name }}</router-link
                       >
@@ -142,10 +140,10 @@ const toggleDropdown = () => {
                 </template>
               </template>
 
-              <hr class="border-gray-200 dark:border-gray-700" />
+              <hr class="mt-1 border-gray-200 dark:border-gray-700" />
 
               <router-link
-                class="block py-2 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                class="block py-2 mt-2 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                 :to="{ name: 'trip-userPlan' }"
                 >나의 여행 계획</router-link
               >

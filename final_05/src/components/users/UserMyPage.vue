@@ -3,9 +3,17 @@ import { storeToRefs } from "pinia";
 import { useMemberStore } from "@/stores/member";
 
 const memberStore = useMemberStore();
-
+import { onMounted } from "vue";
 const { userInfo } = storeToRefs(memberStore);
 const { userId, goModify, userDelete } = memberStore;
+import { useRouter } from "vue-router";
+const router = useRouter();
+onMounted(() => {
+  if (!userId) {
+    alert("로그인이 필요한 화면입니다.");
+    router.push({ name: "user-login" });
+  }
+});
 
 const go = () => {
   goModify();
