@@ -120,7 +120,7 @@ const addPlan = (plan) => {
 
   <div class="grid grid-cols-4 gap-4">
     <div class="col-span-3">
-      <div class="fluid-container text-center mt-3 mx-auto w-10/12">
+      <div class="fluid-container text-center mt-3 mx-auto w-11/12">
         <div class="flex items-center justify-center mb-10">
           <div class="mx-auto">
             <form class="flex">
