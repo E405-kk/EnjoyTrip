@@ -80,6 +80,7 @@
 		JOIN attraction_description d ON i.content_id = d.content_id 
 		JOIN monthly m ON i.title LIKE CONCAT('%', m.title, '%') 
 		WHERE i.first_image != '' AND m.mon = MONTH(CURDATE())
+		AND i.content_type_id = 12
 		GROUP BY m.mon, m.region, m.title, m.latitude, m.longitude;
 	</select>
 </mapper>
