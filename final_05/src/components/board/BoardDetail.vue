@@ -7,7 +7,7 @@ import VArticle from "@/components/common/VArticle.vue";
 import PageNavigation from "@/components/common/PageNavigation.vue";
 import CommentFormItem from "@/components/board/item/CommentFormItem.vue";
 import CommentListItem from "@/components/board/item/CommentListItem.vue";
-
+import Swal from "sweetalert2";
 const userId = sessionStorage.getItem("userId");
 
 const route = useRoute();
@@ -35,9 +35,7 @@ const getArticle = () => {
     articleno,
     ({ data }) => {
       article.value = data;
-      console.log(data);
       param.value.articleno = articleno;
-      console.log(param.value.articleno);
       getCommentList();
     },
     (error) => {
@@ -55,17 +53,41 @@ function moveModify() {
 }
 
 function onDeleteArticle() {
-  if (confirm("게시글을 삭제하시겠습니까?")) {
-    deleteArticle(
-      articleno,
-      (response) => {
-        if (response.status == 200) moveList();
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  }
+  Swal.fire({
+    title: "게시글을 삭제하시겠습니까?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#d33",
+    cancelButtonColor: "#848484",
+    confirmButtonText: "삭제",
+    cancelButtonText: "취소",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      deleteArticle(
+        articleno,
+        (response) => {
+          let msg = response.data;
+          if (response.status == 200) {
+            msg = "게시글이 삭제되었습니다.";
+            Swal.fire({
+              title: "삭제",
+              text: msg,
+              icon: "success",
+            });
+            moveList();
+          } else {
+            Swal.fire({
+              icon: "error",
+              text: msg,
+            });
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+  });
 }
 
 const getCommentList = () => {
@@ -92,33 +114,49 @@ const handleUpdateComment = (commentIdx, newComment) => {
   // 댓글 데이터 업데이트 로직 (CommentFormItem에서 처리)
   const comment = comments.value.find((comment) => comment.idx === commentIdx);
   if (comment) {
-    console.log(newComment.content);
     comment.content = newComment.content;
-    console.log(comment.content);
   }
 };
 
 const handleDeleteComment = (commentIdx) => {
-  if (confirm("댓글을 삭제하시겠습니까?")) {
-    // 댓글 삭제 로직
-    deleteComment(
-      commentIdx,
-      (response) => {
-        let msg = response.data;
-        if (response.status == 200) {
-          msg = "댓글 삭제가 완료되었습니다.";
-          // 출력
-          comments.value = comments.value.filter(
-            (comment) => comment.idx !== commentIdx
-          );
+  Swal.fire({
+    title: "댓글을 삭제하시겠습니까?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#d33",
+    cancelButtonColor: "#848484",
+    confirmButtonText: "삭제",
+    cancelButtonText: "취소",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      deleteComment(
+        commentIdx,
+        (response) => {
+          let msg = response.data;
+          if (response.status == 200) {
+            msg = "댓글이 삭제되었습니다.";
+            // 출력
+            comments.value = comments.value.filter(
+              (comment) => comment.idx !== commentIdx
+            );
+            Swal.fire({
+              title: "삭제",
+              text: msg,
+              icon: "success",
+            });
+          } else {
+            Swal.fire({
+              icon: "error",
+              text: msg,
+            });
+          }
+        },
+        (error) => {
+          console.log(error);
         }
-        alert(msg);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  }
+      );
+    }
+  });
 };
 const handleWriteComment = () => {
   getCommentList();

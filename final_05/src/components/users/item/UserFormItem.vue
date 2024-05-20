@@ -2,6 +2,7 @@
 import { ref, onMounted } from "vue";
 import { storeToRefs } from "pinia";
 import { useMemberStore } from "@/stores/member";
+import Swal from "sweetalert2";
 const memberStore = useMemberStore();
 const { userInfo } = storeToRefs(memberStore);
 const { userJoin, userModify } = memberStore;
@@ -23,13 +24,25 @@ onMounted(() => {
 
 const register = async () => {
   await userJoin(user.value);
+  Swal.fire({
+    icon: "success",
+    title: "회원가입이 완료되었습니다.",
+    showConfirmButton: false,
+    timer: 1500,
+  });
 };
 
 const modify = async () => {
   if (userPwdCheck.value === user.value.userPwd) {
     await userModify(user.value);
+    Swal.fire({
+      icon: "success",
+      title: "회원정보가 수정되었습니다.",
+      showConfirmButton: false,
+      timer: 1500,
+    });
   } else {
-    alert("비밀번호를 다시 확인해주세요.");
+    Swal.fire("비밀번호를 다시 확인해주세요.");
     return;
   }
 };

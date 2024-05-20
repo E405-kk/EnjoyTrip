@@ -6,7 +6,7 @@ import { httpStatusCode } from "@/util/http-status";
 import VPlanMap from "@/components/common/VPlanMap.vue";
 import VSelect from "@/components/common/VSelect.vue";
 import { useRouter } from "vue-router";
-
+import Swal from "sweetalert2";
 const router = useRouter();
 
 const sidoList = ref([]);
@@ -32,7 +32,7 @@ const param = ref({
 
 onMounted(() => {
   if (sessionStorage.getItem("userId") == null) {
-    alert("로그인이 필요한 화면입니다.");
+    Swal.fire("로그인이 필요한 페이지입니다!");
     router.push({ name: "user-login" });
   }
   getSidoList();
@@ -102,10 +102,30 @@ const addPlan = (plan) => {
       let msg = response.data;
       if (response.status === httpStatusCode.OK) {
         msg = "계획을 저장했습니다.";
-      }
-      alert(msg);
-      if (msg == "계획을 저장했습니다.") {
+        // Swal.fire({
+        //   icon: "success",
+        //   title: msg,
+        //   showConfirmButton: false,
+        //   timer: 1500,
+        // });
+        Swal.fire({
+          title: msg,
+          width: 600,
+          padding: "3em",
+          color: "#716add",
+          backdrop: `
+    rgba(0,0,123,0.4)
+    url("/images/nyan-cat.gif")
+    left top
+    no-repeat
+  `,
+        });
         router.push({ name: "trip-userPlan" });
+      } else {
+        Swal.fire({
+          icon: "error",
+          text: msg,
+        });
       }
     },
     (error) => {

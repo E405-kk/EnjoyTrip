@@ -1,6 +1,7 @@
 <script setup>
 import { ref, watch } from "vue";
 import { registComment, modifyComment } from "@/api/comment.js";
+import Swal from "sweetalert2";
 const props = defineProps({
   type: String,
   articleno: Number,
@@ -18,24 +19,8 @@ const comment = ref({
   registerTime: props.curcomment.registerTime,
 });
 
-// const contentErrMsg = ref("");
-// watch(
-//   () => comment.value.content,
-//   (value) => {
-//     let len = value.length;
-//     if (len == 0 || len > 500) {
-//       contentErrMsg.value = "내용을 확인해 주세요!!!";
-//     } else contentErrMsg.value = "";
-//   },
-//   { immediate: true }
-// );
-
 function onSubmit() {
-  // if (contentErrMsg.value) {
-  //   alert(contentErrMsg.value);
-  // } else {
   props.type === "regist" ? writeComment() : updateComment();
-  // }
 }
 
 function writeComment() {
@@ -46,12 +31,22 @@ function writeComment() {
       let msg = response.data;
 
       if (response.status == 201) {
-        msg = "댓글 등록이 완료되었습니다.";
+        msg = "댓글이 등록되었습니다.";
         emit("write-comment");
         // 등록 후에 textarea 비우기
         comment.value.content = "";
+        Swal.fire({
+          icon: "success",
+          title: msg,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          text: msg,
+        });
       }
-      alert(msg);
     },
     (error) => console.log(error)
   );
@@ -61,12 +56,21 @@ function updateComment() {
   modifyComment(
     comment.value,
     (response) => {
-      let msg = "댓글 수정 처리시 문제 발생했습니다.";
+      let msg = "댓글 수정에 실패했습니다.";
       if (response.status == 200) {
-        msg = "댓글 수정이 완료되었습니다.";
-        console.log(comment.value);
+        msg = "댓글이 수정되었습니다.";
         emit("update-comment", comment.value.idx, comment.value);
-        alert(msg);
+        Swal.fire({
+          icon: "success",
+          title: msg,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          text: msg,
+        });
       }
     },
     (error) => console.log(error)

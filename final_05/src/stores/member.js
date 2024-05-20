@@ -1,7 +1,7 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { defineStore } from "pinia";
-
+import Swal from "sweetalert2";
 import {
   userConfirm,
   userRegister,
@@ -33,44 +33,72 @@ export const useMemberStore = defineStore("memberStore", () => {
     await userConfirm(
       loginUser,
       (response) => {
-        if (response.status === httpStatusCode.CREATE) {
-          console.log("로그인 성공!!!!");
+        let msg = response.data;
+        if (response.status == httpStatusCode.CREATE) {
+          msg = "로그인 되었습니다.";
           let { data } = response;
           let userId = data["userId"];
           isLogin.value = true;
           sessionStorage.setItem("userId", userId);
           userGetInfo(userId);
+          Swal.fire({
+            icon: "success",
+            title: msg,
+            showConfirmButton: false,
+            timer: 1500,
+          });
         }
       },
       (error) => {
-        console.log("로그인 실패!!!!");
         isLogin.value = false;
         console.error(error);
-        alert("아이디 및 비밀번호를 확인해주세요.");
+        Swal.fire({
+          icon: "error",
+          text: "아이디 및 비밀번호를 확인해주세요.",
+        });
       }
     );
   };
   const userLogout = () => {
-    isLogin.value = false;
-    userInfo.value = null;
-    changeMenuState();
-    sessionStorage.clear();
+    Swal.fire({
+      title: "로그아웃하시겠습니까?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#848484",
+      confirmButtonText: "삭제",
+      cancelButtonText: "취소",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        isLogin.value = false;
+        userInfo.value = null;
+        changeMenuState();
+        sessionStorage.clear();
+      }
+    });
   };
   const userJoin = async (user) => {
     await userRegister(
       user,
       (response) => {
         if (response.status === httpStatusCode.CREATE) {
-          console.log("회원가입 성공!!!!");
+          Swal.fire({
+            icon: "success",
+            title: "회원가입이 완료되었습니다.",
+            showConfirmButton: false,
+            timer: 1500,
+          });
           goLogin();
         } else if (response.status === httpStatusCode.NOCONTENT) {
-          alert("사용할 수 없는 아이디입니다.");
+          Swal.fire({ icon: "error", title: "사용할 수 없는 아이디입니다." });
         }
       },
       (error) => {
-        console.log("회원가입 실패!!!!");
         console.error(error);
-        alert("회원가입 실패");
+        Swal.fire({
+          icon: "error",
+          text: "회원가입에 실패했습니다.",
+        });
       }
     );
   };
@@ -94,14 +122,21 @@ export const useMemberStore = defineStore("memberStore", () => {
       user,
       (response) => {
         if (response.status === httpStatusCode.CREATE) {
-          console.log("회원 정보 수정 성공!!!!");
+          Swal.fire({
+            icon: "success",
+            title: "회원정보가 수정되었습니다.",
+            showConfirmButton: false,
+            timer: 1500,
+          });
           goMyPage();
         }
       },
       (error) => {
-        console.log("회원 정보 수정 실패!!!!");
         console.error(error);
-        alert("회원 정보 수정 실패");
+        Swal.fire({
+          icon: "error",
+          text: "회원정보 수정에 실패했습니다.",
+        });
       }
     );
   };
@@ -110,16 +145,23 @@ export const useMemberStore = defineStore("memberStore", () => {
       userId,
       (response) => {
         if (response.status === httpStatusCode.OK) {
-          console.log("회원 탈퇴 성공!!!!");
+          Swal.fire({
+            icon: "success",
+            title: "회원 탈퇴되었습니다.",
+            showConfirmButton: false,
+            timer: 1500,
+          });
           sessionStorage.clear();
           changeMenuState();
           router.push({ name: "main" });
         }
       },
       (error) => {
-        console.log("회원 탈퇴 실패!!!!");
         console.error(error);
-        alert("회원 탈퇴 실패");
+        Swal.fire({
+          icon: "error",
+          text: "회원탈퇴에 실패했습니다.",
+        });
       }
     );
   };
@@ -129,15 +171,22 @@ export const useMemberStore = defineStore("memberStore", () => {
       (response) => {
         if (response.status === httpStatusCode.OK) {
           userInfo.value = user;
-          console.log("비밀번호 찾기 성공!!!!");
+          Swal.fire({
+            icon: "success",
+            title: "회원정보가 확인되었습니다.",
+            showConfirmButton: false,
+            timer: 1500,
+          });
           console.log(response.status);
           gochangePwd();
         }
       },
       (error) => {
-        console.log("비밀번호 찾기 실패!!!!");
         console.error(error);
-        alert("아이디 및 이름을 확인해주세요.");
+        Swal.fire({
+          icon: "error",
+          text: "아이디 및 이름을 확인해주세요.",
+        });
       }
     );
   };
@@ -146,14 +195,21 @@ export const useMemberStore = defineStore("memberStore", () => {
       user,
       (response) => {
         if (response.status === httpStatusCode.OK) {
-          console.log("비밀번호 변경 성공!!!!");
+          Swal.fire({
+            icon: "success",
+            title: "비밀번호가 변경되었습니다.",
+            showConfirmButton: false,
+            timer: 1500,
+          });
           goLogin();
         }
       },
       (error) => {
-        console.log("비밀번호 변경 실패!!!!");
         console.error(error);
-        alert("비밀번호 변경 실패");
+        Swal.fire({
+          icon: "error",
+          text: "비밀번호를 다시 확인해주세요.",
+        });
       }
     );
   };

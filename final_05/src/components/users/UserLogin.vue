@@ -4,7 +4,7 @@ import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 import { useMemberStore } from "@/stores/member";
 import { useMenuStore } from "@/stores/menu";
-
+import Swal from "sweetalert2";
 const router = useRouter();
 
 const memberStore = useMemberStore();

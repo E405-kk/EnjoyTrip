@@ -6,7 +6,7 @@ import { httpStatusCode } from "@/util/http-status";
 import { useMemberStore } from "@/stores/member";
 import { useRouter } from "vue-router";
 import VUserPlanMap from "@/components/common/VUserPlanMap.vue";
-
+import Swal from "sweetalert2";
 const router = useRouter();
 const memberStore = useMemberStore();
 const { userInfo } = storeToRefs(memberStore);
@@ -15,7 +15,7 @@ const planList = ref([]);
 
 onMounted(() => {
   if (sessionStorage.getItem("userId") == null) {
-    alert("로그인이 필요한 화면입니다.");
+    Swal.fire("로그인이 필요한 페이지입니다!");
     router.push({ name: "user-login" });
   }
   getTripList();
@@ -37,23 +37,41 @@ const viewStation = (trip) => {
 };
 
 const resetPlan = () => {
-  if (confirm("계획을 삭제하시겠습니까?")) {
-    deletePlanList(
-      userInfo.value,
-      (response) => {
-        let msg = response.data;
-        if (response.status === httpStatusCode.OK) {
-          msg = `계획을 삭제했습니다. 새로운 여행을 계획해보세요!`;
-          getTripList();
-          router.push({ name: "trip-plan" });
+  Swal.fire({
+    title: "계획을 삭제하시겠습니까?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#d33",
+    cancelButtonColor: "#848484",
+    confirmButtonText: "삭제",
+    cancelButtonText: "취소",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      deletePlanList(
+        userInfo.value,
+        (response) => {
+          let msg = response.data;
+          if (response.status == 200) {
+            Swal.fire({
+              title: "계획을 삭제했습니다.",
+              text: "새로운 여행을 계획해보세요!",
+              icon: "success",
+            });
+            getTripList();
+            router.push({ name: "trip-plan" });
+          } else {
+            Swal.fire({
+              icon: "error",
+              text: msg,
+            });
+          }
+        },
+        (error) => {
+          console.log(error);
         }
-        alert(msg);
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
-  }
+      );
+    }
+  });
 };
 </script>
 

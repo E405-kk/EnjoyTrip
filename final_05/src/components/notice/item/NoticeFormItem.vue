@@ -3,6 +3,7 @@ import { ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { registArticle, getModifyArticle, modifyArticle } from "@/api/notice";
 import { useMemberStore } from "@/stores/member";
+import Swal from "sweetalert2";
 const memberStore = useMemberStore();
 const { userId } = memberStore;
 const router = useRouter();
@@ -63,9 +64,9 @@ watch(
 
 function onSubmit() {
   if (subjectErrMsg.value) {
-    alert(subjectErrMsg.value);
+    Swal.fire(subjectErrMsg.value);
   } else if (contentErrMsg.value) {
-    alert(contentErrMsg.value);
+    Swal.fire(contentErrMsg.value);
   } else {
     props.type === "regist" ? writeArticle() : updateArticle();
   }
@@ -78,10 +79,18 @@ function writeArticle() {
       let msg = response.data;
       if (response.status == 201) {
         msg = "글등록이 완료되었습니다.";
-        alert(msg);
+        Swal.fire({
+          icon: "success",
+          title: msg,
+          showConfirmButton: false,
+          timer: 1500,
+        });
         moveList();
       } else {
-        alert(msg);
+        Swal.fire({
+          icon: "error",
+          text: msg,
+        });
       }
     },
     (error) => console.log(error)
@@ -92,9 +101,21 @@ function updateArticle() {
   modifyArticle(
     article.value,
     (response) => {
-      let msg = "글수정 처리시 문제 발생했습니다.";
-      if (response.status == 200) msg = "글정보 수정이 완료되었습니다.";
-      alert(msg);
+      let msg = "글수정에 실패했습니다.";
+      if (response.status == 200) {
+        msg = "글이 수정되었습니다.";
+        Swal.fire({
+          icon: "success",
+          title: msg,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          text: msg,
+        });
+      }
       moveList();
     },
     (error) => console.log(error)

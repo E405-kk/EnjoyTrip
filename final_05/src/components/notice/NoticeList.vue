@@ -9,6 +9,7 @@ import PageNavigation from "@/components/common/PageNavigation.vue";
 
 import { storeToRefs } from "pinia";
 import { useMemberStore } from "@/stores/member";
+import Swal from "sweetalert2";
 const memberStore = useMemberStore();
 const { userInfo } = storeToRefs(memberStore);
 
@@ -65,7 +66,7 @@ const moveWrite = () => {
   if (sessionStorage.getItem("userId")) {
     router.push({ name: "notice-write" });
   } else {
-    alert("로그인이 필요한 페이지입니다");
+    Swal.fire("로그인이 필요한 페이지입니다!");
     router.push({ name: "user-login" });
   }
 };

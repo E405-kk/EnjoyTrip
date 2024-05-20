@@ -2,6 +2,7 @@
 import { ref, onMounted } from "vue";
 import { storeToRefs } from "pinia";
 import { useMemberStore } from "@/stores/member";
+import Swal from "sweetalert2";
 const memberStore = useMemberStore();
 const { userInfo } = storeToRefs(memberStore);
 const { userChangePwd } = memberStore;
@@ -22,7 +23,6 @@ const changePwd = async () => {
   if (userPwdCheck.value === user.value.userPwd) {
     await userChangePwd(user.value);
   } else {
-    alert("비밀번호를 다시 확인해주세요.");
     return;
   }
 };

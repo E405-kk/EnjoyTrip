@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import { useMemberStore } from "@/stores/member";
+import Swal from "sweetalert2";
 const memberStore = useMemberStore();
 const { userFindPwd } = memberStore;
 

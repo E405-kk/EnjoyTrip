@@ -8,9 +8,11 @@ const { userInfo } = storeToRefs(memberStore);
 const { userId, goModify, userDelete } = memberStore;
 import { useRouter } from "vue-router";
 const router = useRouter();
+
+import Swal from "sweetalert2";
 onMounted(() => {
   if (!userId) {
-    alert("로그인이 필요한 화면입니다.");
+    Swal.fire("로그인이 필요한 화면입니다.");
     router.push({ name: "user-login" });
   }
 });
@@ -19,9 +21,19 @@ const go = () => {
   goModify();
 };
 const remove = () => {
-  if (confirm("정말로 회원 탈퇴하시겠습니까? ㅠㅠ")) {
-    userDelete(userId);
-  }
+  Swal.fire({
+    title: "정말로 회원 탈퇴하시겠습니까? ㅠㅠ",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#d33",
+    cancelButtonColor: "#848484",
+    confirmButtonText: "탈퇴",
+    cancelButtonText: "취소",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      userDelete(userId);
+    }
+  });
 };
 </script>
 
