@@ -125,16 +125,16 @@ const loadMarkers = () => {
     kakao.maps.event.addListener(markers.value[i], "click", function () {
       infowindows.value[i].close();
 
-      var content2 =
-        '            <div class="img">' +
-        `                <img src="${positions.value[i].firstImage}" width="100" height="80">` +
-        "           </div>" +
-        '            <div class="desc">' +
-        `                <div class="ellipsis">${positions.value[i].addr1}</div>` +
-        `                <div class="jibun ellipsis">(우)${positions.value[i].zipcode}</div>` +
-        `               <div class="overview"> ${positions.value[i].overview}</div>` +
-        '                <div><a href="https://www.kakaocorp.com/main" target="_blank" class="link">홈페이지</a></div>' +
-        "            </div>";
+      var content =
+        `    <a href="#">` +
+        `       <h5 class="text-gray-900 font-bold text-2xl tracking-tight mb-2 dark:text-white">${positions.value[i].title}</h5>` +
+        `   </a>` +
+        `<div>${positions.value[i].addr1}</div>` +
+        `   <p class="font-normal text-gray-700 mb-3 dark:text-gray-400 overflow-content">${positions.value[i].overview}</p>` +
+        `   <a href="https://search.naver.com/search.naver?&query=${positions.value[i].title}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 text-center inline-flex items-center  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">` +
+        `       Read more` +
+        `       <svg class="-mr-1 ml-2 h-4 w-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>` +
+        `   </a>`;
 
       var customOverlay = new kakao.maps.CustomOverlay({
         position: markers.value[i].n,
@@ -142,15 +142,20 @@ const loadMarkers = () => {
       });
 
       var div1 = document.createElement("div");
-      div1.setAttribute("class", "wrap");
+      div1.setAttribute(
+        "class",
+        "custom-overlay bg-white shadow-md border border-gray-200 rounded-lg max-w-sm dark:bg-gray-800 dark:border-gray-700"
+      );
+
+      var img = document.createElement("img");
+      img.setAttribute("class", "rounded-t-lg");
+      img.setAttribute("src", `${positions.value[i].firstImage}`);
+
       var div2 = document.createElement("div");
-      div2.setAttribute("class", "info");
-      var div3 = document.createElement("div");
-      div3.innerHTML = positions.value[i].title;
-      div3.setAttribute("class", "title");
+      div2.setAttribute("class", "p-5");
 
       var div4 = document.createElement("div");
-      div4.innerHTML = content2;
+      div4.innerHTML = content;
       div4.setAttribute("class", "body");
 
       var closeBtn = document.createElement("div");
@@ -159,9 +164,8 @@ const loadMarkers = () => {
       closeBtn.onclick = function () {
         customOverlay.setMap(null);
       };
-
+      div1.appendChild(img);
       div1.appendChild(div2);
-      div2.appendChild(div3);
       div2.appendChild(closeBtn);
       div2.appendChild(div4);
 
@@ -198,45 +202,21 @@ function hiderMarksersInCluster(clusterer) {
   height: 600px;
   border-radius: 20px;
 }
-.wrap {
-  position: absolute;
-  left: 0;
-  bottom: 40px;
-  width: 350px;
-  height: auto;
-  margin-left: -144px;
-  text-align: left;
-  font-size: 12px;
-  font-family: "Malgun Gothic", dotum, "돋움", sans-serif;
-  line-height: 1.5;
+
+.custom-overlay {
+  background: white;
+  border: 1px solid gray;
+  border-radius: 8px;
+  width: 350px; /* Increase the width to make the overlay wider */
+  max-height: 400px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+  word-break: break-word;
+  white-space: pre-wrap;
 }
-.wrap * {
-  padding: 0;
-  margin: 0;
-}
-.wrap .info {
-  width: 350px;
-  height: 400px;
-  border-radius: 5px;
-  border-bottom: 2px solid #ccc;
-  border-right: 1px solid #ccc;
-  background: #fff;
-  overflow: auto;
-}
-.wrap .info:nth-child(1) {
-  border: 0;
-  box-shadow: 0px 1px 2px #888;
-  margin-bottom: 5px;
-}
-.info .title {
-  padding: 5px 0 30px 10px;
-  height: 30px;
-  background: #eee;
-  border-bottom: 1px solid #ddd;
-  font-size: 18px;
-  font-weight: bold;
-}
-.info .close {
+
+.custom-overlay .close {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -245,53 +225,16 @@ function hiderMarksersInCluster(clusterer) {
   height: 17px;
   background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png");
 }
-.info .close:hover {
+
+.custom-overlay .close:hover {
   cursor: pointer;
 }
-.info .body {
-  position: relative;
-}
-.info .desc {
-  position: relative;
-  margin: 13px 0 0 90px;
-  height: 75px;
-}
-.desc .ellipsis {
-  /* text-overflow: ellipsis; */
-  white-space: normal;
-}
-.desc .jibun {
-  font-size: 11px;
-  color: #888;
-  margin-top: -2px;
-}
-.info .img {
-  position: absolute;
-  top: 6px;
-  left: 5px;
-  width: 73px;
-  height: 71px;
-  border: 1px solid #ddd;
-  color: #888;
-  overflow: auto;
-}
-.info:after {
-  content: "";
-  position: absolute;
-  margin-left: -12px;
-  left: 50%;
-  bottom: 0;
-  width: 22px;
-  height: 12px;
-  background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png");
-}
-.info .link {
-  color: #5085bb;
-}
 
-.overview {
-  padding-right: 10px;
-  white-space: normal;
-  overflow: auto;
+.overview-content {
+  max-height: 200px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  word-break: break-word;
+  white-space: pre-wrap;
 }
 </style>

@@ -80,14 +80,14 @@ function cancelModify() {
 
 <template>
   <form @submit.prevent="onSubmit">
-    <div class="mt-6 border border-gray-300 rounded-md p-2 relative">
-      <div class="mb-2">
-        <span class="font-semibold">{{ comment.userId }}</span>
-        <div
-          class="flex flex-col justify-between absolute top-0 right-0 mt-2 mr-2 space-y-2">
+    <div class="mt-6 border border-gray-300 rounded-md px-2 relative">
+      <div class="flex items-center" style="height: 50px">
+        <span class="font-semibold ml-1.5 mr-auto">{{ comment.userId }}</span>
+
+        <div class="flex items-center justify-between mr-1 ml-auto">
           <button
             v-if="type === 'modify'"
-            class="text-gray-600 hover:text-gray-800"
+            class="text-gray-600 py-1 px-2 hover:text-gray-800"
             @click="cancelModify">
             취소
           </button>
