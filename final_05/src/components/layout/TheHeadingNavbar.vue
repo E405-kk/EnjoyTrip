@@ -10,9 +10,11 @@ const memberStore = useMemberStore();
 const { menuList } = storeToRefs(menuStore);
 
 const { userLogout } = memberStore;
-const userId = sessionStorage.getItem("userId");
+const userId = ref();
+
 const logout = () => {
   userLogout();
+  userId.value = "";
   toggleDropdown();
 };
 if (sessionStorage.getItem("userId")) {
@@ -25,6 +27,7 @@ const showDropdown = ref(false); // 드롭다운 메뉴의 표시 여부를 관�
 
 // 드롭다운 메뉴를 열거나 닫는 함수
 const toggleDropdown = () => {
+  userId.value = sessionStorage.getItem("userId");
   showDropdown.value = !showDropdown.value;
 };
 </script>

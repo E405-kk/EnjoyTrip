@@ -83,33 +83,34 @@ function cancelModify() {
     <div class="mt-6 border border-gray-300 rounded-md p-2 relative">
       <div class="mb-2">
         <span class="font-semibold">{{ comment.userId }}</span>
+        <div
+          class="flex flex-col justify-between absolute top-0 right-0 mt-2 mr-2 space-y-2">
+          <button
+            v-if="type === 'modify'"
+            class="text-gray-600 hover:text-gray-800"
+            @click="cancelModify">
+            취소
+          </button>
+          <button
+            type="submit"
+            v-if="type === 'modify'"
+            class="bg-emerald-100 text-emerald-700 font-semibold py-1 px-2 border border-emerald-300 rounded-md shadow-sm hover:bg-emerald-200 hover:text-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-300 focus:ring-opacity-50">
+            수정
+          </button>
+          <button
+            type="submit"
+            v-if="type === 'regist'"
+            class="bg-emerald-100 text-emerald-700 font-semibold py-1 px-2 border border-emerald-300 rounded-md shadow-sm hover:bg-emerald-200 hover:text-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-300 focus:ring-opacity-50">
+            등록
+          </button>
+        </div>
       </div>
+
       <textarea
         rows="3"
         v-model="comment.content"
         class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-opacity-50"
         placeholder="댓글을 입력하세요"></textarea>
-      <div
-        class="flex flex-col justify-between absolute top-0 right-0 mt-2 mr-2 space-y-2">
-        <button
-          v-if="type === 'modify'"
-          class="text-gray-600 hover:text-gray-800"
-          @click="cancelModify">
-          취소
-        </button>
-        <button
-          type="submit"
-          v-if="type === 'modify'"
-          class="bg-emerald-100 text-emerald-700 font-semibold py-2 px-4 border border-emerald-300 rounded-md shadow-sm hover:bg-emerald-200 hover:text-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-300 focus:ring-opacity-50">
-          수정
-        </button>
-        <button
-          type="submit"
-          v-if="type === 'regist'"
-          class="bg-emerald-100 text-emerald-700 font-semibold py-2 px-4 border border-emerald-300 rounded-md shadow-sm hover:bg-emerald-200 hover:text-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-300 focus:ring-opacity-50">
-          등록
-        </button>
-      </div>
     </div>
   </form>
 </template>
