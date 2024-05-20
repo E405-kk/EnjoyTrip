@@ -5,10 +5,10 @@ import { useMemberStore } from "@/stores/member";
 const memberStore = useMemberStore();
 import { onMounted } from "vue";
 const { userInfo } = storeToRefs(memberStore);
-const { userId, goModify, userDelete } = memberStore;
+const { goModify, userDelete } = memberStore;
 import { useRouter } from "vue-router";
 const router = useRouter();
-
+const userId = sessionStorage.getItem("userId");
 import Swal from "sweetalert2";
 onMounted(() => {
   if (!userId) {

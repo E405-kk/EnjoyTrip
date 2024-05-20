@@ -45,7 +45,7 @@ export const useMemberStore = defineStore("memberStore", () => {
             icon: "success",
             title: msg,
             showConfirmButton: false,
-            timer: 1500,
+            timer: 1200,
           });
         }
       },
@@ -62,11 +62,11 @@ export const useMemberStore = defineStore("memberStore", () => {
   const userLogout = () => {
     Swal.fire({
       title: "로그아웃하시겠습니까?",
-      icon: "warning",
+      icon: "question",
       showCancelButton: true,
-      confirmButtonColor: "#d33",
+      confirmButtonColor: "#4169E1",
       cancelButtonColor: "#848484",
-      confirmButtonText: "삭제",
+      confirmButtonText: "확인",
       cancelButtonText: "취소",
     }).then((result) => {
       if (result.isConfirmed) {
@@ -74,6 +74,12 @@ export const useMemberStore = defineStore("memberStore", () => {
         userInfo.value = null;
         changeMenuState();
         sessionStorage.clear();
+        Swal.fire({
+          icon: "success",
+          title: "로그아웃 되었습니다.",
+          showConfirmButton: false,
+          timer: 1200,
+        });
       }
     });
   };
