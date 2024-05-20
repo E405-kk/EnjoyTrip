@@ -41,7 +41,7 @@ const findPwd = () => {
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
       <img
         class="mx-auto h-10 w-auto"
-        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+        src="@/assets/favicon-64x64.png"
         alt="Your Company" />
       <h2
         class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
@@ -79,7 +79,7 @@ const findPwd = () => {
             <div class="text-sm">
               <a
                 href="#"
-                class="font-semibold text-indigo-600 hover:text-indigo-500"
+                class="font-semibold text-green-600 hover:text-green-500"
                 @click="findPwd"
                 >비밀번호 찾기</a
               >
@@ -101,7 +101,7 @@ const findPwd = () => {
         <div>
           <button
             type="button"
-            class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            class="flex w-full justify-center bg-green-500 rounded-md px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             @click="login">
             로그인
           </button>
@@ -111,7 +111,7 @@ const findPwd = () => {
       <p class="mt-10 text-center text-sm text-gray-500">
         <a
           href="#"
-          class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+          class="font-semibold leading-6 text-green-600 hover:text-green-500"
           @click="mvRegister"
           >회원가입</a
         >

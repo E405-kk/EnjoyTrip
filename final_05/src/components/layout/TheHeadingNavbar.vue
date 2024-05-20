@@ -38,7 +38,7 @@ const toggleDropdown = () => {
     class="bg-white border border-gray-200 dark:border-gray-700 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-800 shadow">
     <div class="container flex justify-between items-center mx-auto">
       <span
-        class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
+        class="self-center text-2xl font-bold whitespace-nowrap dark:text-white">
         <router-link :to="{ name: 'main' }"> EnjoyTrip </router-link>
       </span>
 

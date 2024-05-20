@@ -72,7 +72,7 @@ const remove = () => {
       <div class="flex mt-6">
         <button
           @click="go"
-          class="rounded-xl bg-indigo-600 px-4 py-2 text-base mb-3 font-medium text-white transition duration-200 hover:bg-indigo-500 active:bg-indigo-600">
+          class="rounded-xl bg-green-500 px-4 py-2 text-base mb-3 font-medium text-white transition duration-200 hover:bg-green-600 active:bg-indigo-600">
           정보 수정
         </button>
         <button
