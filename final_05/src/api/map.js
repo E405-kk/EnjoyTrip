@@ -28,4 +28,15 @@ function deletePlanList(param, success, fail) {
     .catch(fail);
 }
 
-export { listSido, listTrip, addPlanList, getPlanList, deletePlanList };
+function listMonthly(success, fail) {
+  local.get("/trip/monthlyList").then(success).catch(fail);
+}
+
+export {
+  listSido,
+  listTrip,
+  addPlanList,
+  getPlanList,
+  deletePlanList,
+  listMonthly,
+};

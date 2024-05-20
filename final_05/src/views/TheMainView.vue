@@ -1,11 +1,25 @@
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import VCard from "@/components/common/VCard.vue";
+import { listMonthly } from "@/api/map";
 
+const recommends = ref([]);
 onMounted(() => {
   AOS.init();
+  getRecommendList();
 });
+const getRecommendList = () => {
+  listMonthly(
+    ({ data }) => {
+      recommends.value = data;
+    },
+    (error) => {
+      console.log(err);
+    }
+  );
+};
 </script>
 
 <template>
@@ -46,10 +60,10 @@ onMounted(() => {
       data-aos="fade-right"
       data-aos-easing="ease-in-out"
       data-aos-offset="100"
-      data-aos-duration="1500"
+      data-aos-duration="1000"
       data-aos-once="false"
-      data-aos-delay="1200"
-      style="bottom: 10%; left: 10%">
+      data-aos-delay="600"
+      style="bottom: 20%; left: 10%">
       <router-link
         class="flex items-center text-lg font-bold text-white md:hover:text-gray-700"
         :to="{ name: 'hotplace' }"
@@ -57,7 +71,18 @@ onMounted(() => {
       >
     </div>
   </div>
-  <div id="recommend"></div>
+  <div id="recommend" class="mt-10 overflow-x-auto" style="width: 300px">
+    <div class="white-space-nowrap">
+      <ul>
+        <li>
+          <VCard
+            v-for="recommend in recommends"
+            :key="recommend.title"
+            :recommend="recommend" />
+        </li>
+      </ul>
+    </div>
+  </div>
   <div id="rank"></div>
 </template>
 
@@ -65,11 +90,12 @@ onMounted(() => {
 .image-container {
   position: relative;
   width: 100%;
+  height: 150vh;
 }
 
 .full-width-image {
   width: 100%;
-  height: auto;
+  height: 150vh;
   display: block;
 }
 
