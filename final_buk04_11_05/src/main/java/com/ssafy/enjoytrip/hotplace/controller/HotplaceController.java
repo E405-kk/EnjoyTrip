@@ -65,6 +65,7 @@ public class HotplaceController {
 				break;
 			}
 		}
+		System.out.println("slang");
 		String realPath = servletContext.getRealPath("/");
 		String projectPath = realPath.replace(File.separator + "final_buk04_11_05" + File.separator + "src" + File.separator + "main" + File.separator + "webapp", "");
 		String today = new SimpleDateFormat("yyMMdd").format(new Date());
