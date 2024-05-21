@@ -1,5 +1,5 @@
 USE `ssafytrip`;
-DROP TABLE IF EXISTS `ssafytrip`.`board` ;
+
 DROP TABLE IF EXISTS `ssafytrip`.`notice` ;
 DROP TABLE IF EXISTS `ssafytrip`.`tripplan`;
 DROP TABLE IF EXISTS `ssafytrip`.`user` ;
@@ -7,8 +7,10 @@ DROP TABLE IF EXISTS `ssafytrip`.`file_info` ;
 DROP TABLE IF EXISTS `ssafytrip`.`comment` ;
 DROP TABLE IF EXISTS `ssafytrip`.`hotplace` ;
 DROP TABLE IF EXISTS `ssafytrip`.`goods` ;
-DROP TABLE IF EXISTS `ssafytrip`.`user_plan` ;
-DROP TABLE IF EXISTS `ssafytrip`.`user_dayplan` ;
+DROP TABLE IF EXISTS `ssafytrip`.`board` ;
+DROP TABLE IF EXISTS `ssafytrip`.`plan` ;
+DROP TABLE IF EXISTS `ssafytrip`.`plan_detail` ;
+DROP TABLE IF EXISTS `ssafytrip`.`monthly` ;
 
 CREATE TABLE IF NOT EXISTS `ssafytrip`.`user` (
   `user_id` VARCHAR(16) NOT NULL,
@@ -33,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `ssafytrip`.`board` (
   `register_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`article_no`),
   KEY `board_to_user_user_id_fk` (`user_id`),
-  CONSTRAINT `board_to_user_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
+  CONSTRAINT `board_to_user_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE IF NOT EXISTS `ssafytrip`.`notice` (
@@ -45,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `ssafytrip`.`notice` (
   `register_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`article_no`),
   KEY `notice_to_user_user_id_fk` (`user_id`),
-  CONSTRAINT `notice_to_user_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
+  CONSTRAINT `notice_to_user_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
@@ -53,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `ssafytrip`.`tripplan`(
 	`num` int NOT NULL auto_increment PRIMARY KEY,
     `user_id` varchar(16) DEFAULT NULL,
     `plan_list` varchar(5000) NOT NULL,
-	CONSTRAINT `tripplan_to_user_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
+	CONSTRAINT `tripplan_to_user_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 USE `ssafytrip`;
@@ -84,7 +86,7 @@ CREATE TABLE IF NOT EXISTS `file_info` (
 	`save_file` varchar(50) DEFAULT NULL,
 	PRIMARY KEY (`idx`),
 	KEY `file_to_hotplace_article_no_fk` (`article_no`),
-	CONSTRAINT `file_to_hotplace_article_no_fk` FOREIGN KEY (`article_no`) REFERENCES `hotplace` (`article_no`)
+	CONSTRAINT `file_to_hotplace_article_no_fk` FOREIGN KEY (`article_no`) REFERENCES `hotplace` (`article_no`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 CREATE TABLE IF NOT EXISTS `comment` (
@@ -122,8 +124,8 @@ CREATE TABLE `goods` (
 CREATE TABLE `plan` (
   `plan_id` int NOT NULL AUTO_INCREMENT,
   `user_id` varchar(16) NOT NULL,
-  `start_date` timestamp NOT NULL,
-  `end_date` timestamp NOT NULL,
+  `start_date` timestamp,
+  `end_date` timestamp,
   `comment` varchar(300),
   PRIMARY KEY (`plan_id`),
    KEY `plan_to_user_user_id_fk` (`user_id`),
