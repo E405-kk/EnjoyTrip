@@ -36,8 +36,9 @@ const router = createRouter({
           component: () => import("@/components/trip/TripPlanList.vue"),
         },
         {
-          path: "planListDetail",
+          path: "planListDetail/:idx",
           name: "trip-listDetail",
+          props: true,
           component: () => import("@/components/trip/TripPlanDetail.vue"),
         },
       ],

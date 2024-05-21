@@ -11,15 +11,15 @@ function listTrip(param, success, fail) {
 }
 
 function addPlanList(param, success, fail) {
-  local.post("/trip/tripPlanSave", param).then(success).catch(fail);
+  local.post("/trip/planRegist", param).then(success).catch(fail);
 }
 
-function getPlanList(param, success, fail) {
-  local
-    .get("/trip/userTripPlanList", { params: param })
-    .then(success)
-    .catch(fail);
-}
+// function getPlanList(param, success, fail) {
+//   local
+//     .get("/trip/userTripPlanList", { params: param })
+//     .then(success)
+//     .catch(fail);
+// }
 
 function deletePlan(planId, success, fail) {
   local.delete(`/trip/planDelete/${planId}`).then(success).catch(fail);
@@ -51,7 +51,6 @@ export {
   listSido,
   listTrip,
   addPlanList,
-  getPlanList,
   deletePlan,
   listMonthly,
   listRank,

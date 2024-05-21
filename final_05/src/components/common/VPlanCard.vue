@@ -1,7 +1,8 @@
 <script setup>
-defineProps({
+const props = defineProps({
   plan: Object,
 });
+console.log(props.plan);
 </script>
 
 <template>

@@ -58,20 +58,20 @@ public class TripController {
 		return ResponseEntity.ok(result);
 	}
 
-	@GetMapping("/tripPlan")
-	public ResponseEntity<?> tripPlan() {
-		List<SidoDto> sidoList = tripService.sidoList();
-		return ResponseEntity.ok(sidoList);
-	}
+//	@GetMapping("/tripPlan")
+//	public ResponseEntity<?> tripPlan() {
+//		List<SidoDto> sidoList = tripService.sidoList();
+//		return ResponseEntity.ok(sidoList);
+//	}
 
-	@DeleteMapping("/tripPlanDelete/{userId}")
-	public ResponseEntity<?> tripPlanDelete(@PathVariable String userId) {
-		UserDto userDto = new UserDto();
-		userDto.setUserId(userId);
-		System.out.println("tripPlanDelete: " + userDto);
-		int result = tripService.tripPlanDelete(userDto);
-		return ResponseEntity.ok(result);
-	}
+//	@DeleteMapping("/tripPlanDelete/{userId}")
+//	public ResponseEntity<?> tripPlanDelete(@PathVariable String userId) {
+//		UserDto userDto = new UserDto();
+//		userDto.setUserId(userId);
+//		System.out.println("tripPlanDelete: " + userDto);
+//		int result = tripService.tripPlanDelete(userDto);
+//		return ResponseEntity.ok(result);
+//	}
 
 //	@PostMapping("/tripPlanSave")
 //	public ResponseEntity<?> tripPlanSave(@RequestBody TripPlanDto tripPlanDto) {
@@ -89,25 +89,25 @@ public class TripController {
 //		}
 //	}
 
-	@GetMapping("/userTripPlanList")
-	public ResponseEntity<?> userTripPlanList(@ModelAttribute UserDto userDto) {
-		// 유저가 등록한 여행계획 들고오기
-		TripPlanDto userTripPlan = tripService.userTripPlan(userDto);
-		List<TripDto> result = new ArrayList<>();
-
-		// tripPlanDto에 있는 planList를 전부 검색해서 List<TripDto>로 변환하는 코드 작성
-		if (userTripPlan == null) {
-			return ResponseEntity.ok(result);
-		}
-		String[] titles = userTripPlan.getPlanList2().split(",");
-
-		for (String title : titles) {
-			result.add(tripService.tripPlanDtoToTripDtoList(title));
-		}
-
-		// 클라이언트로 리턴
-		return ResponseEntity.ok(result);
-	}
+//	@GetMapping("/userTripPlanList")
+//	public ResponseEntity<?> userTripPlanList(@ModelAttribute UserDto userDto) {
+//		// 유저가 등록한 여행계획 들고오기
+//		TripPlanDto userTripPlan = tripService.userTripPlan(userDto);
+//		List<TripDto> result = new ArrayList<>();
+//
+//		// tripPlanDto에 있는 planList를 전부 검색해서 List<TripDto>로 변환하는 코드 작성
+//		if (userTripPlan == null) {
+//			return ResponseEntity.ok(result);
+//		}
+//		String[] titles = userTripPlan.getPlanList2().split(",");
+//
+//		for (String title : titles) {
+//			result.add(tripService.tripPlanDtoToTripDtoList(title));
+//		}
+//
+//		// 클라이언트로 리턴
+//		return ResponseEntity.ok(result);
+//	}
 
 	@GetMapping("/monthlyList")
 	public ResponseEntity<?> monthlyList() {

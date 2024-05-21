@@ -14,17 +14,19 @@ const planList = ref([]);
 const props = defineProps({
   idx: Number,
 });
+const numericIdx = Number(props.idx);
 onMounted(() => {
   if (sessionStorage.getItem("userId") == null) {
     Swal.fire("로그인이 필요한 페이지입니다!");
     router.push({ name: "user-login" });
   }
+  console.log(numericIdx);
   getTripPlan();
 });
 
 const getTripPlan = () => {
   planDetail(
-    props.idx,
+    numericIdx,
     ({ data }) => {
       planList.value = data;
     },
@@ -49,7 +51,7 @@ const resetPlan = () => {
   }).then((result) => {
     if (result.isConfirmed) {
       deletePlan(
-        userInfo.value,
+        numericIdx,
         (response) => {
           let msg = response.data;
           if (response.status == 200) {

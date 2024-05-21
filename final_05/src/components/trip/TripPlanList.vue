@@ -29,7 +29,7 @@ const getPlanList = async () => {
       <VPlanCard
         v-for="plan in planList"
         :key="plan.planId"
-        :recommend="plan"
+        :plan="plan"
         class="flex-none shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 max-w-sm mr-4" />
     </div>
   </div>
