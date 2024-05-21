@@ -21,8 +21,8 @@ onMounted(() => {
   getTripList();
 });
 
-const getTripList = async () => {
-  await getPlanList(
+const getTripList = () => {
+  getPlanList(
     userInfo.value,
     ({ data }) => {
       planList.value = data;

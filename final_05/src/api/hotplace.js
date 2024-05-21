@@ -27,6 +27,17 @@ function deleteArticle(articleno, success, fail) {
   local.delete(`/hotplace/remove/${articleno}`).then(success).catch(fail);
 }
 
+function checkGood(param, success, fail) {
+  local.get(`/hotplace/good`, { params: param }).then(success).catch(fail);
+}
+
+function updateGood(param, success, fail) {
+  local
+    .put(`/hotplace/updateGood`, { params: param })
+    .then(success)
+    .catch(fail);
+}
+
 export {
   listArticle,
   detailArticle,
@@ -34,4 +45,6 @@ export {
   getModifyArticle,
   modifyArticle,
   deleteArticle,
+  checkGood,
+  updateGood,
 };

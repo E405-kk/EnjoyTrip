@@ -102,24 +102,11 @@ const addPlan = (plan) => {
       let msg = response.data;
       if (response.status === httpStatusCode.OK) {
         msg = "계획을 저장했습니다.";
-        // Swal.fire({
-        //   icon: "success",
-        //   title: msg,
-        //   showConfirmButton: false,
-        //   timer: 1500,
-        // });
         Swal.fire({
-          title: msg,
-          width: 600,
-          padding: "3em",
-          color: "#716add",
-          backdrop: `
-    rgba(0,0,123,0.4)
-    url("/images/nyan-cat.gif")
-    left top
-    no-repeat
-  `,
+          text: msg,
+          icon: "success",
         });
+
         router.push({ name: "trip-userPlan" });
       } else {
         Swal.fire({
