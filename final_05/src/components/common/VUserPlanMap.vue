@@ -104,7 +104,7 @@ const loadMarkers = () => {
     tripPlanPosList.value.push(position.latlng);
     var img = position.firstImage;
     if (img == "") {
-      img = "/src/assets/about-bg.jpg";
+      img = "/src/assets/bg-white.png";
     }
     var contentVal =
       '        <div class="mb-10" style="padding: 5px;">' +

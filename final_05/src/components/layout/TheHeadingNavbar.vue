@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useMenuStore } from "@/stores/menu";
 import { useMemberStore } from "@/stores/member";
 import { storeToRefs } from "pinia";
@@ -8,9 +8,14 @@ const menuStore = useMenuStore();
 const memberStore = useMemberStore();
 
 const { menuList } = storeToRefs(menuStore);
+const { userInfo } = storeToRefs(memberStore);
 
 const { userLogout } = memberStore;
 const userId = ref();
+
+onMounted(() => {
+  getImageUrl();
+});
 
 const logout = () => {
   userLogout();
@@ -30,6 +35,18 @@ const toggleDropdown = () => {
   userId.value = sessionStorage.getItem("userId");
   showDropdown.value = !showDropdown.value;
 };
+function getImageUrl() {
+  if (userInfo.value == null) {
+    return "/src/assets/user.png";
+  }
+  if (userInfo.value.img != null) {
+    var url = "/src/assets/users/";
+    url += userInfo.value.img;
+    return url;
+  } else {
+    return "/src/assets/user.png";
+  }
+}
 </script>
 
 <template>
@@ -107,12 +124,12 @@ const toggleDropdown = () => {
                 class="flex items-center p-3 -mt-2 text-sm text-gray-600 transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
                 <img
                   class="border flex-shrink-0 object-cover ml-3 rounded-full w-9 h-9"
-                  src="@/assets/user.png" />
+                  :src="getImageUrl()" />
                 <div class="mx-auto">
                   <h1
                     v-if="userId"
                     class="text-sm font-semibold text-gray-700 dark:text-gray-200">
-                    {{ userId }}
+                    {{ userInfo.userName }}
                   </h1>
                 </div>
               </router-link>

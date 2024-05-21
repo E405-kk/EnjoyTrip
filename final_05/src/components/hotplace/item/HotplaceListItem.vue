@@ -1,13 +1,29 @@
 <script setup>
+import { storeToRefs } from "pinia";
+import { useMemberStore } from "@/stores/member";
+const memberStore = useMemberStore();
+const { userInfo } = storeToRefs(memberStore);
 defineProps({ article: Object });
 function getImageUrl(article) {
-  if (article.fileInfo != null) {
+  if (article.fileInfo.saveFile) {
     var url = "/src/assets/upload/";
     url += article.fileInfo.saveFolder + "/" + article.fileInfo.saveFile;
 
     return url;
   } else {
     return "/src/assets/about-bg.jpg";
+  }
+}
+function getUserImageUrl() {
+  if (userInfo.value == null) {
+    return "/src/assets/user.png";
+  }
+  if (userInfo.value.img != null) {
+    var url = "/src/assets/users/";
+    url += userInfo.value.img;
+    return url;
+  } else {
+    return "/src/assets/user.png";
   }
 }
 </script>
@@ -69,7 +85,7 @@ function getImageUrl(article) {
         <div class="pr-3">
           <img
             class="h-12 w-12 rounded-full object-cover"
-            src="@/assets/user.png"
+            :src="getUserImageUrl()"
             alt="" />
         </div>
         <div class="flex flex-1">

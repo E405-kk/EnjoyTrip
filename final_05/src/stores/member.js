@@ -25,6 +25,7 @@ export const useMemberStore = defineStore("memberStore", () => {
     userEmail: "",
     joinDate: "",
     isAdmin: 0,
+    img: "",
   });
 
   const isLogin = ref(false);
@@ -83,9 +84,10 @@ export const useMemberStore = defineStore("memberStore", () => {
       }
     });
   };
-  const userJoin = async (user) => {
+  const userJoin = async (user, config) => {
     await userRegister(
       user,
+      config,
       (response) => {
         if (response.status === httpStatusCode.CREATE) {
           Swal.fire({
@@ -123,9 +125,10 @@ export const useMemberStore = defineStore("memberStore", () => {
   if (sessionStorage.getItem("userId")) {
     userGetInfo(userId);
   }
-  const userModify = async (user) => {
+  const userModify = async (user, config) => {
     await userUpdate(
       user,
+      config,
       (response) => {
         if (response.status === httpStatusCode.CREATE) {
           Swal.fire({
@@ -134,6 +137,7 @@ export const useMemberStore = defineStore("memberStore", () => {
             showConfirmButton: false,
             timer: 1500,
           });
+          userGetInfo(userId);
           goMyPage();
         }
       },

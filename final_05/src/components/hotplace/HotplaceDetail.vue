@@ -17,7 +17,7 @@ const router = useRouter();
 const { articleno } = route.params;
 
 const article = ref({});
-const isGood = ref(true);
+const isGood = ref(false);
 const param = ref({
   userId: userId,
   articleNo: articleno,
@@ -115,16 +115,17 @@ function onDeleteArticle() {
     }
   });
 }
-function getImageUrl(article) {
-  if (article && article.fileInfo) {
-    return (
-      "/src/assets/upload/" +
-      article.fileInfo.saveFolder +
-      "/" +
-      article.fileInfo.saveFile
-    );
+function getImageUrl() {
+  if (article.value.fileInfo == null) {
+    return null;
+  }
+  if (article.value.fileInfo.saveFile) {
+    var url = "/src/assets/upload/";
+    url +=
+      article.value.fileInfo.saveFolder + "/" + article.value.fileInfo.saveFile;
+    return url;
   } else {
-    return "";
+    return "/src/assets/about-bg.jpg";
   }
 }
 </script>
@@ -133,7 +134,7 @@ function getImageUrl(article) {
   <div class="container mx-auto p-5">
     <div class="flex justify-center">
       <img
-        :src="getImageUrl(article)"
+        :src="getImageUrl()"
         class="max-w-full h-auto"
         style="width: 40%; max-width: 40%; height: auto" />
       <div
@@ -148,20 +149,22 @@ function getImageUrl(article) {
               @click="moveList">
               글목록
             </button>
-            <button
-              v-if="isGood"
-              @click="updateIsGood"
-              class="middle none center mr-3 flex items-center justify-center rounded-lg bg-gradient-to-tr from-pink-600 to-pink-400 p-3 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-              data-ripple-light="true">
-              <i class="fas fa-heart text-lg leading-none"></i>
-            </button>
-            <button
-              v-if="!isGood"
-              @click="updateIsGood"
-              class="middle none center mr-3 flex items-center justify-center rounded-lg border border-pink-500 p-3 font-sans text-xs font-bold uppercase text-pink-500 transition-all hover:opacity-75 focus:ring focus:ring-pink-200 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-              data-ripple-dark="true">
-              <i class="fas fa-heart text-lg leading-none"></i>
-            </button>
+            <template v-if="userId">
+              <button
+                v-if="isGood"
+                @click="updateIsGood"
+                class="middle none center mr-3 flex items-center justify-center rounded-lg bg-gradient-to-tr from-pink-600 to-pink-400 p-3 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                data-ripple-light="true">
+                <i class="fas fa-heart text-lg leading-none"></i>
+              </button>
+              <button
+                v-if="!isGood"
+                @click="updateIsGood"
+                class="middle none center mr-3 flex items-center justify-center rounded-lg border border-pink-500 p-3 font-sans text-xs font-bold uppercase text-pink-500 transition-all hover:opacity-75 focus:ring focus:ring-pink-200 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                data-ripple-dark="true">
+                <i class="fas fa-heart text-lg leading-none"></i>
+              </button>
+            </template>
           </div>
           <div class="flex">
             <button

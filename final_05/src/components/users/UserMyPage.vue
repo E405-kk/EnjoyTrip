@@ -35,6 +35,18 @@ const remove = () => {
     }
   });
 };
+function getImageUrl() {
+  if (userInfo.value == null) {
+    return "/src/assets/user.png";
+  }
+  if (userInfo.value.img != null) {
+    var url = "/src/assets/users/";
+    url += userInfo.value.img;
+    return url;
+  } else {
+    return "/src/assets/user.png";
+  }
+}
 </script>
 
 <template>
@@ -46,42 +58,48 @@ const remove = () => {
           마이 페이지
         </h4>
       </div>
-
-      <div class="mt-4 border-t border-gray-100 w-full">
-        <dl class="divide-y divide-gray-100">
-          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-            <dt class="text-m font-medium leading-6 text-gray-900">ID</dt>
-            <dd
-              class="mt-1 text-m leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-              {{ userInfo.userId }}
-            </dd>
-          </div>
-          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-            <dt class="text-m font-medium leading-6 text-gray-900">이름</dt>
-            <dd
-              class="mt-1 text-m leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-              {{ userInfo.userName }}
-            </dd>
-          </div>
-          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-            <dt class="text-m font-medium leading-6 text-gray-900">이메일</dt>
-            <dd
-              class="mt-1 text-m leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-              {{ userInfo.userEmail }}
-            </dd>
-          </div>
-          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-            <dt class="text-m font-medium leading-6 text-gray-900">
-              가입 날짜
-            </dt>
-            <dd
-              class="mt-1 text-m leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-              {{ userInfo.joinDate }}
-            </dd>
-          </div>
-        </dl>
+      <div class="flex">
+        <img
+          :src="getImageUrl()"
+          style="width: 40%"
+          class="mr-20 rounded-[20px]" />
+        <div class="mt-4 border-t border-gray-100 w-full">
+          <dl class="divide-y divide-gray-100">
+            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <dt class="text-m font-medium leading-6 text-gray-900">ID</dt>
+              <dd
+                class="mt-1 text-m leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                {{ userInfo.userId }}
+              </dd>
+            </div>
+            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <dt class="text-m font-medium leading-6 text-gray-900">이름</dt>
+              <dd
+                class="mt-1 text-m leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                {{ userInfo.userName }}
+              </dd>
+            </div>
+            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <dt class="text-m font-medium leading-6 text-gray-900">이메일</dt>
+              <dd
+                class="mt-1 text-m leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                {{ userInfo.userEmail }}
+              </dd>
+            </div>
+            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <dt class="text-m font-medium leading-6 text-gray-900">
+                가입 날짜
+              </dt>
+              <dd
+                class="mt-1 text-m leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                {{ userInfo.joinDate }}
+              </dd>
+            </div>
+          </dl>
+        </div>
       </div>
-      <div class="flex mt-6">
+
+      <div class="flex mt-[50px]">
         <button
           @click="go"
           class="rounded-xl bg-green-500 px-4 py-2 text-base mb-3 font-medium text-white transition duration-200 hover:bg-green-600 active:bg-indigo-600">

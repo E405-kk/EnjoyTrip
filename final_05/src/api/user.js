@@ -6,16 +6,16 @@ async function userConfirm(param, success, fail) {
   await local.get(`/user/login`, { params: param }).then(success).catch(fail);
 }
 
-async function userRegister(param, success, fail) {
-  await local.post(`/user/register`, param).then(success).catch(fail);
+async function userRegister(param, config, success, fail) {
+  await local.post(`/user/register`, param, config).then(success).catch(fail);
 }
 
 async function userSearch(userId, success, fail) {
   await local.get(`/user/info/${userId}`).then(success).catch(fail);
 }
 
-async function userUpdate(param, success, fail) {
-  await local.put(`/user/modify`, param).then(success).catch(fail);
+async function userUpdate(param, config, success, fail) {
+  await local.put(`/user/modify`, param, config).then(success).catch(fail);
 }
 
 async function userRemove(userId, success, fail) {

@@ -11,7 +11,6 @@ function detailArticle(articleno, success, fail) {
 }
 
 function registArticle(article, config, success, fail) {
-  console.log("hotplacejs article", article);
   local.post(`/hotplace/regist`, article, config).then(success).catch(fail);
 }
 

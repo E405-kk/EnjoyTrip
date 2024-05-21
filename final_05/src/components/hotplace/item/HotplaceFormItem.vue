@@ -175,7 +175,7 @@ function getImageUrl() {
   if (article.value == null) {
     return null;
   }
-  if (article.value.fileInfo != null) {
+  if (article.value.fileInfo.saveFile) {
     var url = "/src/assets/upload/";
     url +=
       article.value.fileInfo.saveFolder + "/" + article.value.fileInfo.saveFile;

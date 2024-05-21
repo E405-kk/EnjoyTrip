@@ -57,6 +57,7 @@ public class HotplaceController {
 	public ResponseEntity<?> regist(@RequestParam(value = "file", required = false) MultipartFile file,
 			@RequestPart HotplaceDto hotplaceDto) throws IllegalStateException, IOException, URISyntaxException{
 		List<String> slangs = hotplaceService.getSlang();
+		System.out.println(file);
 		String full = hotplaceDto.getSubject() + " " +  hotplaceDto.getContent();
 		String slangFinded = null;		// 발견한 욕설(첫번째)
 		for (String slang : slangs) {
@@ -86,13 +87,6 @@ public class HotplaceController {
 				}
 				hotplaceDto.setFileInfo(fileInfoDto);
 				
-			}
-			else {
-				FileInfoDto fileInfoDto = new FileInfoDto();
-				fileInfoDto.setSaveFile("about-bg.jpg");
-				fileInfoDto.setSaveFolder("");
-				fileInfoDto.setOriginalFile("");
-				hotplaceDto.setFileInfo(fileInfoDto);
 			}
 			int result = hotplaceService.regist(hotplaceDto);
 			
@@ -147,13 +141,6 @@ public class HotplaceController {
 				}
 				hotplaceDto.setFileInfo(fileInfoDto);
 				
-			}
-			else if (hotplaceDto.getFileInfo() == null){
-				FileInfoDto fileInfoDto = new FileInfoDto();
-				fileInfoDto.setSaveFile("about-bg.jpg");
-				fileInfoDto.setSaveFolder("");
-				fileInfoDto.setOriginalFile("");
-				hotplaceDto.setFileInfo(fileInfoDto);
 			}
 			
 			int result = hotplaceService.modify(hotplaceDto);

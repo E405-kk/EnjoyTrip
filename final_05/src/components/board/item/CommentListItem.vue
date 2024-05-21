@@ -1,6 +1,10 @@
 <script setup>
 import { ref } from "vue";
 import CommentFormItem from "@/components/board/item/CommentFormItem.vue";
+import { useMemberStore } from "@/stores/member";
+import { storeToRefs } from "pinia";
+const memberStore = useMemberStore();
+const { userInfo } = storeToRefs(memberStore);
 
 const props = defineProps({ comment: Object });
 const emit = defineEmits(["update-comment", "delete-comment"]);
@@ -21,6 +25,18 @@ const cancelEdit = () => {
 const deleteComment = () => {
   emit("delete-comment", props.comment.idx);
 };
+function getImageUrl() {
+  if (userInfo.value == null) {
+    return "/src/assets/user.png";
+  }
+  if (userInfo.value.img != null) {
+    var url = "/src/assets/users/";
+    url += userInfo.value.img;
+    return url;
+  } else {
+    return "/src/assets/user.png";
+  }
+}
 </script>
 
 <template>
@@ -33,10 +49,10 @@ const deleteComment = () => {
         @cancel-edit="cancelEdit" />
     </div>
     <div v-if="!isEditing" class="flex items-center mb-2">
-      <!-- <img
+      <img
         class="w-10 h-10 rounded-full mr-3"
-        src="@/assets/plane.png"
-        alt="User Avatar" /> -->
+        :src="getImageUrl()"
+        alt="User Avatar" />
       <div class="flex-1">
         <div class="flex justify-between items-center">
           <span class="font-semibold text-gray-700">{{ comment.userId }}</span>

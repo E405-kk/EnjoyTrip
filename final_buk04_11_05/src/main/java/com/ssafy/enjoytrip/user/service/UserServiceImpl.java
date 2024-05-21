@@ -42,7 +42,9 @@ public class UserServiceImpl implements UserService{
 		String saveFolder = projectPath  + File.separator + "final_05" + File.separator + "src" + File.separator + "assets" + File.separator + "users";
 		String filePath = saveFolder + File.separator + userInfo.getImg();
 		File file = new File(filePath);
-		file.delete();
+		if (!userDto.getImg().equals(userInfo.getImg())) {
+			file.delete();
+		}
 		return userDao.modify(userDto);
 	}
 

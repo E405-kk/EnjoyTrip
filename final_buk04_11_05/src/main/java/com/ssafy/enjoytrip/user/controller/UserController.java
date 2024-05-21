@@ -72,8 +72,6 @@ public class UserController{
 
 	@PostMapping("/register")
 	public ResponseEntity<?> register(@RequestParam(value = "file", required = false) MultipartFile file, @RequestPart UserDto userDto) throws IllegalStateException, IOException {
-		System.out.println(userDto);
-		System.out.println(file);
 		String realPath = servletContext.getRealPath("/");
 		String projectPath = realPath.replace(File.separator + "final_buk04_11_05" + File.separator + "src" + File.separator + "main" + File.separator + "webapp", "");
 		String saveFolder = projectPath  + File.separator + "final_05" + File.separator + "src" + File.separator + "assets" + File.separator + "users";
@@ -89,7 +87,6 @@ public class UserController{
 				userDto.setImg(saveFileName);
 			}
 		}
-		System.out.println(userDto);
 		int result = userService.register(userDto);
 		
 		HttpStatus status = HttpStatus.ACCEPTED;
