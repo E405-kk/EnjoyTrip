@@ -32,10 +32,9 @@ function checkGood(param, success, fail) {
 }
 
 function updateGood(param, success, fail) {
-  local
-    .put(`/hotplace/updateGood`, { params: param })
-    .then(success)
-    .catch(fail);
+  console.log(param);
+
+  local.put(`/hotplace/updateGood`, param).then(success).catch(fail);
 }
 
 export {

@@ -183,6 +183,7 @@ public class HotplaceController {
 	@GetMapping("/good")
 	public ResponseEntity<?> good(@RequestParam Map<String, String> map){
 		int result = hotplaceService.good(map);
+		System.out.println(map);
 		if (result == 0) {
 			return ResponseEntity.ok(false);
 		}
@@ -192,7 +193,8 @@ public class HotplaceController {
 	}
 	
 	@PutMapping("/updateGood")
-	public ResponseEntity<?> updateGood(@RequestParam Map<String, String> map){
+	public ResponseEntity<?> updateGood(@RequestBody Map<String, String> map){
+		System.out.println(map);
 		int result = hotplaceService.updateGood(map);
 		return ResponseEntity.ok(result);
 	}

@@ -17,11 +17,11 @@ const router = useRouter();
 const { articleno } = route.params;
 
 const article = ref({});
-const isGood = ref(false);
+const isGood = ref(true);
 const param = ref({
   userId: userId,
   articleNo: articleno,
-  check: isGood.value,
+  check: "",
 });
 
 onMounted(() => {
@@ -52,10 +52,16 @@ const checkIsGood = () => {
     }
   );
 };
-const updateGood = () => {
+const updateIsGood = () => {
+  if (!isGood.value) {
+    param.value.check = "plus";
+  } else {
+    param.value.check = "";
+  }
+  console.log(param.value);
   updateGood(
     param.value,
-    (response) => {
+    () => {
       isGood.value = !isGood.value;
     },
     (error) => {
@@ -144,14 +150,14 @@ function getImageUrl(article) {
             </button>
             <button
               v-if="isGood"
-              @click="updateGood"
+              @click="updateIsGood"
               class="middle none center mr-3 flex items-center justify-center rounded-lg bg-gradient-to-tr from-pink-600 to-pink-400 p-3 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
               data-ripple-light="true">
               <i class="fas fa-heart text-lg leading-none"></i>
             </button>
             <button
               v-if="!isGood"
-              @click="updateGood"
+              @click="updateIsGood"
               class="middle none center mr-3 flex items-center justify-center rounded-lg border border-pink-500 p-3 font-sans text-xs font-bold uppercase text-pink-500 transition-all hover:opacity-75 focus:ring focus:ring-pink-200 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
               data-ripple-dark="true">
               <i class="fas fa-heart text-lg leading-none"></i>
