@@ -6,6 +6,7 @@ DROP TABLE IF EXISTS `ssafytrip`.`user` ;
 DROP TABLE IF EXISTS `ssafytrip`.`file_info` ;
 DROP TABLE IF EXISTS `ssafytrip`.`comment` ;
 DROP TABLE IF EXISTS `ssafytrip`.`hotplace` ;
+DROP TABLE IF EXISTS `ssafytrip`.`goods` ;
 
 CREATE TABLE IF NOT EXISTS `ssafytrip`.`user` (
   `user_id` VARCHAR(16) NOT NULL,
@@ -104,6 +105,18 @@ CREATE TABLE monthly (
     latitude DECIMAL(20,17),
     longitude DECIMAL(20,17)
 );
+
+CREATE TABLE `goods` (
+  `idx` int NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(16) NOT NULL,
+  `article_no` int NOT NULL,
+  PRIMARY KEY (`idx`),
+  KEY `goods_to_user_user_id_fk` (`user_id`),
+  KEY `goods_to_hotplace_article_no_fk` (`article_no`),
+  CONSTRAINT `goods_to_user_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES user (`user_id`) ON DELETE CASCADE,
+  CONSTRAINT `goods_to_hotplace_article_no_fk` FOREIGN KEY (`article_no`) REFERENCES hotplace (`article_no`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 INSERT INTO monthly (mon, region, title, latitude, longitude) VALUES
 (1, '강원도 평창', '대관령 양떼목장', 37.67140000000000000, 128.71430000000000000),
 (1, '강원도 강릉', '정동진', 37.68970000000000000, 129.03350000000000000),

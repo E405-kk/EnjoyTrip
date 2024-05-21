@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -177,6 +178,23 @@ public class HotplaceController {
 		HttpHeaders header = new HttpHeaders();
 		header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
 		return ResponseEntity.ok().headers(header).body(hotplaceListDto);
+	}
+	
+	@GetMapping("/good")
+	public ResponseEntity<?> good(@RequestParam Map<String, String> map){
+		int result = hotplaceService.good(map);
+		if (result == 0) {
+			return ResponseEntity.ok(false);
+		}
+		else {
+			return ResponseEntity.ok(true);
+		}
+	}
+	
+	@PutMapping("/updateGood")
+	public ResponseEntity<?> updateGood(@RequestParam Map<String, String> map){
+		int result = hotplaceService.updateGood(map);
+		return ResponseEntity.ok(result);
 	}
 	
 	private boolean kmp(String full, String slang) {

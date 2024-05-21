@@ -14,4 +14,6 @@ public interface HotplaceService {
 	int modify(HotplaceDto hotplaceDto);
 	int remove(int articleNo);
 	List<String> getSlang();
+	int good(Map<String, String> map);
+	int updateGood(Map<String, String> map);
 }

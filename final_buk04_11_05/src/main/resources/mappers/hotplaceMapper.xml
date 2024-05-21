@@ -82,4 +82,26 @@
 		set save_folder = #{saveFolder}, original_file = #{originalFile}, save_file = #{saveFile}
 		where article_no = #{articleNo}
 	</update>
+	
+	<select id="good" parameterType="map" resultType="int">
+		SELECT count(user_id)
+		FROM goods
+		WHERE user_id = #{userId} AND article_no = #{articleNo}
+	</select>
+	
+	<update id="updateGoodArticle" parameterType="map">
+		update hotplace
+		set good = good + #{num}
+		where article_no = #{articleNo}
+	</update>
+	
+	<insert id="addGood" parameterType="map">
+		insert into goods (article_no, user_id)
+		values (#{articleNo}, #{userId})
+	</insert>
+	
+	<delete id="deleteGood" parameterType="map">
+		delete from goods
+		where article_no = #{articleNo} AND user_id = #{userId}
+	</delete>
 </mapper>

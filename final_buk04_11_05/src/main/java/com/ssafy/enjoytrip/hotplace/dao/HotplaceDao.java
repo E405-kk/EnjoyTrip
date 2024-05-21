@@ -23,4 +23,8 @@ public interface HotplaceDao {
 	int update(FileInfoDto fileInfo);
 	int deleteFile(int articleNo);
 	FileInfoDto fileInfo(int articleNo);
+	int good(Map<String, String> map);
+	int updateGoodArticle(Map<String, Integer> map);
+	int addGood(Map<String, String> map);
+	int deleteGood(Map<String, String> map);
 }

@@ -129,5 +129,37 @@ public class HotplaceServiceImpl implements HotplaceService{
 		return hotplaceDao.getSlang();
 	}
 
+	@Override
+	public int good(Map<String, String> map) {
+		return hotplaceDao.good(map);
+	}
+	
+	@Override
+	public int updateGood(Map<String, String> map) {
+		int articleNo = Integer.parseInt(map.get("articleNo"));
+		int num = 0;
+		System.out.println(map);
+		Map<String, Integer> param = new HashMap<>();
+		param.put("articleNo", articleNo);
+		String check = map.get("check");
+		System.out.println(check);
+		if (check.equals("plus")) {
+			num = 1;
+			param.put("num", num);
+			hotplaceDao.updateGoodArticle(param);
+			hotplaceDao.addGood(map);
+		}
+		else {
+			num = -1;
+			param.put("num", num);
+			hotplaceDao.updateGoodArticle(param);
+			hotplaceDao.deleteGood(map);
+		}
+		return num;
+	}
+
+	
+	
+
 
 }
