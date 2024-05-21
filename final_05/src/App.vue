@@ -42,5 +42,18 @@ onMounted(() => {
 
 body {
   font-family: "NEXON Lv1 Gothic OTF", sans-serif;
+  min-height: 100vh; /* 화면 최소 높이 설정 */
+  margin: 0; /* 바디 마진 제거 */
+  position: relative; /* 포지션 상대적으로 설정 */
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+#app > :last-child {
+  margin-top: auto;
 }
 </style>

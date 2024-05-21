@@ -1,14 +1,10 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { planDetail, deletePlan } from "@/api/map";
-import { storeToRefs } from "pinia";
-import { useMemberStore } from "@/stores/member";
 import { useRouter } from "vue-router";
 import VUserPlanMap from "@/components/common/VUserPlanMap.vue";
 import Swal from "sweetalert2";
 const router = useRouter();
-const memberStore = useMemberStore();
-const { userInfo } = storeToRefs(memberStore);
 const selectStation = ref({});
 const planList = ref([]);
 const props = defineProps({

@@ -54,8 +54,25 @@ onMounted(() => {
       startDate: startDate.value,
       endDate: endDate.value,
       planList: names.value,
+      comment: "",
     });
-    addPlan(plan.value);
+    Swal.fire({
+      title: "여행 제목을 입력하세요",
+      input: "text",
+      inputAttributes: {
+        autocapitalize: "off",
+      },
+      showCancelButton: true,
+      confirmButtonText: "확인",
+      cancelButtonText: "취소",
+      showLoaderOnConfirm: true,
+      preConfirm: async (title) => {
+        plan.value.comment = title;
+      },
+      allowOutsideClick: () => !Swal.isLoading(),
+    }).then(() => {
+      addPlan(plan.value);
+    });
   });
 });
 
