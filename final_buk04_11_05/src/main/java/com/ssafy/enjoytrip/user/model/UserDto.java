@@ -7,10 +7,68 @@ public class UserDto {
 	private String userEmail;
 	private String joinDate;
 	private int isAdmin;
+	private String img;
+	
 	public UserDto() {}
-	
-	
-	public UserDto(String userName, String userId, String userPwd, String userEmail, String joinDate, int isAdmin) {
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public String getUserPwd() {
+		return userPwd;
+	}
+
+	public void setUserPwd(String userPwd) {
+		this.userPwd = userPwd;
+	}
+
+	public String getUserEmail() {
+		return userEmail;
+	}
+
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
+
+	public String getJoinDate() {
+		return joinDate;
+	}
+
+	public void setJoinDate(String joinDate) {
+		this.joinDate = joinDate;
+	}
+
+	public int getIsAdmin() {
+		return isAdmin;
+	}
+
+	public void setIsAdmin(int isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
+	}
+
+	public UserDto(String userName, String userId, String userPwd, String userEmail, String joinDate, int isAdmin,
+			String img) {
 		super();
 		this.userName = userName;
 		this.userId = userId;
@@ -18,54 +76,13 @@ public class UserDto {
 		this.userEmail = userEmail;
 		this.joinDate = joinDate;
 		this.isAdmin = isAdmin;
+		this.img = img;
 	}
-
-	public int getIsAdmin() {
-		return isAdmin;
-	}
-
-
-	public void setIsAdmin(int isAdmin) {
-		this.isAdmin = isAdmin;
-	}
-
-
-	public String getUserName() {
-		return userName;
-	}
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-	public String getUserId() {
-		return userId;
-	}
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-	public String getUserPwd() {
-		return userPwd;
-	}
-	public void setUserPwd(String userPwd) {
-		this.userPwd = userPwd;
-	}
-	public String getUserEmail() {
-		return userEmail;
-	}
-	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
-	}
-	public String getJoinDate() {
-		return joinDate;
-	}
-	public void setJoinDate(String joinDate) {
-		this.joinDate = joinDate;
-	}
-
 
 	@Override
 	public String toString() {
 		return "UserDto [userName=" + userName + ", userId=" + userId + ", userPwd=" + userPwd + ", userEmail="
-				+ userEmail + ", joinDate=" + joinDate + ", isAdmin=" + isAdmin + "]";
+				+ userEmail + ", joinDate=" + joinDate + ", isAdmin=" + isAdmin + ", img=" + img + "]";
 	}
 	
 }

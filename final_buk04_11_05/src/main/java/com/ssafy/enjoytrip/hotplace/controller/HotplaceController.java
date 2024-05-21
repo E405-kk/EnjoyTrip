@@ -55,7 +55,7 @@ public class HotplaceController {
 
 	@PostMapping("/regist")
 	public ResponseEntity<?> regist(@RequestParam(value = "file", required = false) MultipartFile file,
-			@RequestPart HotplaceDto hotplaceDto, HttpServletRequest request) throws IllegalStateException, IOException, URISyntaxException{
+			@RequestPart HotplaceDto hotplaceDto) throws IllegalStateException, IOException, URISyntaxException{
 		List<String> slangs = hotplaceService.getSlang();
 		String full = hotplaceDto.getSubject() + " " +  hotplaceDto.getContent();
 		String slangFinded = null;		// 발견한 욕설(첫번째)

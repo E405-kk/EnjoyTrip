@@ -89,15 +89,12 @@ public class HotplaceServiceImpl implements HotplaceService{
 			String saveFolder = projectPath  + File.separator + "final_05" + File.separator + "src" + File.separator + "assets" + File.separator + "upload";
 			String filePath = saveFolder + File.separator + fileInfo.getSaveFolder() + File.separator + fileInfo.getSaveFile();
 			File file = new File(filePath);
-			System.out.println(hotplaceDto.getFileInfo().getSaveFile());
-			System.out.println(fileInfo.getSaveFile());
 			if (!hotplaceDto.getFileInfo().getSaveFile().equals(fileInfo.getSaveFile())) {
 				file.delete();
 				System.out.println("파일이 성공적으로 삭제되었습니다.");
 			} else {
 				System.out.println("파일을 삭제하는 데 문제가 발생했습니다.");
 			}
-
 		}
 		fileInfo = hotplaceDto.getFileInfo();
 		fileInfo.setArticleNo(hotplaceDto.getArticleNo());

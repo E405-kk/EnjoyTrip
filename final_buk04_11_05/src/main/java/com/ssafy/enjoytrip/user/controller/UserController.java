@@ -1,8 +1,14 @@
 package com.ssafy.enjoytrip.user.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,11 +22,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.ssafy.enjoytrip.hotplace.model.FileInfoDto;
 import com.ssafy.enjoytrip.user.model.UserDto;
 import com.ssafy.enjoytrip.user.service.UserService;
 
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
@@ -30,6 +40,9 @@ import jakarta.servlet.http.HttpSession;
 public class UserController{
 
 	private final UserService userService;
+
+	@Autowired
+	private ServletContext servletContext;
 
 	public UserController(UserService userService) {
 		this.userService = userService;
@@ -58,8 +71,27 @@ public class UserController{
 	}
 
 	@PostMapping("/register")
-	public ResponseEntity<?> register(@RequestBody UserDto userDto) {
+	public ResponseEntity<?> register(@RequestParam(value = "file", required = false) MultipartFile file, @RequestPart UserDto userDto) throws IllegalStateException, IOException {
+		System.out.println(userDto);
+		System.out.println(file);
+		String realPath = servletContext.getRealPath("/");
+		String projectPath = realPath.replace(File.separator + "final_buk04_11_05" + File.separator + "src" + File.separator + "main" + File.separator + "webapp", "");
+		String saveFolder = projectPath  + File.separator + "final_05" + File.separator + "src" + File.separator + "assets" + File.separator + "users";
+		if (file != null) {
+			File folder = new File(saveFolder);
+			if (!folder.exists())
+				folder.mkdirs();
+			String originalFileName = file.getOriginalFilename();
+			if (!originalFileName.isEmpty()) {
+				String saveFileName = UUID.randomUUID().toString()
+						+ originalFileName.substring(originalFileName.lastIndexOf('.'));
+				file.transferTo(new File(folder, saveFileName));
+				userDto.setImg(saveFileName);
+			}
+		}
+		System.out.println(userDto);
 		int result = userService.register(userDto);
+		
 		HttpStatus status = HttpStatus.ACCEPTED;
 		if (result > 0) {
 			status = HttpStatus.CREATED;
@@ -92,8 +124,23 @@ public class UserController{
 	}
 
 	@PutMapping("/modify")
-	public ResponseEntity<?> modify(@RequestBody UserDto userDto) {
+	public ResponseEntity<?> modify(@RequestParam(value = "file", required = false) MultipartFile file,@RequestPart UserDto userDto) throws IllegalStateException, IOException {
 		Map<String, Object> resultMap = new HashMap<>();
+		String realPath = servletContext.getRealPath("/");
+		String projectPath = realPath.replace(File.separator + "final_buk04_11_05" + File.separator + "src" + File.separator + "main" + File.separator + "webapp", "");
+		String saveFolder = projectPath  + File.separator + "final_05" + File.separator + "src" + File.separator + "assets" + File.separator + "users";
+		if (file != null) {
+			File folder = new File(saveFolder);
+			if (!folder.exists())
+				folder.mkdirs();
+			String originalFileName = file.getOriginalFilename();
+			if (!originalFileName.isEmpty()) {
+				String saveFileName = UUID.randomUUID().toString()
+						+ originalFileName.substring(originalFileName.lastIndexOf('.'));
+				file.transferTo(new File(folder, saveFileName));
+				userDto.setImg(saveFileName);
+			}
+		}
 		HttpStatus status = HttpStatus.ACCEPTED;
 		try {
 			int result = userService.modify(userDto);
