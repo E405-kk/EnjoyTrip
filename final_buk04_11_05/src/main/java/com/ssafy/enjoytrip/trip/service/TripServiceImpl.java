@@ -1,12 +1,15 @@
 package com.ssafy.enjoytrip.trip.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
 import com.ssafy.enjoytrip.trip.dao.TripDao;
 import com.ssafy.enjoytrip.trip.model.MonthlyDto;
+import com.ssafy.enjoytrip.trip.model.PlanDto;
 import com.ssafy.enjoytrip.trip.model.SidoDto;
 import com.ssafy.enjoytrip.trip.model.TripDto;
 import com.ssafy.enjoytrip.trip.model.TripPlanDto;
@@ -36,8 +39,8 @@ public class TripServiceImpl implements TripService {
 	}
 	
 	@Override
-	public int updateReadCount(String title) {
-		return tripDao.updateReadCount(title);
+	public int updateReadCount(int contentId) {
+		return tripDao.updateReadCount(contentId);
 	}
 	
 	@Override
@@ -135,10 +138,40 @@ public class TripServiceImpl implements TripService {
 		return tripDao.tripDetail(contentId);
 	}
 
-	
+	@Override
+	public int registPlan(PlanDto planDto) {
+		int res = tripDao.registPlan(planDto);
+		for (int i = 0; i < planDto.getPlanList().size(); i++) {
+			int contentId = planDto.getPlanList().get(i);
+			tripDao.updateReadCount(contentId);	// readCount 증가
+			//plan_detail에 등록
+			Map<String , Object> map = new HashMap<>();
+			map.put("planId", planDto.getPlanId());
+			map.put("contentId", contentId);
+			map.put("order", i+1);
+			tripDao.registPlanDetail(map);
+		}
+		
+		return res;
+	}
 
+	@Override
+	public List<PlanDto> listPlan(String userId) {
+		return tripDao.listPlan(userId);
+	}
 
-	
-	
-	
+	@Override
+	public List<TripDto> detailPlan(int planId) {
+		List<TripDto> list = new ArrayList<>();
+		List<Integer> contentList =tripDao.detailPlan(planId); 
+		for (int i : contentList) {
+			list.add(tripDao.tripDetail(i));
+		}
+		return list;
+	}
+
+	@Override
+	public int deletePlan(int planId) {
+		return tripDao.deletePlan(planId);
+	}
 }

@@ -35,10 +35,10 @@
 		WHERE content_id = #{contentId}
 	</select>
 	
-	 <update id="updateReadCount" parameterType="string">
+	 <update id="updateReadCount" parameterType="int">
 			UPDATE attraction_info 
 			SET readcount = readcount + 1 
-			WHERE title = #{title}
+			WHERE content_id = #{contentId}
 		
 	</update> 
 	
@@ -92,4 +92,31 @@
 		WHERE i.content_id = #{contentId}
 	</select>
 	
+	<insert id="registPlan" parameterType="planDto" useGeneratedKeys="true" keyProperty="planId">
+		INSERT INTO plan (user_id, start_date, end_date, comment)
+		VALUES (#{userId}, #{startDate}, #{endDate}, #{comment})
+	</insert>
+	
+	<insert id="registPlanDetail" parameterType="map">
+		INSERT INTO plan_detail (plan_id, content_id, plan_order)
+		VALUES (#{planId}, #{contentId}, #{order})
+	</insert>
+	
+	<select id="listPlan" parameterType="string" resultType="planDto">
+		SELECT plan_id, user_id, start_date, end_date, comment
+		FROM plan
+		WHERE user_id=#{userId}
+	</select>
+	
+	<select id="detailPlan" parameterType="int" resultType="int">
+		SELECT content_id
+		FROM plan_detail
+		WHERE plan_id=#{planId}
+		ORDER BY plan_order ASC
+	</select>
+	
+	<delete id="deletePlan" parameterType="int">
+		DELETE FROM plan
+		WHERE plan_id=#{planId}
+	</delete>
 </mapper>

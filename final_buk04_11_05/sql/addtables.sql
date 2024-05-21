@@ -7,6 +7,8 @@ DROP TABLE IF EXISTS `ssafytrip`.`file_info` ;
 DROP TABLE IF EXISTS `ssafytrip`.`comment` ;
 DROP TABLE IF EXISTS `ssafytrip`.`hotplace` ;
 DROP TABLE IF EXISTS `ssafytrip`.`goods` ;
+DROP TABLE IF EXISTS `ssafytrip`.`user_plan` ;
+DROP TABLE IF EXISTS `ssafytrip`.`user_dayplan` ;
 
 CREATE TABLE IF NOT EXISTS `ssafytrip`.`user` (
   `user_id` VARCHAR(16) NOT NULL,
@@ -116,6 +118,30 @@ CREATE TABLE `goods` (
   CONSTRAINT `goods_to_user_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES user (`user_id`) ON DELETE CASCADE,
   CONSTRAINT `goods_to_hotplace_article_no_fk` FOREIGN KEY (`article_no`) REFERENCES hotplace (`article_no`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `plan` (
+  `plan_id` int NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(16) NOT NULL,
+  `start_date` timestamp NOT NULL,
+  `end_date` timestamp NOT NULL,
+  `comment` varchar(300),
+  PRIMARY KEY (`plan_id`),
+   KEY `plan_to_user_user_id_fk` (`user_id`),
+  CONSTRAINT `plan_to_user_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `plan_detail` (
+  `idx` int NOT NULL AUTO_INCREMENT,
+  `plan_id` int NOT NULL,
+  `content_id` int NOT NULL,
+  `plan_order` int NOT NULL,
+  PRIMARY KEY (`idx`),
+   KEY `plan_detail_to_plan_plan_id_fk` (`plan_id`),
+   KEY `plan_detail_to_attraction_info_content_id_fk` (`content_id`),
+  CONSTRAINT `plan_detail_to_plan_plan_id_fk` FOREIGN KEY (`plan_id`) REFERENCES `plan` (`plan_id`) ON DELETE CASCADE,
+  CONSTRAINT `plan_detail_to_attraction_info_content_id_fk` FOREIGN KEY (`content_id`) REFERENCES `attraction_info` (`content_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 
 INSERT INTO monthly (mon, region, title, latitude, longitude) VALUES
 (1, '강원도 평창', '대관령 양떼목장', 37.67140000000000000, 128.71430000000000000),
