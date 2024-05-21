@@ -77,7 +77,7 @@ const moveWrite = () => {
           </button>
         </div>
         <div class="mr-40 ml-auto">
-          <form class="flex">
+          <form class="flex" @submit.prevent="getArticleList">
             <VSelect :selectOption="selectOption" @onKeySelect="changeKey" />
             <div
               class="flex items-center max-w-md mx-auto bg-white rounded-lg"
@@ -87,6 +87,7 @@ const moveWrite = () => {
                   type="search"
                   class="w-full px-4 py-1 text-gray-800 rounded-full focus:outline-none"
                   placeholder="search"
+                  @keyup.enter="getArticleList"
                   x-model="search"
                   v-model="param.word" />
               </div>

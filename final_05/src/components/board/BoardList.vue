@@ -83,7 +83,7 @@ const moveWrite = () => {
           </button>
         </div>
         <div class="mr-40 ml-auto">
-          <form class="flex">
+          <form class="flex" @submit.prevent="getArticleList">
             <VSelect :selectOption="selectOption" @onKeySelect="changeKey" />
             <div
               class="flex items-center max-w-md mx-auto bg-white rounded-lg"
@@ -93,6 +93,7 @@ const moveWrite = () => {
                   type="search"
                   class="w-full px-4 py-1 text-gray-800 rounded-full focus:outline-none"
                   placeholder="search"
+                  @keyup.enter="getArticleList"
                   x-model="search"
                   v-model="param.word" />
               </div>
@@ -126,32 +127,37 @@ const moveWrite = () => {
         </div>
       </div>
 
-      <div class="fluid-container mx-40 my-10">
-        <div class="overflow-x-auto">
-          <table class="min-w-full bg-white shadow-md rounded-xl">
-            <thead>
-              <tr class="bg-emerald-100 text-gray-700">
-                <th class="py-3 px-4 text-left">글번호</th>
-                <th class="py-3 px-4 text-left">제목</th>
-                <th class="py-3 px-4 text-left">작성자</th>
-                <th class="py-3 px-4 text-left">조회수</th>
-                <th class="py-3 px-4 text-left">작성일</th>
-              </tr>
-            </thead>
-            <tbody class="text-blue-gray-900">
-              <BoardListItem
-                v-for="article in articles"
-                :key="article.articleNo"
-                :article="article"></BoardListItem>
-            </tbody>
-          </table>
+      <div v-if="articles.length === 0" class="text-center text-xl my-10">
+        작성된 글이 없습니다.
+      </div>
+      <div v-else>
+        <div class="fluid-container mx-40 my-10">
+          <div class="overflow-x-auto">
+            <table class="min-w-full bg-white shadow-md rounded-xl">
+              <thead>
+                <tr class="bg-emerald-100 text-gray-700">
+                  <th class="py-3 px-4 text-left">글번호</th>
+                  <th class="py-3 px-4 text-left">제목</th>
+                  <th class="py-3 px-4 text-left">작성자</th>
+                  <th class="py-3 px-4 text-left">조회수</th>
+                  <th class="py-3 px-4 text-left">작성일</th>
+                </tr>
+              </thead>
+              <tbody class="text-blue-gray-900">
+                <BoardListItem
+                  v-for="article in articles"
+                  :key="article.articleNo"
+                  :article="article"></BoardListItem>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
+      <PageNavigation
+        :current-page="currentPage"
+        :total-page="totalPage"
+        @pageChange="onPageChange"></PageNavigation>
     </div>
-    <PageNavigation
-      :current-page="currentPage"
-      :total-page="totalPage"
-      @pageChange="onPageChange"></PageNavigation>
   </div>
 </template>
 

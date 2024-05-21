@@ -78,7 +78,7 @@ const viewStation = (trip) => {
   <div class="fluid-container text-center mt-3 mx-auto w-11/12">
     <div class="flex items-center justify-center mb-10">
       <div class="mx-auto">
-        <form class="flex">
+        <form class="flex" @submit.prevent="getTripList">
           <VSelect :selectOption="sidoList" @onKeySelect="onChangeSido" />
           <VSelect :selectOption="typeList" @onKeySelect="onChangeType" />
           <div
@@ -90,7 +90,8 @@ const viewStation = (trip) => {
                 class="w-full px-4 py-1 text-gray-800 rounded-full focus:outline-none"
                 placeholder="search"
                 x-model="search"
-                v-model="param.keyword" />
+                v-model="param.keyword"
+                @keyup.enter="getTripList" />
             </div>
             <div>
               <button
@@ -117,8 +118,9 @@ const viewStation = (trip) => {
     </div>
     <VKakaoMap :stations="tripList" :selectStation="selectStation" />
 
+    <div v-if="tripList.length === 0" class="my-5"></div>
     <!-- component -->
-    <div class="bg-white my-5">
+    <div v-else class="bg-white my-5">
       <div
         class="overflow-x-auto border-x border-t"
         style="width: 100%; height: 500px; overflow: auto">

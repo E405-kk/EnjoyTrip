@@ -83,7 +83,13 @@ const getRankList = () => {
       >
     </div>
   </div>
-  <div id="recommend" class="mx-auto my-20" style="width: 80%">
+  <div
+    id="recommend"
+    class="mx-auto my-20"
+    style="width: 80%"
+    data-aos="fade-up"
+    data-aos-easing="ease-in-out"
+    data-aos-duration="2000">
     <h2 class="text-left font-bold text-2xl ml-4">이 달의 추천 여행지</h2>
     <div class="py-5 flex overflow-x-auto scrollbar">
       <VCard
@@ -95,7 +101,13 @@ const getRankList = () => {
     </div>
   </div>
 
-  <div id="rank" class="mx-auto my-20" style="width: 80%">
+  <div
+    id="rank"
+    class="mx-auto my-20"
+    style="width: 80%"
+    data-aos="fade-up"
+    data-aos-easing="ease-in-out"
+    data-aos-duration="2000">
     <h2 class="text-left font-bold text-2xl ml-4">인기 맛집</h2>
     <div class="py-5 flex overflow-x-auto scrollbar">
       <VCard

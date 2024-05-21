@@ -144,7 +144,7 @@ const addPlan = (plan) => {
 </script>
 
 <template>
-  <div class="my-5 text-center font-semibold text-xl">나만의 여행 계획</div>
+  <div class="my-5 text-center font-semibold text-xl">여행 계획</div>
 
   <div class="grid grid-cols-4 gap-4">
     <div class="col-span-3">
@@ -189,8 +189,10 @@ const addPlan = (plan) => {
           </div>
         </div>
         <VPlanMap :stations="tripList" :selectStation="selectStation" />
+
+        <div v-if="tripList.length === 0" class="my-5"></div>
         <!-- component -->
-        <div class="bg-white my-5">
+        <div v-else class="bg-white my-5">
           <div
             class="overflow-x-auto border-x border-t"
             style="width: 100%; height: 500px; overflow: auto">
