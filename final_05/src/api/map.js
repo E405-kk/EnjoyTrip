@@ -21,11 +21,8 @@ function getPlanList(param, success, fail) {
     .catch(fail);
 }
 
-function deletePlanList(param, success, fail) {
-  local
-    .delete(`/trip/tripPlanDelete/${param.userId}`)
-    .then(success)
-    .catch(fail);
+function deletePlan(planId, success, fail) {
+  local.delete(`/trip/planDelete/${planId}`).then(success).catch(fail);
 }
 
 function listMonthly(success, fail) {
@@ -43,14 +40,23 @@ function detailMonthly(idx, success, fail) {
 function detailRank(idx, success, fail) {
   local.get(`/trip/tripDetail/${idx}`).then(success).catch(fail);
 }
+
+function listPlan(userId, success, fail) {
+  local.get(`/trip/planList/${userId}`).then(success).catch(fail);
+}
+function planDetail(planId, success, fail) {
+  local.get(`/trip/planDetail/${planId}`).then(success).catch(fail);
+}
 export {
   listSido,
   listTrip,
   addPlanList,
   getPlanList,
-  deletePlanList,
+  deletePlan,
   listMonthly,
   listRank,
   detailRank,
   detailMonthly,
+  listPlan,
+  planDetail,
 };

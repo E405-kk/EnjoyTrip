@@ -1,8 +1,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import { getPlanList, deletePlanList } from "@/api/map";
+import { planDetail, deletePlan } from "@/api/map";
 import { storeToRefs } from "pinia";
-import { httpStatusCode } from "@/util/http-status";
 import { useMemberStore } from "@/stores/member";
 import { useRouter } from "vue-router";
 import VUserPlanMap from "@/components/common/VUserPlanMap.vue";
@@ -12,18 +11,20 @@ const memberStore = useMemberStore();
 const { userInfo } = storeToRefs(memberStore);
 const selectStation = ref({});
 const planList = ref([]);
-
+const props = defineProps({
+  idx: Number,
+});
 onMounted(() => {
   if (sessionStorage.getItem("userId") == null) {
     Swal.fire("로그인이 필요한 페이지입니다!");
     router.push({ name: "user-login" });
   }
-  getTripList();
+  getTripPlan();
 });
 
-const getTripList = () => {
-  getPlanList(
-    userInfo.value,
+const getTripPlan = () => {
+  planDetail(
+    props.idx,
     ({ data }) => {
       planList.value = data;
     },
@@ -47,7 +48,7 @@ const resetPlan = () => {
     cancelButtonText: "취소",
   }).then((result) => {
     if (result.isConfirmed) {
-      deletePlanList(
+      deletePlan(
         userInfo.value,
         (response) => {
           let msg = response.data;
@@ -57,8 +58,8 @@ const resetPlan = () => {
               text: "새로운 여행을 계획해보세요!",
               icon: "success",
             });
-            getTripList();
-            router.push({ name: "trip-plan" });
+
+            router.push({ name: "trip-planList" });
           } else {
             Swal.fire({
               icon: "error",

@@ -29,6 +29,8 @@ const param = ref({
   contentTypeId: 0,
   keyword: "",
 });
+const startDate = ref(null);
+const endDate = ref(null);
 
 onMounted(() => {
   if (sessionStorage.getItem("userId") == null) {
@@ -39,16 +41,18 @@ onMounted(() => {
   let tripPlanButton = document.getElementById("tripPlanSaveBtn");
   tripPlanButton.addEventListener("click", function () {
     let list = document.getElementsByName("plan-list-item");
-
     const names = ref([]);
 
     for (let i = 0; i < list.length; i++) {
-      let name = list[i].getAttribute("value");
+      let name = list[i].getAttribute("data-content-id");
+      console.log(name);
       names.value.push(name);
     }
 
     const plan = ref({
       userId: sessionStorage.getItem("userId"),
+      startDate: startDate.value,
+      endDate: endDate.value,
       planList: names.value,
     });
     addPlan(plan.value);
@@ -107,7 +111,7 @@ const addPlan = (plan) => {
           icon: "success",
         });
 
-        router.push({ name: "trip-userPlan" });
+        router.push({ name: "trip-planList" });
       } else {
         Swal.fire({
           icon: "error",
@@ -209,6 +213,13 @@ const addPlan = (plan) => {
           id="tripPlanSaveBtn">
           저장하기
         </button>
+        <div class="mt-3">
+          <label for="date">
+            <input type="date" id="startDate" v-model="startDate" />
+            ~
+            <input type="date" id="endDate" v-model="endDate" />
+          </label>
+        </div>
         <div id="plan-list" class="mt-3"></div>
       </div>
     </div>

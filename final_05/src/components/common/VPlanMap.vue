@@ -47,6 +47,7 @@ watch(
       let obj = {};
       obj.latlng = new kakao.maps.LatLng(station.latitude, station.longitude);
       obj.title = station.title;
+      obj.contentId = station.contentId;
       obj.contentTypeId = station.contentTypeId;
       obj.firstImage = station.firstImage;
       obj.addr1 = station.addr1;
@@ -146,7 +147,7 @@ const loadMarkers = () => {
       tripPlanList.value.push(marker);
       tripPlanPosList.value.push(pos);
       marker.setMap(map);
-      addAnswer(positions.value[i].title, marker);
+      addAnswer(positions.value[i].title, positions.value[i].contentId, marker);
       reloadPlanLine();
     });
   }
@@ -169,7 +170,7 @@ function hiderMarksersInCluster(clusterer) {
   clusterer.clear();
 }
 
-let addAnswer = function (title, marker) {
+let addAnswer = function (title, contentId, marker) {
   // 리스트
   let listDiv = document.getElementById("plan-list");
 
@@ -185,6 +186,7 @@ let addAnswer = function (title, marker) {
   inputEl.setAttribute("type", "text");
   inputEl.setAttribute("class", "ml-2 form-control outline-none");
   inputEl.setAttribute("value", title);
+  inputEl.setAttribute("data-content-id", contentId);
   inputEl.setAttribute("readonly", "readonly");
 
   //삭제 버튼 추가

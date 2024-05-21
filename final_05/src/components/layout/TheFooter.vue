@@ -45,7 +45,7 @@
             <li>
               <router-link
                 class="text-gray-600 hover:text-gray-800"
-                :to="{ name: 'trip-userPlan' }"
+                :to="{ name: 'trip-planList' }"
                 >나의 여행 계획</router-link
               >
             </li>

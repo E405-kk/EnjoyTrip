@@ -31,9 +31,14 @@ const router = createRouter({
           component: () => import("@/components/trip/TripPlan.vue"),
         },
         {
-          path: "userPlan",
-          name: "trip-userPlan",
-          component: () => import("@/components/trip/TripUserPlan.vue"),
+          path: "planList",
+          name: "trip-planList",
+          component: () => import("@/components/trip/TripPlanList.vue"),
+        },
+        {
+          path: "planListDetail",
+          name: "trip-listDetail",
+          component: () => import("@/components/trip/TripPlanDetail.vue"),
         },
       ],
     },
