@@ -2,12 +2,12 @@ USE `ssafytrip`;
 
 DROP TABLE IF EXISTS `ssafytrip`.`notice` ;
 DROP TABLE IF EXISTS `ssafytrip`.`tripplan`;
+DROP TABLE IF EXISTS `ssafytrip`.`comment` ;
+DROP TABLE IF EXISTS `ssafytrip`.`board` ;
 DROP TABLE IF EXISTS `ssafytrip`.`user` ;
 DROP TABLE IF EXISTS `ssafytrip`.`file_info` ;
-DROP TABLE IF EXISTS `ssafytrip`.`comment` ;
 DROP TABLE IF EXISTS `ssafytrip`.`hotplace` ;
 DROP TABLE IF EXISTS `ssafytrip`.`goods` ;
-DROP TABLE IF EXISTS `ssafytrip`.`board` ;
 DROP TABLE IF EXISTS `ssafytrip`.`plan` ;
 DROP TABLE IF EXISTS `ssafytrip`.`plan_detail` ;
 DROP TABLE IF EXISTS `ssafytrip`.`monthly` ;
