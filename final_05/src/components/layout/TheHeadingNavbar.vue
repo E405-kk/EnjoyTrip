@@ -36,10 +36,10 @@ const toggleDropdown = () => {
   showDropdown.value = !showDropdown.value;
 };
 function getImageUrl() {
-  if (userInfo.value == null) {
+  if (!userInfo.value) {
     return "/src/assets/user.png";
   }
-  if (userInfo.value.img != null) {
+  if (userInfo.value.img) {
     var url = "/src/assets/users/";
     url += userInfo.value.img;
     return url;

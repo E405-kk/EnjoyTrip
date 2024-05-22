@@ -42,7 +42,7 @@ const getRankList = () => {
       data-aos="fade-right"
       data-aos-easing="ease-in-out"
       data-aos-offset="100"
-      data-aos-duration="1500"
+      data-aos-duration="1800"
       data-aos-once="true"
       data-aos-delay="400"
       style="top: 30%; left: 15%">
@@ -57,7 +57,7 @@ const getRankList = () => {
       data-aos="fade-left"
       data-aos-easing="ease-in-out"
       data-aos-offset="100"
-      data-aos-duration="1500"
+      data-aos-duration="1800"
       data-aos-once="true"
       data-aos-delay="800"
       style="top: 50%; right: 15%">
@@ -89,6 +89,7 @@ const getRankList = () => {
     style="width: 80%"
     data-aos="fade-up"
     data-aos-easing="ease-in-out"
+    data-aos-delay="100"
     data-aos-duration="2000">
     <h2 class="text-left font-bold text-2xl ml-4">이 달의 추천 여행지</h2>
     <div class="py-5 flex overflow-x-auto scrollbar">
@@ -107,6 +108,7 @@ const getRankList = () => {
     style="width: 80%"
     data-aos="fade-up"
     data-aos-easing="ease-in-out"
+    data-aos-delay="200"
     data-aos-duration="2000">
     <h2 class="text-left font-bold text-2xl ml-4">인기 맛집</h2>
     <div class="py-5 flex overflow-x-auto scrollbar">

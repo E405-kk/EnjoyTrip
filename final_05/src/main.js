@@ -12,9 +12,7 @@ import Swal from "sweetalert2";
 
 const app = createApp(App);
 app.use(createPinia());
-// app.use(router);
 
-// app.mount("#app");
 app.use(router).mount("#app", () => {
   AOS.init();
 });

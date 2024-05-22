@@ -9,7 +9,7 @@ export default {
     function ({ addUtilities }) {
       addUtilities({
         ".scrollbar::-webkit-scrollbar": {
-          width: "8px", // 스크롤바 너비 설정
+          width: "16px", // 스크롤바 너비 설정
         },
         ".scrollbar::-webkit-scrollbar-thumb": {
           backgroundColor: "white",

@@ -90,7 +90,7 @@ function getUserImageUrl() {
         </div>
         <div class="flex flex-1">
           <div class="">
-            <p class="text-sm font-semibold">{{ article.userName }}</p>
+            <p class="text-lg ml-2 font-semibold">{{ article.userName }}</p>
           </div>
         </div>
       </div>

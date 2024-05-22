@@ -4,12 +4,12 @@ DROP TABLE IF EXISTS `ssafytrip`.`notice` ;
 DROP TABLE IF EXISTS `ssafytrip`.`tripplan`;
 DROP TABLE IF EXISTS `ssafytrip`.`comment` ;
 DROP TABLE IF EXISTS `ssafytrip`.`board` ;
+DROP TABLE IF EXISTS `ssafytrip`.`goods` ;
+DROP TABLE IF EXISTS `ssafytrip`.`plan_detail` ;
+DROP TABLE IF EXISTS `ssafytrip`.`plan` ;
 DROP TABLE IF EXISTS `ssafytrip`.`user` ;
 DROP TABLE IF EXISTS `ssafytrip`.`file_info` ;
 DROP TABLE IF EXISTS `ssafytrip`.`hotplace` ;
-DROP TABLE IF EXISTS `ssafytrip`.`goods` ;
-DROP TABLE IF EXISTS `ssafytrip`.`plan` ;
-DROP TABLE IF EXISTS `ssafytrip`.`plan_detail` ;
 DROP TABLE IF EXISTS `ssafytrip`.`monthly` ;
 
 CREATE TABLE IF NOT EXISTS `ssafytrip`.`user` (
@@ -19,12 +19,13 @@ CREATE TABLE IF NOT EXISTS `ssafytrip`.`user` (
   `user_email` VARCHAR(50) NULL DEFAULT NULL,
   `join_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
    `is_admin` int DEFAULT '0',
+   `img` VARCHAR(50) DEFAULT NULL,
   PRIMARY KEY (`user_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
-INSERT INTO user VALUES ("ssafy", "김싸피", "1234", "ssafy@ssafy.com", now(), 1);
+INSERT INTO user VALUES ("ssafy", "김싸피", "1234", "ssafy@ssafy.com", now(), 1, null);
 
 CREATE TABLE IF NOT EXISTS `ssafytrip`.`board` (
   `article_no` int NOT NULL AUTO_INCREMENT,
@@ -52,17 +53,17 @@ CREATE TABLE IF NOT EXISTS `ssafytrip`.`notice` (
 
 
 CREATE TABLE IF NOT EXISTS `ssafytrip`.`tripplan`(
-	`num` int NOT NULL auto_increment PRIMARY KEY,
+    `num` int NOT NULL auto_increment PRIMARY KEY,
     `user_id` varchar(16) DEFAULT NULL,
     `plan_list` varchar(5000) NOT NULL,
-	CONSTRAINT `tripplan_to_user_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE
+    CONSTRAINT `tripplan_to_user_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 USE `ssafytrip`;
 DROP TABLE IF EXISTS `ssafytrip`.`slang`;
 
 CREATE TABLE IF NOT EXISTS `ssafytrip`.`slang`(
-	`num` int NOT NULL auto_increment PRIMARY KEY,
+    `num` int NOT NULL auto_increment PRIMARY KEY,
     `word` varchar(30) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -79,25 +80,25 @@ CREATE TABLE IF NOT EXISTS `hotplace` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE IF NOT EXISTS `file_info` (
-	`idx` int NOT NULL AUTO_INCREMENT,
-	`article_no` int NOT NULL,
-	`save_folder` varchar(45) DEFAULT NULL,
-	`original_file` varchar(50) DEFAULT NULL,
-	`save_file` varchar(50) DEFAULT NULL,
-	PRIMARY KEY (`idx`),
-	KEY `file_to_hotplace_article_no_fk` (`article_no`),
-	CONSTRAINT `file_to_hotplace_article_no_fk` FOREIGN KEY (`article_no`) REFERENCES `hotplace` (`article_no`) ON DELETE CASCADE
+    `idx` int NOT NULL AUTO_INCREMENT,
+    `article_no` int NOT NULL,
+    `save_folder` varchar(45) DEFAULT NULL,
+    `original_file` varchar(50) DEFAULT NULL,
+    `save_file` varchar(50) DEFAULT NULL,
+    PRIMARY KEY (`idx`),
+    KEY `file_to_hotplace_article_no_fk` (`article_no`),
+    CONSTRAINT `file_to_hotplace_article_no_fk` FOREIGN KEY (`article_no`) REFERENCES `hotplace` (`article_no`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 CREATE TABLE IF NOT EXISTS `comment` (
-	`idx` int NOT NULL AUTO_INCREMENT,
-	`article_no` int NOT NULL,
-	`user_id` varchar(16) NOT NULL,
-	`content` varchar(2000) DEFAULT NULL,
-	`register_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	PRIMARY KEY (`idx`),
-	KEY `comment_to_board_article_no_fk` (`article_no`),
-	CONSTRAINT `comment_to_board_article_no_fk` FOREIGN KEY (`article_no`) REFERENCES `board` (`article_no`) ON DELETE CASCADE
+    `idx` int NOT NULL AUTO_INCREMENT,
+    `article_no` int NOT NULL,
+    `user_id` varchar(16) NOT NULL,
+    `content` varchar(2000) DEFAULT NULL,
+    `register_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`idx`),
+    KEY `comment_to_board_article_no_fk` (`article_no`),
+    CONSTRAINT `comment_to_board_article_no_fk` FOREIGN KEY (`article_no`) REFERENCES `board` (`article_no`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 

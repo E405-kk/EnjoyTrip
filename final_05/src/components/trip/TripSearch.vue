@@ -122,7 +122,7 @@ const viewStation = (trip) => {
     <!-- component -->
     <div v-else class="bg-white my-5">
       <div
-        class="overflow-x-auto border-x border-t"
+        class="overflow-x-auto border-x border-t scrollbar"
         style="width: 100%; height: 500px; overflow: auto">
         <table class="table-auto w-full">
           <thead class="border-b">

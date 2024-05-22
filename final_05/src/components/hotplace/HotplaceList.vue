@@ -120,22 +120,26 @@ const moveWrite = () => {
           </form>
         </div>
       </div>
-
-      <!-- component -->
-      <div class="relative pt-2 lg:pt-2 min-h-screen">
-        <div
-          class="bg-cover w-full flex justify-center items-center"
-          style="background-image: url('/images/mybackground.jpeg')">
+      <div v-if="articles.length === 0" class="text-center text-xl my-10">
+        작성된 글이 없습니다.
+      </div>
+      <div v-else>
+        <!-- component -->
+        <div class="relative pt-2 lg:pt-2 min-h-screen">
           <div
-            class="w-full bg-white p-5 bg-opacity-40 backdrop-filter backdrop-blur-lg">
+            class="bg-cover w-full flex justify-center items-center"
+            style="background-image: url('/images/mybackground.jpeg')">
             <div
-              class="w-12/12 mx-auto rounded-2xl bg-white p-5 bg-opacity-40 backdrop-filter backdrop-blur-lg">
+              class="w-full bg-white p-5 bg-opacity-40 backdrop-filter backdrop-blur-lg">
               <div
-                class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 text-center px-2 mx-auto">
-                <HotplaceListItem
-                  v-for="article in articles"
-                  :key="article.articleNo"
-                  :article="article"></HotplaceListItem>
+                class="w-12/12 mx-auto rounded-2xl bg-white p-5 bg-opacity-40 backdrop-filter backdrop-blur-lg">
+                <div
+                  class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 text-center px-2 mx-auto">
+                  <HotplaceListItem
+                    v-for="article in articles"
+                    :key="article.articleNo"
+                    :article="article"></HotplaceListItem>
+                </div>
               </div>
             </div>
           </div>

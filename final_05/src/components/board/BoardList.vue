@@ -152,11 +152,12 @@ const moveWrite = () => {
             </table>
           </div>
         </div>
+
+        <PageNavigation
+          :current-page="currentPage"
+          :total-page="totalPage"
+          @pageChange="onPageChange"></PageNavigation>
       </div>
-      <PageNavigation
-        :current-page="currentPage"
-        :total-page="totalPage"
-        @pageChange="onPageChange"></PageNavigation>
     </div>
   </div>
 </template>
