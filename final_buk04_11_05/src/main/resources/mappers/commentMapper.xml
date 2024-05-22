@@ -4,11 +4,11 @@
 
 <mapper namespace="com.ssafy.enjoytrip.comment.dao.CommentDao">
 	<insert id="regist" parameterType="CommentDto">
-		insert into comment (article_no, user_id, content)
-		values (#{articleNo}, #{userId}, #{content})
+		insert into comment (article_no, user_id, content, img)
+		values (#{articleNo}, #{userId}, #{content}, #{img})
 	</insert>
 	<select id="list" parameterType="map" resultType="CommentDto">
-		select idx, article_no, user_id, content, register_time
+		select idx, article_no, user_id, content, register_time, img
 		from comment
 		where article_no = #{articleno}
 		order by register_time

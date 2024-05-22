@@ -7,6 +7,15 @@ public class BoardDto {
 	private String content;
 	private int hit;
 	private String registerTime;
+	private String img;
+	
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
+	}
 
 	public int getArticleNo() {
 		return articleNo;
@@ -59,6 +68,8 @@ public class BoardDto {
 	@Override
 	public String toString() {
 		return "BoardDto [articleNo=" + articleNo + ", userId=" + userId + ", subject=" + subject + ", content="
-				+ content + ", hit=" + hit + ", registerTime=" + registerTime + "]";
+				+ content + ", hit=" + hit + ", registerTime=" + registerTime + ", img=" + img + "]";
 	}
+	
+
 }

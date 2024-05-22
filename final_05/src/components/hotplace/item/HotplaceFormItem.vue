@@ -3,6 +3,10 @@ import { ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { registArticle, getModifyArticle, modifyArticle } from "@/api/hotplace";
 import Swal from "sweetalert2";
+import { storeToRefs } from "pinia";
+import { useMemberStore } from "@/stores/member";
+const memberStore = useMemberStore();
+const { userInfo } = storeToRefs(memberStore);
 const router = useRouter();
 const route = useRoute();
 
@@ -23,6 +27,7 @@ const article = ref({
     saveFolder: "",
     originalFile: "",
   },
+  img: userInfo.value.img,
 });
 
 if (props.type === "modify") {

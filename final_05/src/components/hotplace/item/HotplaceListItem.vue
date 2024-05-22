@@ -1,9 +1,5 @@
 <script setup>
-import { storeToRefs } from "pinia";
-import { useMemberStore } from "@/stores/member";
-const memberStore = useMemberStore();
-const { userInfo } = storeToRefs(memberStore);
-defineProps({ article: Object });
+const props = defineProps({ article: Object });
 function getImageUrl(article) {
   if (article.fileInfo.saveFile) {
     var url = "/src/assets/upload/";
@@ -15,12 +11,9 @@ function getImageUrl(article) {
   }
 }
 function getUserImageUrl() {
-  if (userInfo.value == null) {
-    return "/src/assets/user.png";
-  }
-  if (userInfo.value.img != null) {
+  if (props.article.img) {
     var url = "/src/assets/users/";
-    url += userInfo.value.img;
+    url += props.article.img;
     return url;
   } else {
     return "/src/assets/user.png";

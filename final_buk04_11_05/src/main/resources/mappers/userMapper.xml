@@ -28,7 +28,22 @@
 	
 	<update id="modify" parameterType="userDto">
 		UPDATE user SET user_name = #{userName}, user_email = #{userEmail}, user_password = #{userPwd}, img = #{img}
-		WHERE user_id = #{userId}
+		WHERE user_id = #{userId};
+	</update>
+	
+	<update id="modifyBoardImg" parameterType="userDto">
+		UPDATE board SET img = #{img}
+		WHERE user_id = #{userId};
+	</update>
+	
+	<update id="modifyHotplaceImg" parameterType="userDto">
+		UPDATE hotplace SET img = #{img}
+		WHERE user_id = #{userId};
+	</update>
+	
+	<update id="modifyCommentImg" parameterType="userDto">
+		UPDATE comment SET img = #{img}
+		WHERE user_id = #{userId};
 	</update>
 	
 	<delete id="userBoardRemove" parameterType="string">
@@ -40,7 +55,6 @@
 		
 		DELETE FROM notice
 		WHERE user_id = #{userId};
-		 
 	</delete>
 	
 	<delete id="remove" parameterType="string">

@@ -1,7 +1,11 @@
 <script setup>
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import { registComment, modifyComment } from "@/api/comment.js";
 import Swal from "sweetalert2";
+import { storeToRefs } from "pinia";
+import { useMemberStore } from "@/stores/member";
+const memberStore = useMemberStore();
+const { userInfo } = storeToRefs(memberStore);
 const props = defineProps({
   type: String,
   articleno: Number,
@@ -17,6 +21,7 @@ const comment = ref({
   userId: sessionStorage.getItem("userId"),
   content: props.curcomment.content,
   registerTime: props.curcomment.registerTime,
+  img: userInfo.value.img,
 });
 
 function onSubmit() {

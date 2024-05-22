@@ -6,13 +6,22 @@ public class CommentDto {
 	private String userId;
 	private String content;
 	private String registerTime;
-	public CommentDto(int idx, int articleNo, String userId, String content, String registerTime) {
+	private String img;
+	
+	public CommentDto(int idx, int articleNo, String userId, String content, String registerTime, String img) {
 		super();
 		this.idx = idx;
 		this.articleNo = articleNo;
 		this.userId = userId;
 		this.content = content;
 		this.registerTime = registerTime;
+		this.img = img;
+	}
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
 	}
 	public CommentDto() {}
 	public int getIdx() {
@@ -48,8 +57,6 @@ public class CommentDto {
 	@Override
 	public String toString() {
 		return "CommentDto [idx=" + idx + ", articleNo=" + articleNo + ", userId=" + userId + ", content=" + content
-				+ ", registerTime=" + registerTime + "]";
+				+ ", registerTime=" + registerTime + ", img=" + img + "]";
 	}
-	
-	
 }

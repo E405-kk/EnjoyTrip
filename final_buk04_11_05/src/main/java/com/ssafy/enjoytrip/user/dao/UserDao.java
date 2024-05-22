@@ -15,5 +15,8 @@ public interface UserDao {
 	int findpwd(UserDto userDto);
 	int changepwd(UserDto userDto);
 	UserDto userInfo(String userId);
+	void modifyBoardImg(UserDto userDto);
+	void modifyCommentImg(UserDto userDto);
+	void modifyHotplaceImg(UserDto userDto);
 
 }

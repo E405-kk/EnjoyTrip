@@ -2,10 +2,11 @@
 import { ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { registArticle, getModifyArticle, modifyArticle } from "@/api/board";
-import { useMemberStore } from "@/stores/member";
 import Swal from "sweetalert2";
+import { storeToRefs } from "pinia";
+import { useMemberStore } from "@/stores/member";
 const memberStore = useMemberStore();
-const { userId } = memberStore;
+const { userInfo } = storeToRefs(memberStore);
 const router = useRouter();
 const route = useRoute();
 
@@ -21,6 +22,7 @@ const article = ref({
   userName: "",
   hit: 0,
   registerTime: "",
+  img: userInfo.value.img,
 });
 
 if (props.type === "modify") {

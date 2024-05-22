@@ -60,8 +60,8 @@ export const useMemberStore = defineStore("memberStore", () => {
       }
     );
   };
-  const userLogout = () => {
-    Swal.fire({
+  const userLogout = async () => {
+    await Swal.fire({
       title: "로그아웃하시겠습니까?",
       icon: "question",
       showCancelButton: true,
@@ -80,6 +80,9 @@ export const useMemberStore = defineStore("memberStore", () => {
           title: "로그아웃 되었습니다.",
           showConfirmButton: false,
           timer: 1200,
+        }).then(() => {
+          // 페이지 이동
+          router.push("/");
         });
       }
     });

@@ -1,5 +1,14 @@
 <script setup>
-defineProps({ article: Object });
+const props = defineProps({ article: Object });
+function getImageUrl() {
+  if (props.article.img) {
+    var url = "/src/assets/users/";
+    url += props.article.img;
+    return url;
+  } else {
+    return "/src/assets/user.png";
+  }
+}
 </script>
 
 <template>
@@ -11,8 +20,8 @@ defineProps({ article: Object });
   <div class="flex items-center justify-between mb-5">
     <div class="flex items-center">
       <img
-        class="w-12 h-12 mr-3 rounded-full bg-gray-100 p-2"
-        src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg"
+        class="w-12 h-12 mr-3 rounded-full bg-gray-100"
+        :src="getImageUrl()"
         alt="User Avatar" />
       <div>
         <p class="font-bold text-lg text-gray-700">

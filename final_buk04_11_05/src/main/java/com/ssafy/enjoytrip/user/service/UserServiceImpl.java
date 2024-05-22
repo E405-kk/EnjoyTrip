@@ -45,6 +45,9 @@ public class UserServiceImpl implements UserService{
 		if (!userDto.getImg().equals(userInfo.getImg())) {
 			file.delete();
 		}
+		userDao.modifyBoardImg(userDto);
+		userDao.modifyCommentImg(userDto);
+		userDao.modifyHotplaceImg(userDto);
 		return userDao.modify(userDto);
 	}
 

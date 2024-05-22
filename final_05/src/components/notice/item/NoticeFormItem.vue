@@ -2,13 +2,10 @@
 import { ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { registArticle, getModifyArticle, modifyArticle } from "@/api/notice";
-import { useMemberStore } from "@/stores/member";
 import Swal from "sweetalert2";
-const memberStore = useMemberStore();
-const { userId } = memberStore;
 const router = useRouter();
 const route = useRoute();
-
+const userId = sessionStorage.getItem("userId");
 const props = defineProps({ type: String });
 
 const isUseId = ref(false);

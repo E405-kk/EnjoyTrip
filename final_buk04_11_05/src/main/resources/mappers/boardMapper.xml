@@ -4,8 +4,8 @@
 
 <mapper namespace="com.ssafy.enjoytrip.board.dao.BoardDao">
 	<insert id="regist" parameterType="BoardDto">
-		insert into board (user_id, subject, content)
-		values (#{userId}, #{subject}, #{content})
+		insert into board (user_id, subject, content, img)
+		values (#{userId}, #{subject}, #{content}, #{img})
 	</insert>
 	<sql id="search">
 		<if test="word != null and word != ''">
@@ -18,7 +18,7 @@
 		</if>
 	</sql>
 	<select id="list" resultType="BoardDto">
-		select article_no, user_id, subject, content, hit, register_time
+		select article_no, user_id, subject, content, hit, register_time, img
 		from board
 		<include refid="search"></include>
 		order by article_no desc
@@ -32,7 +32,7 @@
 	</select>
 	
 	<select id="detail" parameterType="int" resultType="BoardDto">
-		select article_no, user_id, subject, content, hit, register_time
+		select article_no, user_id, subject, content, hit, register_time, img
 		from board
 		where article_no = #{articleNo}
 	</select>

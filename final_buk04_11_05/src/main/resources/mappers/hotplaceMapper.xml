@@ -5,15 +5,15 @@
 <mapper namespace="com.ssafy.enjoytrip.hotplace.dao.HotplaceDao">
 
 	<select id="getArticle" parameterType="int" resultType="HotplaceDto">
-		select b.article_no, b.user_id, b.subject, b.content, b.hit, b.register_time, m.user_name, b.good, b.comment_cnt
+		select b.article_no, b.user_id, b.subject, b.content, b.hit, b.register_time, m.user_name, b.good, b.comment_cnt, b.img
 		from hotplace b, user m
 		where b.user_id = m.user_id
 		and b.article_no = #{articleNo}
 	</select>
 	
 	<insert id="regist" parameterType="HotplaceDto" useGeneratedKeys="true" keyProperty="articleNo">
-		insert into hotplace (user_id, subject, content)
-		values (#{userId}, #{subject}, #{content})
+		insert into hotplace (user_id, subject, content, img)
+		values (#{userId}, #{subject}, #{content}, #{img})
 	</insert>
 	<sql id="search">
 		<if test="word != null and word != ''">
@@ -26,7 +26,7 @@
 		</if>
 	</sql>
 	<select id="list" resultType="HotplaceDto">
-		select b.article_no, b.user_id, b.subject, b.content, b.hit, b.register_time, m.user_name, b.good, b.comment_cnt
+		select b.article_no, b.user_id, b.subject, b.content, b.hit, b.register_time, m.user_name, b.good, b.comment_cnt, b.img
 		from hotplace b, user m
 		where b.user_id = m.user_id
 		<include refid="search"></include>

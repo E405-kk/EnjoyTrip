@@ -17,8 +17,8 @@ onMounted(() => {
   getImageUrl();
 });
 
-const logout = () => {
-  userLogout();
+const logout = async () => {
+  await userLogout();
   userId.value = "";
   toggleDropdown();
 };
@@ -139,18 +139,17 @@ function getImageUrl() {
                 <template v-if="menu.show">
                   <template v-if="menu.routeName === 'user-logout'">
                     <li class="nav-item">
-                      <router-link
-                        to="/"
+                      <a
                         @click.prevent="logout"
                         class="nav-link block mt-2 py-2 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-                        >{{ menu.name }}</router-link
+                        >{{ menu.name }}</a
                       >
                     </li>
                   </template>
                   <template v-else>
                     <li class="nav-item">
                       <router-link
-                        @click="toggleDropdown"
+                        @click.prevent="toggleDropdown"
                         class="nav-link mt-2 block py-2 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                         :to="{ name: menu.routeName }"
                         >{{ menu.name }}</router-link

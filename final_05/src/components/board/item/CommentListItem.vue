@@ -1,10 +1,6 @@
 <script setup>
 import { ref } from "vue";
 import CommentFormItem from "@/components/board/item/CommentFormItem.vue";
-import { useMemberStore } from "@/stores/member";
-import { storeToRefs } from "pinia";
-const memberStore = useMemberStore();
-const { userInfo } = storeToRefs(memberStore);
 
 const props = defineProps({ comment: Object });
 const emit = defineEmits(["update-comment", "delete-comment"]);
@@ -26,12 +22,9 @@ const deleteComment = () => {
   emit("delete-comment", props.comment.idx);
 };
 function getImageUrl() {
-  if (userInfo.value == null) {
-    return "/src/assets/user.png";
-  }
-  if (userInfo.value.img != null) {
+  if (props.comment.img) {
     var url = "/src/assets/users/";
-    url += userInfo.value.img;
+    url += props.comment.img;
     return url;
   } else {
     return "/src/assets/user.png";
