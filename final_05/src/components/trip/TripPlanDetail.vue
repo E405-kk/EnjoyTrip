@@ -56,7 +56,7 @@ const resetPlan = () => {
               icon: "success",
             });
 
-            router.push({ name: "trip-planList" });
+            router.push({ name: "trip-plan" });
           } else {
             Swal.fire({
               icon: "error",
