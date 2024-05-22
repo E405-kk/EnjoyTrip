@@ -34,6 +34,7 @@ CREATE TABLE IF NOT EXISTS `ssafytrip`.`board` (
   `content` varchar(2000) DEFAULT NULL,
   `hit` int DEFAULT '0',
   `register_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `img` VARCHAR(50) DEFAULT NULL,
   PRIMARY KEY (`article_no`),
   KEY `board_to_user_user_id_fk` (`user_id`),
   CONSTRAINT `board_to_user_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE
@@ -76,6 +77,7 @@ CREATE TABLE IF NOT EXISTS `hotplace` (
   `register_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `comment_cnt` int DEFAULT '0',
   `good` int DEFAULT '0',
+  `img` VARCHAR(50) DEFAULT NULL,
   PRIMARY KEY (`article_no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -96,6 +98,7 @@ CREATE TABLE IF NOT EXISTS `comment` (
     `user_id` varchar(16) NOT NULL,
     `content` varchar(2000) DEFAULT NULL,
     `register_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `img` VARCHAR(50) DEFAULT NULL,
     PRIMARY KEY (`idx`),
     KEY `comment_to_board_article_no_fk` (`article_no`),
     CONSTRAINT `comment_to_board_article_no_fk` FOREIGN KEY (`article_no`) REFERENCES `board` (`article_no`) ON DELETE CASCADE
