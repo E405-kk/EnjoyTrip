@@ -16,7 +16,6 @@ onMounted(() => {
     Swal.fire("로그인이 필요한 페이지입니다!");
     router.push({ name: "user-login" });
   }
-  console.log(numericIdx);
   getTripPlan();
 });
 
@@ -89,6 +88,7 @@ const resetPlan = () => {
               <th class="text-center p-4 font-medium">여행 순서</th>
               <th class="text-center p-4 font-medium">대표이미지</th>
               <th class="text-center p-4 font-medium">관광지명</th>
+              <th class="text-center p-4 font-medium">전화번호</th>
               <th class="text-center p-4 font-medium">주소</th>
             </tr>
           </thead>
@@ -105,6 +105,7 @@ const resetPlan = () => {
                 <img :src="trip.firstImage" />
               </td>
               <td class="p-3" style="width: 200px">{{ trip.title }}</td>
+              <td class="p-3" style="width: 180px">{{ trip.tel }}</td>
               <td class="p-3" style="width: 300px">
                 {{ trip.addr1 }} {{ trip.addr2 }}
               </td>

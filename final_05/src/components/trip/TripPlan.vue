@@ -67,11 +67,18 @@ onMounted(() => {
       cancelButtonText: "취소",
       showLoaderOnConfirm: true,
       preConfirm: async (title) => {
-        plan.value.comment = title;
+        if (title) {
+          plan.value.comment = title;
+        } else {
+          Swal.showValidationMessage("여행 제목을 입력해야 합니다.");
+        }
+        return title;
       },
       allowOutsideClick: () => !Swal.isLoading(),
-    }).then(() => {
-      addPlan(plan.value);
+    }).then((result) => {
+      if (result.isConfirmed && result.value) {
+        addPlan(plan.value);
+      }
     });
   });
 });
