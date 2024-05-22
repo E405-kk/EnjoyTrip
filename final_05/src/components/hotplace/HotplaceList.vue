@@ -125,7 +125,7 @@ const moveWrite = () => {
       </div>
       <div v-else>
         <!-- component -->
-        <div class="relative pt-2 lg:pt-2 min-h-screen">
+        <div class="relative pt-2 lg:pt-2 h-auto">
           <div
             class="bg-cover w-full flex justify-center items-center"
             style="background-image: url('/images/mybackground.jpeg')">
@@ -144,13 +144,12 @@ const moveWrite = () => {
             </div>
           </div>
         </div>
+        <PageNavigation
+          :current-page="currentPage"
+          :total-page="totalPage"
+          @pageChange="onPageChange"></PageNavigation>
       </div>
     </div>
-
-    <PageNavigation
-      :current-page="currentPage"
-      :total-page="totalPage"
-      @pageChange="onPageChange"></PageNavigation>
   </div>
 </template>
 

@@ -17,37 +17,23 @@ console.log(props.plan);
 </script>
 
 <template>
-  <div
-    class="relative flex flex-col shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
-    style="width: 300px">
-    <router-link
-      class="hover:text-orange-600 absolute z-30 top-2 right-0 mt-2 mr-3"
-      :to="{
-        name: 'trip-listDetail',
-        params: { idx: plan.planId },
-      }"></router-link>
-    <router-link
-      class="z-20 absolute h-full w-full top-0 left-0"
-      :to="{
-        name: 'trip-listDetail',
-        params: { idx: plan.planId },
-      }"
-      >&nbsp;</router-link
-    >
-    <div class="h-auto overflow-hidden">
-      <div class="h-44 overflow-hidden relative">
-        <img src="" alt="" />
-      </div>
+  <router-link
+    class="transition-all duration-1000 bg-white hover:bg-green-500 hover:shadow-xl m-2 p-4 relative z-40 group"
+    :to="{
+      name: 'trip-listDetail',
+      params: { idx: plan.planId },
+    }">
+    <div
+      class="absolute bg-green-500/50 top-0 left-0 w-24 h-1 z-30 transition-all duration-200 group-hover:bg-white group-hover:w-1/2"></div>
+    <div class="py-2 px-9 relative">
+      <h3 class="mt-8 text-lg font-semibold text-black group-hover:text-white">
+        {{ plan.comment }}
+      </h3>
+      <p class="mt-4 text-base text-gray-600 group-hover:text-white">
+        {{ formattedStartDate }} - {{ formattedEndDate }}
+      </p>
     </div>
-    <div class="bg-white py-4 px-3">
-      <h3 class="text-xl mb-2 font-medium">{{ plan.comment }}</h3>
-      <div class="flex justify-between items-center">
-        <p class="text-s text-gray-400">
-          {{ formattedStartDate }} - {{ formattedEndDate }}
-        </p>
-      </div>
-    </div>
-  </div>
+  </router-link>
 </template>
 
 <style scoped></style>

@@ -81,8 +81,8 @@ const resetPlan = () => {
     <!-- component -->
     <div class="bg-white my-5">
       <div
-        class="overflow-x-auto border-x border-t"
-        style="width: 100%; height: 500px; overflow: auto">
+        class="overflow-x-auto border-x border-t scrollbar"
+        style="width: 100%; max-height: 500px; overflow-y: auto">
         <table class="table-auto w-full">
           <thead class="border-b">
             <tr class="bg-emerald-500 text-white">
@@ -92,7 +92,7 @@ const resetPlan = () => {
               <th class="text-center p-4 font-medium">주소</th>
             </tr>
           </thead>
-          <tbody class="overflow-y-scroll w-full">
+          <tbody class="w-full">
             <tr
               class="text-center border-b hover:bg-gray-50"
               v-for="(trip, index) in planList"
@@ -115,6 +115,11 @@ const resetPlan = () => {
     </div>
 
     <div>
+      <router-link
+        class="ml-4 rounded-xl bg-emerald-500 px-4 py-2 text-base mb-3 font-medium text-white transition duration-200 hover:bg-emerald-400 active:bg-emerald-600"
+        :to="{ name: 'trip-planList' }"
+        >목록으로 이동</router-link
+      >
       <button
         @click="resetPlan"
         class="ml-4 rounded-xl bg-red-500 px-4 py-2 text-base mb-3 font-medium text-white transition duration-200 hover:bg-red-400 active:bg-red-600">

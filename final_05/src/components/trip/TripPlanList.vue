@@ -23,14 +23,18 @@ const getPlanList = async () => {
 </script>
 
 <template>
-  <div id="rank" class="mx-auto my-20" style="width: 80%">
-    <h2 class="text-left font-bold text-2xl ml-4">여행 계획</h2>
-    <div class="py-5 flex overflow-x-auto scrollbar">
-      <VPlanCard
-        v-for="plan in planList"
-        :key="plan.planId"
-        :plan="plan"
-        class="flex-none shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 max-w-sm mr-4" />
+  <div class="mx-auto my-20">
+    <h2 class="text-center font-bold text-2xl mb-10">여행 계획 목록</h2>
+    <div
+      class="w-12/12 mx-auto rounded-2xl bg-white p-5 bg-opacity-40 backdrop-filter backdrop-blur-lg">
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-center px-2 mx-auto">
+        <VPlanCard
+          v-for="plan in planList"
+          :key="plan.planId"
+          :plan="plan"
+          class="flex-none shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 max-w-sm" />
+      </div>
     </div>
   </div>
 </template>
