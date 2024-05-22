@@ -21,7 +21,6 @@ import com.ssafy.enjoytrip.trip.model.MonthlyDto;
 import com.ssafy.enjoytrip.trip.model.PlanDto;
 import com.ssafy.enjoytrip.trip.model.SidoDto;
 import com.ssafy.enjoytrip.trip.model.TripDto;
-import com.ssafy.enjoytrip.trip.model.TripPlanDto;
 import com.ssafy.enjoytrip.trip.model.TripSearchDto;
 import com.ssafy.enjoytrip.trip.service.TripService;
 import com.ssafy.enjoytrip.user.model.UserDto;

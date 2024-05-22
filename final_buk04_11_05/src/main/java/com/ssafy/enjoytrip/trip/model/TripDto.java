@@ -119,31 +119,6 @@ public class TripDto implements Comparable<TripDto>{
 		// TODO Auto-generated constructor stub
 	}
 	
-	
-	
-	public TripDto(int contentId, int contentTypeId, String title, String addr1, String addr2, String zipcode,
-			String tel, String firstImage, String firstImage2, int readCount, int sidoCode, int gugunCode,
-			double latitude, double longitude, String mLevel, String overview) {
-		super();
-		this.contentId = contentId;
-		this.contentTypeId = contentTypeId;
-		this.title = title;
-		this.addr1 = addr1;
-		this.addr2 = addr2;
-		this.zipcode = zipcode;
-		this.tel = tel;
-		this.firstImage = firstImage;
-		this.firstImage2 = firstImage2;
-		this.readCount = readCount;
-		this.sidoCode = sidoCode;
-		this.gugunCode = gugunCode;
-		this.latitude = latitude;
-		this.longitude = longitude;
-		this.mLevel = mLevel;
-		this.overview = overview;
-	}
-	
-	
 	@Override
 	public String toString() {
 		return "TripDto [contentId=" + contentId + ", contentTypeId=" + contentTypeId + ", title=" + title + ", addr1="

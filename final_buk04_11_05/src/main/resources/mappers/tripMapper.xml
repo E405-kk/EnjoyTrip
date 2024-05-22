@@ -42,18 +42,6 @@
 		
 	</update> 
 	
-	 <insert id="tripPlanSave" parameterType="tripPlanDto">
-		INSERT INTO tripplan(user_id, plan_list)
-		VALUES (#{userId}, #{planList2})
-	</insert>  
-	
-	
-	<select id="userTripPlan" parameterType="userDto" resultType="tripPlanDto">
-		SELECT num, user_id, plan_list planList2
-		FROM tripplan
-		WHERE user_id = #{userId}
-	</select>
-	
 	<select id="tripPlanDtoToTripDtoList" parameterType="string" resultType="tripDto">
 		SELECT content_id, content_type_id, title, addr1, addr2, zipcode, tel, first_image, first_image2, readcount, sido_code, gugun_code, latitude, longitude, mlevel
 		FROM attraction_info

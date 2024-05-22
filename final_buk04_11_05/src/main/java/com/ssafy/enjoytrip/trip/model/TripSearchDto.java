@@ -6,13 +6,7 @@ public class TripSearchDto {
 	String keyword;
 	
 	public TripSearchDto() {}
-	public TripSearchDto(int sidoCode, int contentTypeId, String keyword) {
-		super();
-		this.sidoCode = sidoCode;
-		this.contentTypeId = contentTypeId;
-		this.keyword = keyword;
-	}
-
+	
 	public String getKeyword() {
 		return keyword;
 	}

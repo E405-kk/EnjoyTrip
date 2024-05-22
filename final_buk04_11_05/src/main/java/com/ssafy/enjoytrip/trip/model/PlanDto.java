@@ -10,16 +10,7 @@ public class PlanDto {
 	private String comment;
 	private List<Integer> planList;
 	public PlanDto() {}
-	public PlanDto(int planId, String userId, String startDate, String endDate, String comment,
-			List<Integer> planList) {
-		super();
-		this.planId = planId;
-		this.userId = userId;
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.comment = comment;
-		this.planList = planList;
-	}
+	
 	public int getPlanId() {
 		return planId;
 	}

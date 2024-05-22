@@ -12,7 +12,6 @@ import com.ssafy.enjoytrip.trip.model.MonthlyDto;
 import com.ssafy.enjoytrip.trip.model.PlanDto;
 import com.ssafy.enjoytrip.trip.model.SidoDto;
 import com.ssafy.enjoytrip.trip.model.TripDto;
-import com.ssafy.enjoytrip.trip.model.TripPlanDto;
 import com.ssafy.enjoytrip.trip.model.TripSearchDto;
 import com.ssafy.enjoytrip.user.model.UserDto;
 
@@ -43,15 +42,6 @@ public class TripServiceImpl implements TripService {
 		return tripDao.updateReadCount(contentId);
 	}
 	
-	@Override
-	public int tripPlanSave(TripPlanDto tripPlanDto) {
-		return tripDao.tripPlanSave(tripPlanDto);
-	}
-	
-	@Override
-	public TripPlanDto userTripPlan(UserDto userDto) {
-		return tripDao.userTripPlan(userDto);
-	}
 	
 	@Override
 	public TripDto tripPlanDtoToTripDtoList(String title){
