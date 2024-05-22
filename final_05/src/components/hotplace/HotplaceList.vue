@@ -18,10 +18,9 @@ const selectOption = ref([
 const articles = ref([]);
 const currentPage = ref(1);
 const totalPage = ref(0);
-const { VITE_ARTICLE_LIST_SIZE } = import.meta.env;
 const param = ref({
   pgno: currentPage.value,
-  spp: VITE_ARTICLE_LIST_SIZE,
+  spp: 12,
   key: "",
   word: "",
 });
@@ -134,7 +133,7 @@ const moveWrite = () => {
               <div
                 class="w-12/12 mx-auto rounded-2xl bg-white p-5 bg-opacity-40 backdrop-filter backdrop-blur-lg">
                 <div
-                  class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 text-center px-2 mx-auto">
+                  class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 text-center px-2 mx-auto">
                   <HotplaceListItem
                     v-for="article in articles"
                     :key="article.articleNo"

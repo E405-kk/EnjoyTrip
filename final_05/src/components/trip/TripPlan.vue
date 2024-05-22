@@ -153,9 +153,9 @@ const addPlan = (plan) => {
 <template>
   <div class="my-5 text-center font-semibold text-xl">여행 계획</div>
 
-  <div class="grid grid-cols-4 gap-4">
+  <div class="grid grid-cols-4">
     <div class="col-span-3">
-      <div class="fluid-container text-center mt-3 mx-auto w-11/12">
+      <div class="fluid-container text-center mt-3 mr-10 ml-auto w-9/12">
         <div class="flex items-center justify-center mb-10">
           <div class="mx-auto">
             <form class="flex">
@@ -232,7 +232,7 @@ const addPlan = (plan) => {
       </div>
     </div>
 
-    <div class="col-span-1">
+    <div class="col-span-1 mr-auto ml-10">
       <div class="mr-14">
         <button
           class="bg-white text-emerald-600 font-semibold py-2 px-4 border border-emerald-600 rounded-md shadow-md hover:bg-emerald-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:ring-opacity-50"
