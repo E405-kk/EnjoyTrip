@@ -176,7 +176,7 @@ let addAnswer = function (title, contentId, marker) {
 
   //추가할 노드
   let divEl = document.createElement("div");
-  divEl.setAttribute("class", "row mb-1 plan-list-item border rounded-md");
+  divEl.setAttribute("class", "row mb-1 plan-list-item border rounded-md p-2");
   let divEl2 = document.createElement("div");
   divEl2.setAttribute("class", "col-md-10 flex place-items-center");
 

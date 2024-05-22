@@ -155,7 +155,7 @@ const addPlan = (plan) => {
 
   <div class="grid grid-cols-4">
     <div class="col-span-3">
-      <div class="fluid-container text-center mt-3 mr-10 ml-auto w-9/12">
+      <div class="fluid-container text-center mt-3 mr-[100px] ml-auto w-9/12">
         <div class="flex items-center justify-center mb-10">
           <div class="mx-auto">
             <form class="flex">
@@ -233,13 +233,13 @@ const addPlan = (plan) => {
     </div>
 
     <div class="col-span-1 mr-auto ml-10">
-      <div class="mr-14">
+      <div class="mr-14 mt-5">
         <button
           class="bg-white text-emerald-600 font-semibold py-2 px-4 border border-emerald-600 rounded-md shadow-md hover:bg-emerald-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:ring-opacity-50"
           id="tripPlanSaveBtn">
           저장하기
         </button>
-        <div class="mt-3">
+        <div class="my-5">
           <label for="date">
             <input type="date" id="startDate" v-model="startDate" />
             ~
