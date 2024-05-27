@@ -5,12 +5,7 @@ import Swal from "sweetalert2";
 const memberStore = useMemberStore();
 const { userFindPwd } = memberStore;
 
-const user = ref({
-  userId: "",
-  userPwd: "",
-  userName: "",
-  userEmail: "",
-});
+const user = ref(null);
 const findPwd = async () => {
   await userFindPwd(user.value);
 };

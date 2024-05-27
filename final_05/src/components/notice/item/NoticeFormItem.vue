@@ -5,7 +5,11 @@ import { registArticle, getModifyArticle, modifyArticle } from "@/api/notice";
 import Swal from "sweetalert2";
 const router = useRouter();
 const route = useRoute();
-const userId = sessionStorage.getItem("userId");
+import { useMemberStore } from "@/stores/member";
+import { storeToRefs } from "pinia";
+const memberStore = useMemberStore();
+const { userInfo } = storeToRefs(memberStore);
+const userId = userInfo.value.userId;
 const props = defineProps({ type: String });
 
 const isUseId = ref(false);

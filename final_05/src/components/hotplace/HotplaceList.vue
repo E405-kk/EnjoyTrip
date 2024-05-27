@@ -6,6 +6,12 @@ import Swal from "sweetalert2";
 import VSelect from "@/components/common/VSelect.vue";
 import HotplaceListItem from "@/components/hotplace/item/HotplaceListItem.vue";
 import PageNavigation from "@/components/common/PageNavigation.vue";
+import { useMemberStore } from "@/stores/member";
+import { storeToRefs } from "pinia";
+
+const memberStore = useMemberStore();
+const { userInfo } = storeToRefs(memberStore);
+const userId = userInfo.value.userId;
 const router = useRouter();
 
 const selectOption = ref([
@@ -54,7 +60,7 @@ const onPageChange = (val) => {
 };
 
 const moveWrite = () => {
-  if (sessionStorage.getItem("userId")) {
+  if (userId) {
     router.push({ name: "hotplace-write" });
   } else {
     Swal.fire("로그인이 필요한 페이지입니다!");

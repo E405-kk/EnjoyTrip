@@ -1,10 +1,14 @@
 <script setup>
 import { onMounted, ref } from "vue";
+import { storeToRefs } from "pinia";
 import VPlanCard from "@/components/common/VPlanCard.vue";
 import { listPlan } from "@/api/map";
 
 const planList = ref([]);
-const userId = sessionStorage.getItem("userId");
+import { useMemberStore } from "@/stores/member";
+const memberStore = useMemberStore();
+const { userInfo } = storeToRefs(memberStore);
+const userId = userInfo.value.userId;
 onMounted(() => {
   getPlanList();
 });

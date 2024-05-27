@@ -1,6 +1,8 @@
 package com.ssafy.enjoytrip.user.service;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,7 +44,7 @@ public class UserServiceImpl implements UserService{
 		String saveFolder = projectPath  + File.separator + "final_05" + File.separator + "src" + File.separator + "assets" + File.separator + "users";
 		String filePath = saveFolder + File.separator + userInfo.getImg();
 		File file = new File(filePath);
-		if (!userDto.getImg().equals(userInfo.getImg())) {
+		if (userInfo.getImg()!=null && !userDto.getImg().equals(userInfo.getImg())) {
 			file.delete();
 		}
 		userDao.modifyBoardImg(userDto);
@@ -80,5 +82,24 @@ public class UserServiceImpl implements UserService{
 		return userDao.userInfo(userId);
 	}
 
+	@Override
+	public void saveRefreshToken(String userId, String refreshToken) throws Exception {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("userId", userId);
+		map.put("token", refreshToken);
+		userDao.saveRefreshToken(map);
+	}
 
+	@Override
+	public Object getRefreshToken(String userId) throws Exception {
+		return userDao.getRefreshToken(userId);
+	}
+
+	@Override
+	public void deleRefreshToken(String userId) throws Exception {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("userId", userId);
+		map.put("token", null);
+		userDao.deleteRefreshToken(map);
+	}
 }

@@ -1,11 +1,14 @@
 <script setup>
 import { ref } from "vue";
 import CommentFormItem from "@/components/board/item/CommentFormItem.vue";
-
+import { useMemberStore } from "@/stores/member";
+import { storeToRefs } from "pinia";
+const memberStore = useMemberStore();
+const { userInfo } = storeToRefs(memberStore);
 const props = defineProps({ comment: Object });
 const emit = defineEmits(["update-comment", "delete-comment"]);
 
-const userId = sessionStorage.getItem("userId");
+const userId = userInfo.value.userId;
 
 const isEditing = ref(false);
 

@@ -18,7 +18,7 @@ const emit = defineEmits(["write-comment", "update-comment", "cancel-edit"]);
 const comment = ref({
   idx: props.curcomment.idx,
   articleNo: props.articleno,
-  userId: sessionStorage.getItem("userId"),
+  userId: userInfo.value.userId,
   content: props.curcomment.content,
   registerTime: props.curcomment.registerTime,
   img: userInfo.value.img,

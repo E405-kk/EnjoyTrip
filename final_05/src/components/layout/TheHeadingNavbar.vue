@@ -8,7 +8,7 @@ const menuStore = useMenuStore();
 const memberStore = useMemberStore();
 
 const { menuList } = storeToRefs(menuStore);
-const { userInfo } = storeToRefs(memberStore);
+const { userInfo, isLogin } = storeToRefs(memberStore);
 
 const { userLogout } = memberStore;
 const userId = ref();
@@ -22,7 +22,7 @@ const logout = async () => {
   userId.value = "";
   toggleDropdown();
 };
-if (sessionStorage.getItem("userId")) {
+if (isLogin.value) {
   menuList.value[0].show = false;
   menuList.value[1].show = false;
   menuList.value[2].show = true;
@@ -32,7 +32,7 @@ const showDropdown = ref(false); // 드롭다운 메뉴의 표시 여부를 관�
 
 // 드롭다운 메뉴를 열거나 닫는 함수
 const toggleDropdown = () => {
-  userId.value = sessionStorage.getItem("userId");
+  // userId.value = userInfo.value.userId;
   showDropdown.value = !showDropdown.value;
 };
 function getImageUrl() {
@@ -127,7 +127,7 @@ function getImageUrl() {
                   :src="getImageUrl()" />
                 <div class="mx-auto">
                   <h1
-                    v-if="userId"
+                    v-if="isLogin"
                     class="text-sm font-semibold text-gray-700 dark:text-gray-200">
                     {{ userInfo.userName }}
                   </h1>

@@ -4,7 +4,11 @@ import { useRoute, useRouter } from "vue-router";
 import { detailArticle, deleteArticle } from "@/api/notice";
 import VArticle from "@/components/common/VArticle.vue";
 import Swal from "sweetalert2";
-const userId = sessionStorage.getItem("userId");
+import { useMemberStore } from "@/stores/member";
+import { storeToRefs } from "pinia";
+const memberStore = useMemberStore();
+const { userInfo } = storeToRefs(memberStore);
+const userId = userInfo.value.userId;
 
 const route = useRoute();
 const router = useRouter();

@@ -16,11 +16,12 @@ const user = ref({
   userName: "",
   userEmail: "",
   img: "",
+  refreshToken: "",
 });
-
 onMounted(() => {
   if (props.type === "modify") {
     user.value = userInfo.value;
+    console.log(user.value);
     getImageUrl();
   }
 });

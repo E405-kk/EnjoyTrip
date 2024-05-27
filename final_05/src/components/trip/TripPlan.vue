@@ -6,7 +6,11 @@ import { httpStatusCode } from "@/util/http-status";
 import VPlanMap from "@/components/common/VPlanMap.vue";
 import VSelect from "@/components/common/VSelect.vue";
 import { useRouter } from "vue-router";
+import { useMemberStore } from "@/stores/member";
+import { storeToRefs } from "pinia";
 import Swal from "sweetalert2";
+const memberStore = useMemberStore();
+const { userInfo } = storeToRefs(memberStore);
 const router = useRouter();
 
 const sidoList = ref([]);
@@ -33,7 +37,7 @@ const startDate = ref(null);
 const endDate = ref(null);
 
 onMounted(() => {
-  if (sessionStorage.getItem("userId") == null) {
+  if (!userInfo.value.userId) {
     Swal.fire("로그인이 필요한 페이지입니다!");
     router.push({ name: "user-login" });
   }
@@ -50,7 +54,7 @@ onMounted(() => {
     }
 
     const plan = ref({
-      userId: sessionStorage.getItem("userId"),
+      userId: userInfo.value.userId,
       startDate: startDate.value,
       endDate: endDate.value,
       planList: names.value,

@@ -8,7 +8,16 @@ public class UserDto {
 	private String joinDate;
 	private int isAdmin;
 	private String img;
+	private String refreshToken;
 	
+	public String getRefreshToken() {
+		return refreshToken;
+	}
+
+	public void setRefreshToken(String refreshToken) {
+		this.refreshToken = refreshToken;
+	}
+
 	public UserDto() {}
 
 	public String getUserName() {
@@ -67,8 +76,15 @@ public class UserDto {
 		this.img = img;
 	}
 
+	@Override
+	public String toString() {
+		return "UserDto [userName=" + userName + ", userId=" + userId + ", userPwd=" + userPwd + ", userEmail="
+				+ userEmail + ", joinDate=" + joinDate + ", isAdmin=" + isAdmin + ", img=" + img + ", refreshToken="
+				+ refreshToken + "]";
+	}
+
 	public UserDto(String userName, String userId, String userPwd, String userEmail, String joinDate, int isAdmin,
-			String img) {
+			String img, String refreshToken) {
 		super();
 		this.userName = userName;
 		this.userId = userId;
@@ -77,12 +93,9 @@ public class UserDto {
 		this.joinDate = joinDate;
 		this.isAdmin = isAdmin;
 		this.img = img;
+		this.refreshToken = refreshToken;
 	}
 
-	@Override
-	public String toString() {
-		return "UserDto [userName=" + userName + ", userId=" + userId + ", userPwd=" + userPwd + ", userEmail="
-				+ userEmail + ", joinDate=" + joinDate + ", isAdmin=" + isAdmin + ", img=" + img + "]";
-	}
+	
 	
 }

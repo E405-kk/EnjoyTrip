@@ -4,6 +4,11 @@ import { planDetail, deletePlan } from "@/api/map";
 import { useRouter } from "vue-router";
 import VUserPlanMap from "@/components/common/VUserPlanMap.vue";
 import Swal from "sweetalert2";
+import { useMemberStore } from "@/stores/member";
+import { storeToRefs } from "pinia";
+const memberStore = useMemberStore();
+const { userInfo } = storeToRefs(memberStore);
+const userId = userInfo.value.userId;
 const router = useRouter();
 const selectStation = ref({});
 const planList = ref([]);
@@ -12,7 +17,7 @@ const props = defineProps({
 });
 const numericIdx = Number(props.idx);
 onMounted(() => {
-  if (sessionStorage.getItem("userId") == null) {
+  if (!userId) {
     Swal.fire("로그인이 필요한 페이지입니다!");
     router.push({ name: "user-login" });
   }

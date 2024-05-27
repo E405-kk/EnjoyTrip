@@ -1,6 +1,7 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { defineStore } from "pinia";
+import { jwtDecode } from "jwt-decode";
 import Swal from "sweetalert2";
 import {
   userConfirm,
@@ -10,38 +11,36 @@ import {
   userRemove,
   findPwd,
   changePwd,
+  tokenRegeneration,
+  logout,
 } from "@/api/user";
 import { httpStatusCode } from "@/util/http-status";
 import { useMenuStore } from "@/stores/menu";
 export const useMemberStore = defineStore("memberStore", () => {
   const router = useRouter();
-  const userId = sessionStorage.getItem("userId");
   const menuStore = useMenuStore();
   const { changeMenuState } = menuStore;
-  const userInfo = ref({
-    userId: "",
-    userPwd: "",
-    userName: "",
-    userEmail: "",
-    joinDate: "",
-    isAdmin: 0,
-    img: "",
-  });
-
+  const userInfo = ref({});
+  const isValidToken = ref(false);
   const isLogin = ref(false);
+  const isLoginError = ref(false);
 
   const userLogin = async (loginUser) => {
     await userConfirm(
       loginUser,
       (response) => {
         let msg = response.data;
-        if (response.status == httpStatusCode.CREATE) {
+        if (response.status == httpStatusCode.OK) {
           msg = "로그인 되었습니다.";
           let { data } = response;
-          let userId = data["userId"];
+          let accessToken = data["access-token"];
+          let refreshToken = data["refresh-token"];
           isLogin.value = true;
-          sessionStorage.setItem("userId", userId);
-          userGetInfo(userId);
+          isLoginError.value = false;
+          isValidToken.value = true;
+          sessionStorage.setItem("accessToken", accessToken);
+          sessionStorage.setItem("refreshToken", refreshToken);
+
           Swal.fire({
             icon: "success",
             title: msg,
@@ -52,7 +51,10 @@ export const useMemberStore = defineStore("memberStore", () => {
       },
       (error) => {
         isLogin.value = false;
+        isValidToken.value = false;
+        isLoginError.value = true;
         console.error(error);
+
         Swal.fire({
           icon: "error",
           text: "아이디 및 비밀번호를 확인해주세요.",
@@ -71,19 +73,33 @@ export const useMemberStore = defineStore("memberStore", () => {
       cancelButtonText: "취소",
     }).then((result) => {
       if (result.isConfirmed) {
-        isLogin.value = false;
-        userInfo.value = null;
-        changeMenuState();
-        sessionStorage.clear();
-        Swal.fire({
-          icon: "success",
-          title: "로그아웃 되었습니다.",
-          showConfirmButton: false,
-          timer: 1200,
-        }).then(() => {
-          // 페이지 이동
-          router.push("/");
-        });
+        logout(
+          userInfo.value.userId,
+          (response) => {
+            if (response.status === httpStatusCode.OK) {
+              isLogin.value = false;
+              userInfo.value = null;
+              isValidToken.value = false;
+              changeMenuState();
+              sessionStorage.removeItem("accessToken");
+              sessionStorage.removeItem("refreshToken");
+              Swal.fire({
+                icon: "success",
+                title: "로그아웃 되었습니다.",
+                showConfirmButton: false,
+                timer: 1200,
+              }).then(() => {
+                // 페이지 이동
+                router.push("/");
+              });
+            } else {
+              console.error("유저 정보 없음!!!!");
+            }
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
       }
     });
   };
@@ -114,20 +130,71 @@ export const useMemberStore = defineStore("memberStore", () => {
     );
   };
 
-  const userGetInfo = async (userId) => {
+  const userGetInfo = async (token) => {
+    let decodeToken = jwtDecode(token);
+    console.log(decodeToken);
     await userSearch(
-      userId,
-      ({ data }) => {
-        userInfo.value = data.user;
+      decodeToken.userId,
+      (response) => {
+        if (response.status === httpStatusCode.OK) {
+          userInfo.value = response.data.user;
+          console.log(userInfo.value);
+        } else {
+          console.log("유저 정보 없음!!!!");
+        }
       },
-      (error) => {
-        console.error(error);
+      async (error) => {
+        console.error(
+          "g[토큰 만료되어 사용 불가능.] : ",
+          error.response.status,
+          error.response.statusText
+        );
+        isValidToken.value = false;
+
+        await tokenRegenerate();
       }
     );
   };
-  if (sessionStorage.getItem("userId")) {
-    userGetInfo(userId);
-  }
+
+  const tokenRegenerate = async () => {
+    await tokenRegeneration(
+      JSON.stringify(userInfo.value),
+      (response) => {
+        if (response.status === httpStatusCode.CREATE) {
+          let accessToken = response.data["access-token"];
+          sessionStorage.setItem("accessToken", accessToken);
+          isValidToken.value = true;
+        }
+      },
+      async (error) => {
+        // HttpStatus.UNAUTHORIZE(401) : RefreshToken 기간 만료 >> 다시 로그인!!!!
+        if (error.response.status === httpStatusCode.UNAUTHORIZED) {
+          // 다시 로그인 전 DB에 저장된 RefreshToken 제거.
+          await logout(
+            userInfo.value.userId,
+            (response) => {
+              if (response.status === httpStatusCode.OK) {
+                console.log("리프레시 토큰 제거 성공");
+              } else {
+                console.log("리프레시 토큰 제거 실패");
+              }
+              alert("RefreshToken 기간 만료!!! 다시 로그인해 주세요.");
+              isLogin.value = false;
+              userInfo.value = null;
+              isValidToken.value = false;
+              router.push({ name: "user-login" });
+            },
+            (error) => {
+              console.error(error);
+              isLogin.value = false;
+              userInfo.value = null;
+            }
+          );
+        }
+      }
+    );
+  };
+
   const userModify = async (user, config) => {
     await userUpdate(
       user,
@@ -140,7 +207,8 @@ export const useMemberStore = defineStore("memberStore", () => {
             showConfirmButton: false,
             timer: 1500,
           });
-          userGetInfo(userId);
+          console.log(userInfo.value);
+          userGetInfo(userInfo.value.refreshToken);
           goMyPage();
         }
       },
@@ -250,6 +318,8 @@ export const useMemberStore = defineStore("memberStore", () => {
     userFindPwd,
     userChangePwd,
     goModify,
-    userId,
+    tokenRegenerate,
+    isLoginError,
+    isValidToken,
   };
 });

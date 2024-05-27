@@ -8,7 +8,7 @@ const { userInfo } = storeToRefs(memberStore);
 const { goModify, userDelete } = memberStore;
 import { useRouter } from "vue-router";
 const router = useRouter();
-const userId = sessionStorage.getItem("userId");
+const userId = userInfo.value.userId;
 import Swal from "sweetalert2";
 onMounted(() => {
   if (!userId) {

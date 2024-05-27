@@ -9,8 +9,8 @@ const router = useRouter();
 
 const memberStore = useMemberStore();
 
-const { isLogin } = storeToRefs(memberStore);
-const { userLogin } = memberStore;
+const { isLogin, isLoginError } = storeToRefs(memberStore);
+const { userLogin, userGetInfo } = memberStore;
 const { changeMenuState } = useMenuStore();
 
 const loginUser = ref({
@@ -24,8 +24,11 @@ const mvRegister = () => {
 
 const login = async () => {
   await userLogin(loginUser.value);
-  let userId = sessionStorage.getItem("userId");
+  let token = sessionStorage.getItem("accessToken");
+  console.log(token);
+  console.log("isLogin: " + isLogin.value);
   if (isLogin.value) {
+    userGetInfo(token);
     changeMenuState();
     router.replace("/");
   }

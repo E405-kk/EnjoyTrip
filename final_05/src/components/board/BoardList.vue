@@ -2,15 +2,17 @@
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { listArticle } from "@/api/board.js";
-
-import { useMemberStore } from "@/stores/member";
 import Swal from "sweetalert2";
-const memberStore = useMemberStore();
-const { userId } = memberStore;
 
 import VSelect from "@/components/common/VSelect.vue";
 import BoardListItem from "@/components/board/item/BoardListItem.vue";
 import PageNavigation from "@/components/common/PageNavigation.vue";
+
+import { useMemberStore } from "@/stores/member";
+import { storeToRefs } from "pinia";
+const memberStore = useMemberStore();
+const { userInfo } = storeToRefs(memberStore);
+const userId = userInfo.value.userId;
 
 const router = useRouter();
 
@@ -61,7 +63,7 @@ const onPageChange = (val) => {
 };
 
 const moveWrite = () => {
-  if (sessionStorage.getItem("userId")) {
+  if (userId) {
     router.push({ name: "article-write" });
   } else {
     Swal.fire("로그인이 필요한 페이지입니다!");

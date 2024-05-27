@@ -7,12 +7,7 @@ const memberStore = useMemberStore();
 const { userInfo } = storeToRefs(memberStore);
 const { userChangePwd } = memberStore;
 
-const user = ref({
-  userId: "",
-  userPwd: "",
-  userName: "",
-  userEmail: "",
-});
+const user = ref(null);
 const userPwdCheck = ref("");
 
 onMounted(() => {

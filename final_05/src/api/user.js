@@ -11,6 +11,8 @@ async function userRegister(param, config, success, fail) {
 }
 
 async function userSearch(userId, success, fail) {
+  local.defaults.headers["Authorization"] =
+    sessionStorage.getItem("accessToken");
   await local.get(`/user/info/${userId}`).then(success).catch(fail);
 }
 
@@ -20,6 +22,16 @@ async function userUpdate(param, config, success, fail) {
 
 async function userRemove(userId, success, fail) {
   await local.delete(`/user/remove/${userId}`).then(success).catch(fail);
+}
+
+async function tokenRegeneration(user, success, fail) {
+  local.defaults.headers["refreshToken"] =
+    sessionStorage.getItem("refreshToken"); //axios header에 refresh-token 셋팅
+  await local.post(`/user/refresh`, user).then(success).catch(fail);
+}
+
+async function logout(userid, success, fail) {
+  await local.get(`/user/logout/${userid}`).then(success).catch(fail);
 }
 
 async function findPwd(param, success, fail) {
@@ -43,4 +55,6 @@ export {
   userRemove,
   findPwd,
   changePwd,
+  tokenRegeneration,
+  logout,
 };

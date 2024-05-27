@@ -63,7 +63,7 @@ const onPageChange = (val) => {
 };
 
 const moveWrite = () => {
-  if (sessionStorage.getItem("userId")) {
+  if (userInfo.value.userId) {
     router.push({ name: "notice-write" });
   } else {
     Swal.fire("로그인이 필요한 페이지입니다!");
