@@ -35,18 +35,9 @@ async function logout(userid, success, fail) {
 }
 
 async function findPwd(param, success, fail) {
-  await local
-    .get(`/user/findpwd`, {
-      params: { userId: param.userId, userName: param.userName },
-    })
-    .then(success)
-    .catch(fail);
+  await local.get(`/user/findpwd`, { params: param }).then(success).catch(fail);
 }
 
-async function changePwd(param, success, fail) {
-  console.log(param);
-  await local.put(`/user/changepwd`, param).then(success).catch(fail);
-}
 export {
   userConfirm,
   userRegister,
@@ -54,7 +45,6 @@ export {
   userUpdate,
   userRemove,
   findPwd,
-  changePwd,
   tokenRegeneration,
   logout,
 };

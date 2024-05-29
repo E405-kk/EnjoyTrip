@@ -65,7 +65,7 @@
 	<select id="findpwd" parameterType="userDto" resultType="int">
 		SELECT count(user_id)
 		FROM user 
-		WHERE user_id = #{userId} AND user_name = #{userName}
+		WHERE user_id = #{userId} AND user_email = #{userEmail}
 	</select>
 	
 	<update id="changepwd" parameterType="userDto">

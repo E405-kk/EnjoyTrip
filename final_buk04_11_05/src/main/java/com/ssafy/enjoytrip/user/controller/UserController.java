@@ -1,37 +1,23 @@
 package com.ssafy.enjoytrip.user.controller;
 
 
+import com.ssafy.enjoytrip.user.model.UserDto;
+import com.ssafy.enjoytrip.user.service.UserService;
+import com.ssafy.enjoytrip.util.JWTUtil;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-
-import com.ssafy.enjoytrip.user.model.UserDto;
-import com.ssafy.enjoytrip.user.service.UserService;
-import com.ssafy.enjoytrip.util.JWTUtil;
-
-import jakarta.servlet.ServletContext;
-import jakarta.servlet.http.HttpServletRequest;
-import lombok.extern.slf4j.Slf4j;
 
 @CrossOrigin(origins = { "*" }, methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE} , maxAge = 6000)
 @RestController
@@ -207,9 +193,7 @@ public class UserController{
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
 		try {
-			System.out.println(userDto);
 			int result = userService.findpwd(userDto);
-			System.out.println(result);
 			if(result > 0) {
 				resultMap.put("message", "비밀번호 찾기 성공");
 				status = HttpStatus.OK;
@@ -225,27 +209,6 @@ public class UserController{
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 
-	@PutMapping("/changepwd")
-	public ResponseEntity<?> changepwd(@RequestBody UserDto userDto) {
-		Map<String, Object> resultMap = new HashMap<>();
-		HttpStatus status = HttpStatus.ACCEPTED;
-		try {
-			int result = userService.changepwd(userDto);
-			if(result > 0) {
-				resultMap.put("message", "비밀번호 변경 성공");
-				status = HttpStatus.OK;
-			}
-			else {
-				resultMap.put("message", "비밀번호 변경 실패");
-				status = HttpStatus.UNAUTHORIZED;
-			}
-		} catch (Exception e) {
-			resultMap.put("message", e.getMessage());
-			status = HttpStatus.INTERNAL_SERVER_ERROR;
-		}
-		return new ResponseEntity<Map<String, Object>>(resultMap, status);
-	}
-	
 	@GetMapping("/logout/{userId}")
 	public ResponseEntity<?> removeToken(@PathVariable ("userId") String userId) {
 		Map<String, Object> resultMap = new HashMap<>();

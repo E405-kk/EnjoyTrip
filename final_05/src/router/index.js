@@ -73,11 +73,6 @@ const router = createRouter({
           name: "user-findPwd",
           component: () => import("@/components/users/UserFindPwd.vue"),
         },
-        {
-          path: "changePwd",
-          name: "user-changePwd",
-          component: () => import("@/components/users/UserChangePwd.vue"),
-        },
       ],
     },
     {

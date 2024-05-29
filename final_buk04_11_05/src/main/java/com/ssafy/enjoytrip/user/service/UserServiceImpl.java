@@ -1,27 +1,28 @@
 package com.ssafy.enjoytrip.user.service;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-
+import com.ssafy.enjoytrip.user.dao.UserDao;
+import com.ssafy.enjoytrip.user.model.UserDto;
+import jakarta.servlet.ServletContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ssafy.enjoytrip.user.dao.UserDao;
-import com.ssafy.enjoytrip.user.model.UserDto;
-
-import jakarta.servlet.ServletContext;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService{
 
 	private final UserDao userDao;
+	private final MailService mailService;
 
 	@Autowired
 	private ServletContext servletContext;
 
-	public UserServiceImpl(UserDao userDao) {
+	public UserServiceImpl(UserDao userDao, MailService mailService) {
 		this.userDao = userDao;
+		this.mailService = mailService;
 	}
 	@Override
 	public int register(UserDto userDto) {
@@ -69,12 +70,19 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public int findpwd(UserDto userDto) {
-		return userDao.findpwd(userDto);
+		int result = userDao.findpwd(userDto);
+		if (result > 0) {
+			String newPassword = generateRandomPassword();
+			userDto.setUserPwd(newPassword);
+			userDao.changepwd(userDto);
+			mailService.sendMail(userDto.getUserEmail(), "Your New Password", "Your new password is: " + newPassword);
+		}
+		return result;
 	}
 
-	@Override
-	public int changepwd(UserDto userDto) {
-		return userDao.changepwd(userDto);
+	private String generateRandomPassword() {
+		// 랜덤 비밀번호 생성 로직 (예시)
+		return UUID.randomUUID().toString().substring(0, 8);
 	}
 
 	@Override

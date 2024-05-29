@@ -10,7 +10,6 @@ import {
   userUpdate,
   userRemove,
   findPwd,
-  changePwd,
   tokenRegeneration,
   logout,
 } from "@/api/user";
@@ -254,31 +253,7 @@ export const useMemberStore = defineStore("memberStore", () => {
           userInfo.value = user;
           Swal.fire({
             icon: "success",
-            title: "회원정보가 확인되었습니다.",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-          console.log(response.status);
-          gochangePwd();
-        }
-      },
-      (error) => {
-        console.error(error);
-        Swal.fire({
-          icon: "error",
-          text: "아이디 및 이름을 확인해주세요.",
-        });
-      }
-    );
-  };
-  const userChangePwd = async (user) => {
-    await changePwd(
-      user,
-      (response) => {
-        if (response.status === httpStatusCode.OK) {
-          Swal.fire({
-            icon: "success",
-            title: "비밀번호가 변경되었습니다.",
+            title: "이메일로 임시 비밀번호가 전송되었습니다.",
             showConfirmButton: false,
             timer: 1500,
           });
@@ -289,11 +264,12 @@ export const useMemberStore = defineStore("memberStore", () => {
         console.error(error);
         Swal.fire({
           icon: "error",
-          text: "비밀번호를 다시 확인해주세요.",
+          text: "아이디 및 이메일을 확인해주세요.",
         });
       }
     );
   };
+
   const goLogin = () => {
     router.push({ name: "user-login" });
   };
@@ -303,9 +279,7 @@ export const useMemberStore = defineStore("memberStore", () => {
   const goModify = () => {
     router.push({ name: "user-modify" });
   };
-  const gochangePwd = () => {
-    router.push({ name: "user-changePwd" });
-  };
+
   return {
     isLogin,
     userInfo,
@@ -316,7 +290,6 @@ export const useMemberStore = defineStore("memberStore", () => {
     userModify,
     userDelete,
     userFindPwd,
-    userChangePwd,
     goModify,
     tokenRegenerate,
     isLoginError,

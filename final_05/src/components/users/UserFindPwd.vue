@@ -1,12 +1,15 @@
 <script setup>
 import { ref } from "vue";
 import { useMemberStore } from "@/stores/member";
-import Swal from "sweetalert2";
 const memberStore = useMemberStore();
 const { userFindPwd } = memberStore;
 
-const user = ref(null);
+const user = ref({
+  userId: "",
+  userEmail: "",
+});
 const findPwd = async () => {
+  console.log(user.value);
   await userFindPwd(user.value);
 };
 </script>
@@ -48,7 +51,7 @@ const findPwd = async () => {
           <label
             for="email"
             class="block text-sm font-medium leading-6 text-gray-900"
-            >이름</label
+            >이메일</label
           >
           <div class="mt-2">
             <input
@@ -57,7 +60,7 @@ const findPwd = async () => {
               type="email"
               autocomplete="email"
               required
-              v-model="user.userName"
+              v-model="user.userEmail"
               @keyup.enter="findPwd"
               class="pl-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6" />
           </div>
