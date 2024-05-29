@@ -148,6 +148,8 @@ CREATE TABLE `plan_detail` (
   CONSTRAINT `plan_detail_to_attraction_info_content_id_fk` FOREIGN KEY (`content_id`) REFERENCES `attraction_info` (`content_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+alter table `ssafytrip`.`user`
+    add column `token` varchar(1000) null default null after `join_date`;
 
 INSERT INTO monthly (mon, region, title, latitude, longitude) VALUES
 (1, '강원도 평창', '대관령 양떼목장', 37.67140000000000000, 128.71430000000000000),
