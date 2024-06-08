@@ -1,11 +1,10 @@
 package com.ssafy.enjoytrip.user.dao;
 
-import java.sql.SQLException;
-import java.util.Map;
-
+import com.ssafy.enjoytrip.user.model.UserDto;
 import org.apache.ibatis.annotations.Mapper;
 
-import com.ssafy.enjoytrip.user.model.UserDto;
+import java.sql.SQLException;
+import java.util.Map;
 
 @Mapper
 public interface UserDao {
@@ -21,6 +20,7 @@ public interface UserDao {
 	void modifyBoardImg(UserDto userDto);
 	void modifyCommentImg(UserDto userDto);
 	void modifyHotplaceImg(UserDto userDto);
+	void modifyReplyImg(UserDto userDto);
 	void saveRefreshToken(Map<String, String> map) throws SQLException;
 	Object getRefreshToken(String userid) throws SQLException;
 	void deleteRefreshToken(Map<String, String> map) throws SQLException;

@@ -2,6 +2,7 @@ USE `ssafytrip`;
 
 DROP TABLE IF EXISTS `ssafytrip`.`notice` ;
 DROP TABLE IF EXISTS `ssafytrip`.`tripplan`;
+DROP TABLE IF EXISTS `ssafytrip`.`reply` ;
 DROP TABLE IF EXISTS `ssafytrip`.`comment` ;
 DROP TABLE IF EXISTS `ssafytrip`.`board` ;
 DROP TABLE IF EXISTS `ssafytrip`.`goods` ;
@@ -92,16 +93,29 @@ CREATE TABLE IF NOT EXISTS `file_info` (
     CONSTRAINT `file_to_hotplace_article_no_fk` FOREIGN KEY (`article_no`) REFERENCES `hotplace` (`article_no`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
-CREATE TABLE IF NOT EXISTS `comment` (
-    `idx` int NOT NULL AUTO_INCREMENT,
-    `article_no` int NOT NULL,
-    `user_id` varchar(16) NOT NULL,
-    `content` varchar(2000) DEFAULT NULL,
-    `register_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `img` VARCHAR(50) DEFAULT NULL,
-    PRIMARY KEY (`idx`),
-    KEY `comment_to_board_article_no_fk` (`article_no`),
-    CONSTRAINT `comment_to_board_article_no_fk` FOREIGN KEY (`article_no`) REFERENCES `board` (`article_no`) ON DELETE CASCADE
+CREATE TABLE `comment` (
+                           `idx` int NOT NULL AUTO_INCREMENT,
+                           `article_no` int NOT NULL,
+                           `user_id` varchar(16) NOT NULL,
+                           `content` varchar(2000) DEFAULT NULL,
+                           `register_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                           `img` varchar(50) DEFAULT NULL,
+                           `reply` int DEFAULT '0',
+                           PRIMARY KEY (`idx`),
+                           KEY `comment_to_board_article_no_fk` (`article_no`),
+                           CONSTRAINT `comment_to_board_article_no_fk` FOREIGN KEY (`article_no`) REFERENCES `board` (`article_no`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+CREATE TABLE `reply`(
+                        `idx` int NOT NULL AUTO_INCREMENT,
+                        `parent_idx` int NOT NULL,
+                        `user_id` varchar(16) NOT NULL,
+                        `content` varchar(2000) DEFAULT NULL,
+                        `register_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                        `img` varchar(50) DEFAULT NULL,
+                        PRIMARY KEY (`idx`),
+                        KEY `reply_to_comment_idx_fk` (`parent_idx`),
+                        CONSTRAINT `reply_to_comment_idx_fk` FOREIGN KEY (`parent_idx`) REFERENCES `comment` (`idx`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 

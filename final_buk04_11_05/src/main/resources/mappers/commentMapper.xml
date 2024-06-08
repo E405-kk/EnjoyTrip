@@ -8,7 +8,7 @@
 		values (#{articleNo}, #{userId}, #{content}, #{img})
 	</insert>
 	<select id="list" parameterType="map" resultType="CommentDto">
-		select idx, article_no, user_id, content, register_time, img
+		select idx, article_no, user_id, content, register_time, img, reply
 		from comment
 		where article_no = #{articleno}
 		order by register_time

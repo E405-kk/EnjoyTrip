@@ -45,7 +45,12 @@
 		UPDATE comment SET img = #{img}
 		WHERE user_id = #{userId};
 	</update>
-	
+
+	<update id="modifyReplyImg" parameterType="userDto">
+		UPDATE reply SET img = #{img}
+		WHERE user_id = #{userId};
+	</update>
+
 	<delete id="userBoardRemove" parameterType="string">
 		DELETE FROM board 
 		WHERE user_id = #{userId};

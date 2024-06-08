@@ -209,6 +209,7 @@ const handleWriteComment = () => {
               :key="comment.idx"
               :comment="comment"
               @update-comment="handleUpdateComment"
+              @regist-reply="handleWriteComment"
               @delete-comment="handleDeleteComment"></CommentListItem>
           </div>
           <div v-if="comments.length === 0" class="text-gray-500">
@@ -223,6 +224,7 @@ const handleWriteComment = () => {
           <CommentFormItem
             v-if="userId"
             type="regist"
+            kind="comment"
             @write-comment="handleWriteComment"
             :articleno="articleno"></CommentFormItem>
         </div>

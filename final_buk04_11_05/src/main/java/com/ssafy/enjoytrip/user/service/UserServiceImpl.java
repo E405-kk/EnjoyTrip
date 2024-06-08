@@ -51,6 +51,7 @@ public class UserServiceImpl implements UserService{
 		userDao.modifyBoardImg(userDto);
 		userDao.modifyCommentImg(userDto);
 		userDao.modifyHotplaceImg(userDto);
+		userDao.modifyReplyImg(userDto);
 		return userDao.modify(userDto);
 	}
 
