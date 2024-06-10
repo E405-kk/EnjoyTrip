@@ -9,8 +9,7 @@ const memberStore = useMemberStore();
 const { userInfo } = storeToRefs(memberStore);
 const router = useRouter();
 const route = useRoute();
-
-const props = defineProps({ type: String });
+const props = defineProps({ type: String, latlng: Object, detailAddr: String });
 
 const isUseId = ref(false);
 const imagePreview = ref("");
@@ -22,14 +21,32 @@ const article = ref({
   userName: "",
   hit: 0,
   registerTime: "",
+  latitude: 0,
+  longitude: 0,
+  addr: "",
   fileInfo: {
     saveFile: "",
     saveFolder: "",
     originalFile: "",
   },
   img: userInfo.value.img,
+  visitDate: "",
 });
-
+watch(
+  () => props.detailAddr,
+  (value) => {
+    article.value.addr = value;
+  },
+  { immediate: true }
+);
+watch(
+  () => props.latlng.lat,
+  () => {
+    article.value.latitude = props.latlng.lat;
+    article.value.longitude = props.latlng.lng;
+  },
+  { immediate: true }
+);
 if (props.type === "modify") {
   let { articleno } = route.params;
 
@@ -37,6 +54,7 @@ if (props.type === "modify") {
     articleno,
     ({ data }) => {
       article.value = data;
+      console.log(article.value);
       isUseId.value = true;
       getImageUrl();
     },
@@ -195,37 +213,46 @@ function getImageUrl() {
 
 <template>
   <form>
-    <div class="min-h-screen md:px-20 pt-6">
+    <div class="min-h-screen ml-10 py-3">
       <div
         class="border rounded-lg shadow-lg px-6 py-10 max-w-2xl mx-auto bg-grey-lighter">
         <div class="flex">
-          <label
-            class="w-60 mr-6 flex flex-col items-center justify-center px-4 py-6 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-white">
-            <div v-if="imagePreview">
-              <img :src="imagePreview" class="fluid-container" />
-            </div>
-            <template v-else>
-              <svg
-                class="w-10 h-10"
-                fill="currentColor"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20">
-                <path
-                  d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
-              </svg>
-              <span class="mt-2 text-base leading-normal"> 사진 업로드</span>
-            </template>
-
-            <input
-              type="file"
-              class="hidden"
-              name="photo"
-              id="photo"
-              @change="previewImage"
-              accept="image/*" />
-          </label>
-
           <div class="flex-1 space-y-4">
+            <label
+              class="w-60 mx-auto flex flex-col items-center justify-center p-3 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-white">
+              <div
+                v-if="imagePreview"
+                style="
+                  width: 60%;
+                  height: auto;
+                  aspect-ratio: 4/3;
+                  max-width: 100%;
+                ">
+                <img
+                  :src="imagePreview"
+                  class="fluid-container"
+                  style="width: 100%; height: 100%; object-fit: cover" />
+              </div>
+              <template v-else>
+                <svg
+                  class="w-10 h-10"
+                  fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20">
+                  <path
+                    d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
+                </svg>
+                <span class="mt-2 text-base leading-normal"> 사진 업로드</span>
+              </template>
+
+              <input
+                type="file"
+                class="hidden"
+                name="photo"
+                id="photo"
+                @change="previewImage"
+                accept="image/*" />
+            </label>
             <div>
               <label for="subject" class="text-lx">제목:</label>
               <input
@@ -236,11 +263,27 @@ function getImageUrl() {
                 class="mt-2 outline-none py-2 px-2 text-md border-2 rounded-md w-full" />
             </div>
             <div>
+              <label for="addr" class="text-lx">주소:</label>
+              <div
+                id="addr"
+                class="mt-2 outline-none py-2 px-2 text-md border-2 rounded-md w-full">
+                {{ article.addr }}
+              </div>
+            </div>
+            <div>
+              <label for="visitDate" class="text-lx">방문 날짜:</label>
+              <input
+                type="date"
+                id="visitDate"
+                v-model="article.visitDate"
+                class="mt-2 outline-none py-2 px-2 text-md border-2 rounded-md w-full" />
+            </div>
+            <div>
               <label for="content" class="block mb-2 text-lg">내용:</label>
               <textarea
                 id="content"
-                cols="30"
-                rows="10"
+                cols="10"
+                rows="5"
                 v-model="article.content"
                 class="w-full p-4 text-gray-600 bg-emerald-50 outline-none rounded-md"></textarea>
             </div>

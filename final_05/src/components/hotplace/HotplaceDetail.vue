@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, watch, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import {
   detailArticle,
@@ -7,7 +7,6 @@ import {
   checkGood,
   updateGood,
 } from "@/api/hotplace";
-import VArticle from "@/components/common/VArticle.vue";
 import Swal from "sweetalert2";
 import { useMemberStore } from "@/stores/member";
 import { storeToRefs } from "pinia";
@@ -27,10 +26,45 @@ const param = ref({
   articleNo: articleno,
   check: "",
 });
+var map;
+var marker;
+const initMap = () => {
+  const container = document.getElementById("map");
+  const options = {
+    center: new kakao.maps.LatLng(36.386120817951436, 128.02537185582057), // 지도의 중심좌표
+    level: 8, // 지도의 확대 레벨
+  };
+  map = new kakao.maps.Map(container, options);
+  // 지도를 클릭한 위치에 표출할 마커입니다
+  marker = new kakao.maps.Marker({
+    // 지도 중심좌표에 마커를 생성합니다
+    position: map.getCenter(),
+  });
 
+  // 지도에 마커를 표시합니다
+  marker.setMap(map);
+};
+watch(article, (newVal) => {
+  if (newVal.latitude && newVal.longitude) {
+    const position = new kakao.maps.LatLng(newVal.latitude, newVal.longitude);
+    map.setCenter(position);
+    marker.setPosition(position);
+  }
+});
 onMounted(() => {
   getArticle();
   checkIsGood();
+  if (window.kakao && window.kakao.maps) {
+    initMap();
+  } else {
+    const script = document.createElement("script");
+    script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${
+      import.meta.env.VITE_KAKAO_MAP_SERVICE_KEY
+    }&libraries=services,clusterer`;
+    /* global kakao */
+    script.onload = () => kakao.maps.load(() => initMap());
+    document.head.appendChild(script);
+  }
 });
 
 const getArticle = () => {
@@ -136,16 +170,54 @@ function getImageUrl() {
 
 <template>
   <div class="container mx-auto p-5">
-    <div class="flex justify-center">
-      <img
-        :src="getImageUrl()"
-        class="max-w-full h-auto"
-        style="width: 40%; max-width: 40%; height: auto" />
-      <div
-        class="w-full lg:w-10/12 text-start bg-white shadow-md rounded-lg p-5">
-        <VArticle :article="article" />
+    <div id="map" class="mx-auto" style="width: 80%; height: 300px"></div>
+    <div class="flex justify-center mx-auto" style="width: 80%">
+      <div style="width: 60%; height: auto; aspect-ratio: 3/4; max-width: 100%">
+        <img
+          :src="getImageUrl()"
+          class="max-w-full h-auto p-5"
+          style="width: 100%; height: 100%; object-fit: cover" />
+      </div>
+      <div class="w-full text-start bg-white shadow-md rounded-lg p-5">
+        <div class="flex">
+          <div class="flex-1 space-y-4">
+            <div>
+              <label for="subject" class="text-lx">제목:</label>
+              <div
+                id="subject"
+                class="mt-2 outline-none py-2 px-2 text-md border-2 rounded-md w-full">
+                {{ article.subject }}
+              </div>
+            </div>
+            <div>
+              <label for="addr" class="text-lx">주소:</label>
+              <div
+                id="addr"
+                class="mt-2 outline-none py-2 px-2 text-md border-2 rounded-md w-full">
+                {{ article.addr }}
+              </div>
+            </div>
+            <div>
+              <label for="visitDate" class="text-lx">방문 날짜:</label>
+              <div
+                id="visitDate"
+                class="mt-2 outline-none py-2 px-2 text-md border-2 rounded-md w-full">
+                {{ article.visitDate }}
+              </div>
+            </div>
+            <div>
+              <label for="content" class="block mb-2 text-lg">내용:</label>
+              <div
+                id="content"
+                class="w-full p-4 text-gray-600 bg-emerald-50 outline-none rounded-md"
+                style="height: 200px">
+                {{ article.content }}
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="border-t my-3"></div>
-        <div class="flex justify-between mt-10">
+        <div class="flex justify-between mt-5">
           <div class="flex">
             <button
               type="button"
