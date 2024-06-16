@@ -9,7 +9,6 @@ import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 import App from "./App.vue";
 import router from "./router";
 import AOS from "aos";
-import Swal from "sweetalert2";
 const pinia = createPinia();
 
 pinia.use(piniaPluginPersistedstate);
