@@ -1,0 +1,1 @@
+import{_ as e}from"./NoticeFormItem-Cz-cY-tR.js";import{c as s,e as t,i as o,b as c}from"./index-BWaCr9_N.js";import"./notice-B16u_sLm.js";const a={class:"fluid-container"},r={class:"row justify-content-center"},i={class:"col-lg-10 text-start"},f={__name:"NoticeWrite",setup(_){return(n,d)=>(c(),s("div",a,[t("div",r,[t("div",i,[o(e,{type:"regist"})])])]))}};export{f as default};

@@ -1,0 +1,1 @@
+import{_ as t,c as o,i as s,F as r,e as c,b as a,h as n}from"./index-BWaCr9_N.js";const _={},l=c("h2",{class:"my-3 py-3 shadow-sm text-2xl text-center"},"Q&A",-1);function m(d,i){const e=n("router-view");return a(),o(r,null,[l,s(e)],64)}const f=t(_,[["render",m]]);export{f as default};

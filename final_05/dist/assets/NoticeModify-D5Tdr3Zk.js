@@ -1,0 +1,1 @@
+import{_ as e}from"./NoticeFormItem-Cz-cY-tR.js";import{c as o,e as t,i as s,b as c}from"./index-BWaCr9_N.js";import"./notice-B16u_sLm.js";const a={class:"fluid-container"},i={class:"row justify-content-center"},r={class:"col-lg-10 text-start"},p={__name:"NoticeModify",setup(_){return(n,d)=>(c(),o("div",a,[t("div",i,[t("div",r,[s(e,{type:"modify"})])])]))}};export{p as default};
