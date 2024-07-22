@@ -1,0 +1,1 @@
+import{_ as t,c as o,i as s,F as c,e as r,b as n,h as a}from"./index-CmhezA2U.js";const _={},i=r("h2",{class:"my-3 py-3 shadow-sm text-2xl text-center"},"공지사항",-1);function l(m,d){const e=a("router-view");return n(),o(c,null,[i,s(e)],64)}const f=t(_,[["render",l]]);export{f as default};

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.enjoytrip.user.dao.UserDao">
+	<select id="idCheck" parameterType="string">
+		SELECT count(user_id)
+		FROM user
+		WHERE user_id = #{userId}
+	</select>
+
+	<insert id="register" parameterType="userDto">
+		INSERT INTO user (user_id, user_name, user_password, user_email, img)
+		VALUES (#{userId}, #{userName}, #{userPwd}, #{userEmail}, #{img})
+	</insert>
+	
+	<select id="login" parameterType="userDto" resultType="userDto">
+		SELECT user_id, user_name, user_email, join_date, token refreshToken
+		FROM user
+		WHERE user_id = #{userId} AND user_password = #{userPwd}
+	</select>	
+	
+	<select id="userInfo" parameterType="String" resultType="userDto">
+		SELECT user_id, user_name, user_password userPwd, user_email, join_date, is_admin, img, token refreshToken
+		FROM user 
+		WHERE user_id = #{userId}
+	</select>
+	
+	<update id="modify" parameterType="userDto">
+		UPDATE user SET user_name = #{userName}, user_email = #{userEmail}, user_password = #{userPwd}, img = #{img}
+		WHERE user_id = #{userId};
+	</update>
+	
+	<update id="modifyBoardImg" parameterType="userDto">
+		UPDATE board SET img = #{img}
+		WHERE user_id = #{userId};
+	</update>
+	
+	<update id="modifyHotplaceImg" parameterType="userDto">
+		UPDATE hotplace SET img = #{img}
+		WHERE user_id = #{userId};
+	</update>
+	
+	<update id="modifyCommentImg" parameterType="userDto">
+		UPDATE comment SET img = #{img}
+		WHERE user_id = #{userId};
+	</update>
+
+	<update id="modifyReplyImg" parameterType="userDto">
+		UPDATE reply SET img = #{img}
+		WHERE user_id = #{userId};
+	</update>
+
+	<delete id="userBoardRemove" parameterType="string">
+		DELETE FROM board 
+		WHERE user_id = #{userId};
+		
+		DELETE FROM tripplan
+		WHERE user_id = #{userId};
+		
+		DELETE FROM notice
+		WHERE user_id = #{userId};
+	</delete>
+	
+	<delete id="remove" parameterType="string">
+		DELETE FROM user 
+		WHERE user_id = #{userId}
+	</delete>
+	
+	<select id="findpwd" parameterType="userDto" resultType="int">
+		SELECT count(user_id)
+		FROM user 
+		WHERE user_id = #{userId} AND user_email = #{userEmail}
+	</select>
+	
+	<update id="changepwd" parameterType="userDto">
+		UPDATE user 
+		SET user_password = #{userPwd} 
+		WHERE user_id = #{userId}
+	</update>
+	
+	<update id="saveRefreshToken" parameterType="map">
+		update user
+		set token = #{token}
+		where user_id = #{userId}
+	</update>
+	
+	<select id="getRefreshToken" parameterType="string" resultType="string">
+		select token
+		from user
+		where user_id = #{userId}
+	</select>
+	
+	<update id="deleteRefreshToken" parameterType="map">
+		update user
+		set token = #{token, jdbcType=VARCHAR}
+		where user_id = #{userId}
+	</update>
+</mapper>

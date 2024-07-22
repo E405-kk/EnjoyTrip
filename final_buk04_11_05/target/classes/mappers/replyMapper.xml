@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.enjoytrip.reply.dao.ReplyDao">
+	<insert id="regist" parameterType="ReplyDto">
+		insert into reply (parent_idx, user_id, content, img)
+		values (#{parentIdx}, #{userId}, #{content}, #{img})
+	</insert>
+	<select id="list" parameterType="map" resultType="ReplyDto">
+		select idx, parent_idx, user_id, content, register_time, img
+		from reply
+		where parent_idx = #{articleno}
+		order by register_time
+		limit #{start}, #{listsize}
+	</select>
+	
+	<select id="getTotalArticleCount" parameterType="map" resultType="int">
+		select count(idx)
+		from reply
+		where parent_idx = #{articleno}
+	</select>
+	
+	<update id="modify" parameterType="ReplyDto">
+		update reply
+		set content = #{content}
+		where parent_idx = #{parentIdx}
+			AND user_id = #{userId}
+	</update>
+	
+	<delete id="remove" parameterType="int">
+		delete from reply
+		where idx = #{idx}
+	</delete>
+	
+	<select id="getSlang" resultType="string">
+		select word
+		from slang
+	</select>
+
+	<update id="plusCount" parameterType="int">
+		UPDATE comment
+		SET reply = reply + 1
+		WHERE idx = #{parentIdx}
+	</update>
+
+	<update id="minusCount" parameterType="int">
+		UPDATE comment
+		SET reply = reply - 1
+		WHERE idx = (SELECT parent_idx
+		             FROM reply
+		             WHERE idx = #{idx})
+	</update>
+	
+</mapper>
