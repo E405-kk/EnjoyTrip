@@ -1,0 +1,1 @@
+import{_ as t,c as o,i as s,F as c,e as r,b as a,h as n}from"./index-CmhezA2U.js";const _={},l=r("h2",{class:"my-3 py-3 shadow-sm text-2xl text-center"},"핫플레이스",-1);function m(i,p){const e=n("router-view");return a(),o(c,null,[l,s(e)],64)}const f=t(_,[["render",m]]);export{f as default};

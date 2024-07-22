@@ -1,0 +1,1 @@
+import{_ as e}from"./BoardFormItem-BCFWDAKx.js";import{c as o,e as t,i as s,b as c}from"./index-CmhezA2U.js";import"./board-DkxEk9Zx.js";const a={class:"fluid-container"},r={class:"row justify-content-center"},i={class:"col-lg-10 text-start"},p={__name:"BoardModify",setup(_){return(n,d)=>(c(),o("div",a,[t("div",r,[t("div",i,[s(e,{type:"modify"})])])]))}};export{p as default};

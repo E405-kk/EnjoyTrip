@@ -1,0 +1,1 @@
+import{_ as o,c as t,i as n,F as r,e as s,b as c,h as a}from"./index-CmhezA2U.js";const _={},l=s("div",null,null,-1);function i(u,d){const e=a("router-view");return c(),t(r,null,[l,n(e)],64)}const f=o(_,[["render",i]]);export{f as default};
