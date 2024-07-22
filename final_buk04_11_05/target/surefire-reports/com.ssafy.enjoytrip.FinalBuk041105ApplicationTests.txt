@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.ssafy.enjoytrip.FinalBuk041105ApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.496 s -- in com.ssafy.enjoytrip.FinalBuk041105ApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.594 s -- in com.ssafy.enjoytrip.FinalBuk041105ApplicationTests
